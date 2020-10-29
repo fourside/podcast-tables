@@ -8,6 +8,7 @@ const Layout = ({ children }: { children: ReactNode }) => {
     <div className={styles.container}>
       <Head>
         <title>podcast tables</title>
+        <link rel="preload" as="font" type="font/otf" href="fonts/NotoSansJP-Regular.otf" />
       </Head>
       <header className={styles.header}>
         <h1>podcast tables</h1>
