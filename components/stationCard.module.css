@@ -1,0 +1,14 @@
+.stationCard {
+  border-radius: 10px;
+  border: 1px #eee solid;
+  margin: 8px 16px;
+  box-shadow: 4px 4px 12px 2px rgba(0,0,0,0.1);
+}
+
+.stationCardLink {
+  display: block;
+  width: 200px;
+  height: 100px;
+  text-align: center;
+  line-height: 5.5;
+}

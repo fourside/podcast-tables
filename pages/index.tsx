@@ -1,6 +1,8 @@
 import Layout from "../components/layout";
+import { StationCard } from "../components/stationCard";
 import { getStations } from "../lib/client";
 import { Station } from "../lib/station";
+import styles from '../styles/Index.module.css';
 
 type Props = {
   stations: Station[];
@@ -8,11 +10,11 @@ type Props = {
 const Index: React.FC<Props> = ({ stations }) => {
   return (
     <Layout>
-      {stations.map(station => (
-        <div key={station.id}>
-          {station.id}: {station.name}
-          </div>
-      ))}
+      <div className={styles.container}>
+        {stations.map(station => (
+          <StationCard key={station.id} station={station} />
+        ))}
+      </div>
     </Layout>
   )
 };
