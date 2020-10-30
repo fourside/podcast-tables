@@ -9,7 +9,7 @@ type Props = {
 export const StationCard: React.FC<Props> = ({ station }) => {
   return (
     <div className={styles.stationCard}>
-      <Link href={`/${station.id}`}>
+      <Link href={`/programs/${station.id}`}>
         <a className={styles.stationCardLink}>{station.name}</a>
       </Link>
     </div>

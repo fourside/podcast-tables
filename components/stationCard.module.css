@@ -10,5 +10,8 @@
   width: 200px;
   height: 100px;
   text-align: center;
-  line-height: 5.5;
+  line-height: 1.5;
+  padding: 32px 16px;
+  color: #444;
+  font-weight: bold;
 }
