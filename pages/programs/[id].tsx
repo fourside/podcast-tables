@@ -1,4 +1,5 @@
 import { GetServerSidePropsContext, GetServerSidePropsResult } from "next";
+import { ProgramColumns } from "../../components/programColumns";
 import { getPrograms } from "../../lib/client";
 import { ProgramPerDate } from "../../lib/station";
 
@@ -7,13 +8,7 @@ type Props = {
 }
 const Programs: React.FC<Props> = ({ programs }) => {
   return (
-    <div>
-      {programs.map(program => (
-        <div key={program.date}>
-          {program.date}
-        </div>
-      ))}
-    </div>
+    <ProgramColumns programs={programs} />
   )
 };
 
