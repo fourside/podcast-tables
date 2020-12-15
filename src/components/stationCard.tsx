@@ -22,6 +22,7 @@ const Card = styled.div({
   border: "1px #eee solid",
   margin: "8px 16px",
   boxShadow: "4px 4px 12px 2px rgba(0,0,0,0.1)",
+  cursor: "pointer",
 });
 
 const CardLink = styled.a({
