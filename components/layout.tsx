@@ -1,20 +1,30 @@
-import { ReactNode } from "react";
+import React from "react";
 import Head from "next/head";
+import styled from "styled-components";
 
-import styles from "./layout.module.css";
-
-const Layout = ({ children }: { children: ReactNode }) => {
+const Layout: React.FC = ({ children }) => {
   return (
-    <div className={styles.container}>
+    <Container>
       <Head>
         <title>podcast tables</title>
         <link rel="preload" as="font" type="font/otf" href="fonts/NotoSansJP-Regular.otf" />
       </Head>
-      <header className={styles.header}>
+      <Header>
         <h1>podcast tables</h1>
-      </header>
+      </Header>
       <main>{children}</main>
-    </div>
+    </Container>
   );
 }
 export default Layout;
+
+const Container = styled.div({
+  maxWidth: "720px",
+  margin: "3rem auto 6rem",
+});
+
+const Header = styled.header({
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+});
