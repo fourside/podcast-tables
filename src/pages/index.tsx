@@ -1,8 +1,10 @@
+import { GetStaticPropsResult } from "next";
+import styled from "styled-components";
+
 import Layout from "../components/layout";
 import { StationCard } from "../components/stationCard";
 import { getStations } from "../lib/client";
 import { Station } from "../lib/station";
-import styles from '../styles/Index.module.css';
 
 type Props = {
   stations: Station[];
@@ -10,22 +12,30 @@ type Props = {
 const Index: React.FC<Props> = ({ stations }) => {
   return (
     <Layout>
-      <div className={styles.container}>
-        {stations.map(station => (
+      <Container>
+        {stations.map((station) => (
           <StationCard key={station.id} station={station} />
         ))}
-      </div>
+      </Container>
     </Layout>
-  )
+  );
 };
+
+const Container = styled.div({
+  minHeight: "100vh",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  flexWrap: "wrap",
+});
 
 export default Index;
 
-export async function getStaticProps() {
-  const stations = await getStations()
+export async function getStaticProps(): Promise<GetStaticPropsResult<Props>> {
+  const stations = await getStations();
   return {
     props: {
       stations,
-    }
-  }
-}
+    },
+  };
+};
