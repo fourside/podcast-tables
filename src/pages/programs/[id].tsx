@@ -7,15 +7,16 @@ import { ProgramPerDate } from "../../lib/station";
 
 type Props = {
   programs: ProgramPerDate[];
+  stationId: string;
 }
-const Programs: React.FC<Props> = ({ programs }) => {
+const Programs: React.FC<Props> = ({ programs, stationId }) => {
   const router = useRouter();
   if (router.isFallback && !programs) {
     return <div>not found</div>
   }
 
   return (
-    <ProgramColumns programs={programs} />
+    <ProgramColumns stationId={stationId} programs={programs} />
   )
 };
 
@@ -30,6 +31,7 @@ export async function getStaticProps(context: GetStaticPropsContext<{ id: string
   return {
     props: {
       programs,
+      stationId,
     },
     revalidate: REVALIDATE_SEC,
   };

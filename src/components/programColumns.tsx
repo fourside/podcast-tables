@@ -4,11 +4,13 @@ import { ProgramPerDate} from "../lib/station";
 import { ProgramCard } from "./programCard";
 
 type Props = {
-  programs: ProgramPerDate[]
+  stationId: string;
+  programs: ProgramPerDate[];
 };
-export const ProgramColumns: React.FC<Props> = ({ programs }) => {
+export const ProgramColumns: React.FC<Props> = ({ stationId, programs }) => {
   return (
     <Container>
+      <Title>{stationId}</Title>
       {programs.map(program => (
         <Column key={program.date}>
           <Date>{program.date}</Date>
@@ -23,7 +25,14 @@ export const ProgramColumns: React.FC<Props> = ({ programs }) => {
 
 const Container = styled.div({
   display: "flex",
-  flexWrap: "wrap",
+  flexWrap: "nowrap",
+  overflowY: "hidden",
+  margin: "0 auto",
+  width: "85%",
+});
+
+const Title = styled.h2({
+  color: "#888",
 });
 
 const Column = styled.div({
@@ -31,11 +40,11 @@ const Column = styled.div({
   border: "1px #eee solid",
   margin: "8px 16px",
   boxShadow: "4px 4px 12px 2px rgba(0,0,0,0.1)",
-  width: "calc(100% / 5)",
+  width: "calc(100% / 4)",
   display: "flex",
   flexDirection: "column",
   padding: "8px",
 });
 
 const Date = styled.h3({
-})
+});
