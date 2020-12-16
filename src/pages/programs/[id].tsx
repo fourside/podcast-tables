@@ -1,4 +1,6 @@
-import { GetServerSidePropsContext, GetServerSidePropsResult } from "next";
+import { GetStaticPropsContext, GetStaticPropsResult, GetStaticPathsResult } from "next";
+import { useRouter } from "next/router";
+
 import { ProgramColumns } from "../../components/programColumns";
 import { getPrograms } from "../../lib/client";
 import { ProgramPerDate } from "../../lib/station";
@@ -7,6 +9,11 @@ type Props = {
   programs: ProgramPerDate[];
 }
 const Programs: React.FC<Props> = ({ programs }) => {
+  const router = useRouter();
+  if (router.isFallback && !programs) {
+    return <div>not found</div>
+  }
+
   return (
     <ProgramColumns programs={programs} />
   )
@@ -14,18 +21,23 @@ const Programs: React.FC<Props> = ({ programs }) => {
 
 export default Programs;
 
-export async function getServerSideProps(context: GetServerSidePropsContext): Promise<GetServerSidePropsResult<Props>> {
+const REVALIDATE_SEC = 60 * 60;
+
+export async function getStaticProps(context: GetStaticPropsContext<{ id: string }>): Promise<GetStaticPropsResult<Props>> {
   const id = context.params?.id;
-  if (!id) {
-    context.res.writeHead(404);
-    context.res.end();
-    return { notFound: true }
-  }
-  const stationId = (Array.isArray(id)) ? id[0] : id;
+  const stationId = id ?? "";
   const programs = await getPrograms(stationId);
   return {
     props: {
       programs,
-    }
+    },
+    revalidate: REVALIDATE_SEC,
+  };
+}
+
+export function getStaticPaths(): GetStaticPathsResult {
+  return {
+    paths: [],
+    fallback: true,
   };
 }
