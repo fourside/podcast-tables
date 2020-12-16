@@ -6,10 +6,6 @@ import Router from "next/router";
 import { Loading } from "../components/Loading";
 import "../styles/globals.css";
 
-Router.events.on('routeChangeStart', () => console.log("start"));
-Router.events.on('routeChangeComplete', () => console.log("end"));
-Router.events.on('routeChangeError', () => console.log("error"));
-
 const MyApp: NextComponentType<AppContext, AppInitialProps, AppProps> = ({ Component, pageProps }: AppProps) => {
   const [loading, setLoading] = useState(false)
 
