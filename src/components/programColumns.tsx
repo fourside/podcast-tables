@@ -2,15 +2,29 @@ import styled from "styled-components";
 
 import { ProgramPerDate} from "../lib/station";
 import { ProgramCard } from "./programCard";
+import { Button } from "../components/Button";
+import { Clock } from "../components/Clock";
 
 type Props = {
   stationId: string;
   programs: ProgramPerDate[];
 };
 export const ProgramColumns: React.FC<Props> = ({ stationId, programs }) => {
+  const handleClickNext = () => {
+    console.log("next")
+  };
+  const handleClickPrev = () => {
+    console.log("prev")
+  };
+
   return (
     <Container>
-      <Title>{stationId}</Title>
+      <div>
+        <Title>{stationId}</Title>
+        <Clock />
+        <Button label={"next"} onClick={handleClickNext} />
+        <Button label={"prev"} onClick={handleClickPrev} />
+      </div>
       {programs.map(program => (
         <Column key={program.date}>
           <Date>{program.date}</Date>

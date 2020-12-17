@@ -11,3 +11,8 @@ export function formatHourMinute(dateTime: string): string {
   const d = dayjs(dateTime, "YYYYMMDDHHmmss");
   return d.format("HH:mm");
 }
+
+export function formatHourMinuteFromTimeStamp(timestamp: number): string {
+  const d = dayjs(timestamp);
+  return d.format("HH:mm");
+}
