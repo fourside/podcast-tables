@@ -4,7 +4,7 @@ dayjs.extend(customParseFormat);
 
 export function formatMonthDay(monthDay: string): string {
   const d = dayjs(monthDay, "YYYYMMDD");
-  return d.format("ddd, D MMMM");
+  return d.format("MM/DD ddd");
 }
 
 export function formatMonthDate(monthDay: string): string {

@@ -21,8 +21,7 @@ export const ProgramCard: React.FC<Props> = ({ program }) => {
 const Container = styled.div({
   borderRadius: "10px",
   border: "1px #eee solid",
-  margin: "4px",
-  padding: "8px",
+  padding: "12px",
   color: "#444",
 });
 

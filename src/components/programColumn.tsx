@@ -31,9 +31,12 @@ const Column = styled.div({
   width: "calc(100% / 4)",
   display: "flex",
   flexDirection: "column",
+  gap: "4px",
   padding: "8px",
   scrollSnapAlign: "center",
 });
 
 const Date = styled.h3({
+  margin: "8px",
+  paddingLeft: "2px",
 });
