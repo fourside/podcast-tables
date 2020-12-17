@@ -1,6 +1,5 @@
 import { getApiEndpoint } from "./env";
 import { Station, ProgramsPerDateResponse, ProgramPerDate } from "./station";
-import { formatMonthDay } from "./day";
 
 export async function getStations(): Promise<Station[]> {
   const endpoint = getApiEndpoint();
@@ -22,7 +21,6 @@ export async function getPrograms(stationId: string): Promise<ProgramPerDate[]> 
 
 function convert(programPerDateResponses: ProgramsPerDateResponse[]): ProgramPerDate[] {
   return programPerDateResponses.map((res) => {
-    const date = formatMonthDay(res.date.toString());
     const programs = res.programs.map((res) => {
       return {
         id: res.id,
@@ -37,7 +35,7 @@ function convert(programPerDateResponses: ProgramsPerDateResponse[]): ProgramPer
       };
     });
     return {
-      date,
+      date: res.date.toString(),
       programs,
     };
   });

@@ -16,7 +16,7 @@ const Programs: React.FC<Props> = ({ programs, stationId }) => {
   }
 
   return (
-    <ProgramColumns stationId={stationId} programs={programs} />
+    <ProgramColumns stationId={stationId} programPerDates={programs} />
   )
 };
 
