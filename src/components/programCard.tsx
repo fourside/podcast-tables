@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Mic } from "react-feather";
 
 import { formatHourMinute } from "../lib/day";
 import { Program } from "../lib/station";
@@ -12,7 +13,7 @@ export const ProgramCard: React.FC<Props> = ({ program }) => {
     <Container>
       <Time>{time}</Time>
       <Title>{program.title}</Title>
-      <Personality>{program.personality}</Personality>
+      <Personality personality={program.personality} />
       <Info>{program.info}</Info>
     </Container>
   )
@@ -34,10 +35,22 @@ const Title = styled.h4({
   color: "#333",
 });
 
-const Personality = styled.div({});
+const _Personality = styled.div({});
 
 const Info = styled.div({
   overflow: "hidden",
   whiteSpace: "nowrap",
   textOverflow: "ellipsis",
 });
+
+const Personality: React.FC<{ personality?: string }> = ({ personality }) => {
+  if (!personality) {
+    return null;
+  }
+  return (
+    <_Personality>
+      <Mic size={16} color={"#999"} />
+      {personality}
+    </_Personality>
+  );
+};
