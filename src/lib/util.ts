@@ -4,6 +4,14 @@ export function columnId(index: number): string {
   return `column_${index}`;
 }
 
+export function calcWeightFromDuration(durationSec: number): number {
+  const hour = durationSec / (60 * 60);
+  if (hour < 1) {
+    return 1;
+  }
+  return Math.floor(hour);
+}
+
 export function mergeSameProgramPerDates(programPerDates: ProgramPerDate[]): ProgramPerDate[] {
   const result = programPerDates.reduce<ProgramPerDate[]>((acc, programPerDate) => {
     const samePrograms: Program[] = [];

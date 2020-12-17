@@ -3,14 +3,16 @@ import { Mic } from "react-feather";
 
 import { formatHourMinute } from "../lib/day";
 import { Program } from "../lib/station";
+import { calcWeightFromDuration } from "../lib/util";
 
 type Props = {
   program: Program
 }
 export const ProgramCard: React.FC<Props> = ({ program }) => {
   const time = formatHourMinute(program.from);
+  const weight = calcWeightFromDuration(program.duration);
   return (
-    <Container>
+    <Container weight={weight}>
       <CardHeader>
         <Time>{time}</Time>
         <Title>{program.title}</Title>
@@ -26,6 +28,10 @@ const Container = styled.div({
   border: "1px #eee solid",
   padding: "12px",
   color: "#444",
+}, (props: { weight: number }) => {
+  return {
+    minHeight: `calc(1.5em * 4.5 * ${props.weight})`,
+  };
 });
 
 const CardHeader = styled.div({
