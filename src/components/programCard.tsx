@@ -11,8 +11,10 @@ export const ProgramCard: React.FC<Props> = ({ program }) => {
   const time = formatHourMinute(program.from);
   return (
     <Container>
-      <Time>{time}</Time>
-      <Title>{program.title}</Title>
+      <CardHeader>
+        <Time>{time}</Time>
+        <Title>{program.title}</Title>
+      </CardHeader>
       <Personality personality={program.personality} />
       <Info title={program.info}>{program.info}</Info>
     </Container>
@@ -26,8 +28,13 @@ const Container = styled.div({
   color: "#444",
 });
 
+const CardHeader = styled.div({
+  paddingBottom: "4px",
+});
+
 const Time = styled.span({
   color: "#ccc",
+  float: "right",
 });
 
 const Title = styled.h4({
