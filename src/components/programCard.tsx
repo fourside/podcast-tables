@@ -14,7 +14,7 @@ export const ProgramCard: React.FC<Props> = ({ program }) => {
       <Time>{time}</Time>
       <Title>{program.title}</Title>
       <Personality personality={program.personality} />
-      <Info>{program.info}</Info>
+      <Info title={program.info}>{program.info}</Info>
     </Container>
   )
 };
