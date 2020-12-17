@@ -1,5 +1,6 @@
 import { getApiEndpoint } from "./env";
 import { Station, ProgramsPerDateResponse, ProgramPerDate } from "./station";
+import { mergeSameProgramPerDates } from "./util";
 
 export async function getStations(): Promise<Station[]> {
   const endpoint = getApiEndpoint();
@@ -16,7 +17,8 @@ export async function getPrograms(stationId: string): Promise<ProgramPerDate[]> 
   console.log("res", response);
   const json = (await response.json()) as ProgramsPerDateResponse[];
   // console.log("res body", JSON.stringify(json, null , "  "))
-  return convert(json);
+  const convertedJson = convert(json);
+  return mergeSameProgramPerDates(convertedJson);
 }
 
 function convert(programPerDateResponses: ProgramsPerDateResponse[]): ProgramPerDate[] {
