@@ -1,3 +1,4 @@
+import { decode } from "he";
 import { ProgramPerDate, Program } from "./station";
 
 export function columnId(index: number): string {
@@ -10,6 +11,11 @@ export function calcWeightFromDuration(durationSec: number): number {
     return 1;
   }
   return Math.floor(hour);
+}
+
+export function stripHtmlElement(html: string): string {
+  const decoded = decode(html);
+  return decoded.replace(/(<([^>]+)>)/gi, "");
 }
 
 export function mergeSameProgramPerDates(programPerDates: ProgramPerDate[]): ProgramPerDate[] {

@@ -26,11 +26,12 @@ export const ProgramColumn: React.FC<Props> = ({ programPerDate }) => {
 const Column = styled.div({
   borderRadius: "10px",
   border: "1px #eee solid",
-  margin: "8px 16px",
+  margin: "8px",
   boxShadow: "4px 4px 12px 2px rgba(0,0,0,0.1)",
   width: "calc(100% / 4)",
   display: "flex",
   flexDirection: "column",
+  flexShrink: 0,
   gap: "4px",
   padding: "8px",
   scrollSnapAlign: "center",
@@ -39,4 +40,5 @@ const Column = styled.div({
 const Date = styled.h3({
   margin: "8px",
   paddingLeft: "2px",
+  whiteSpace: "nowrap",
 });

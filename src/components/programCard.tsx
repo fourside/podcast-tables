@@ -3,7 +3,7 @@ import { Mic } from "react-feather";
 
 import { formatHourMinute } from "../lib/day";
 import { Program } from "../lib/station";
-import { calcWeightFromDuration } from "../lib/util";
+import { calcWeightFromDuration, stripHtmlElement } from "../lib/util";
 
 type Props = {
   program: Program
@@ -11,14 +11,15 @@ type Props = {
 export const ProgramCard: React.FC<Props> = ({ program }) => {
   const time = formatHourMinute(program.from);
   const weight = calcWeightFromDuration(program.duration);
+  const info = stripHtmlElement(program.info);
   return (
-    <Container weight={weight}>
+    <Container weight={weight} title={info}>
       <CardHeader>
         <Time>{time}</Time>
         <Title>{program.title}</Title>
       </CardHeader>
       <Personality personality={program.personality} />
-      <Info title={program.info}>{program.info}</Info>
+      <Info>{info}</Info>
     </Container>
   )
 };
@@ -52,8 +53,10 @@ const _Personality = styled.div({});
 
 const Info = styled.div({
   overflow: "hidden",
-  whiteSpace: "nowrap",
-  textOverflow: "ellipsis",
+  display: "-webkit-box",
+  "-webkit-line-clamp": "3",
+  "-webkit-box-orient": "vertical",
+  wordBreak: "break-all",
 });
 
 const Personality: React.FC<{ personality?: string }> = ({ personality }) => {
