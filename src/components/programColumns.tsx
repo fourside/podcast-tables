@@ -19,30 +19,48 @@ export const ProgramColumns: React.FC<Props> = ({ stationId, programs }) => {
 
   return (
     <Container>
-      <div>
-        <Title>{stationId}</Title>
-        <Clock />
-        <Button label={"next"} onClick={handleClickNext} />
-        <Button label={"prev"} onClick={handleClickPrev} />
-      </div>
-      {programs.map(program => (
-        <Column key={program.date}>
-          <Date>{program.date}</Date>
-          {program.programs.map((p) => (
-            <ProgramCard program={p} key={p.id} />
-          ))}
-        </Column>
-      ))}
+      <SideContainer>
+        <SideMenu>
+          <Title>{stationId}</Title>
+          <Clock />
+          <Button label={"next"} onClick={handleClickNext} />
+          <Button label={"prev"} onClick={handleClickPrev} />
+        </SideMenu>
+      </SideContainer>
+      <ColumnContainer>
+        {programs.map(program => (
+          <Column key={program.date}>
+            <Date>{program.date}</Date>
+            {program.programs.map((p) => (
+              <ProgramCard program={p} key={p.id} />
+            ))}
+          </Column>
+        ))}
+      </ColumnContainer>
     </Container>
   )
 };
 
 const Container = styled.div({
   display: "flex",
+  margin: "0 auto",
+  width: "90%",
+});
+
+const ColumnContainer = styled.div({
+  display: "flex",
   flexWrap: "nowrap",
   overflowY: "hidden",
-  margin: "0 auto",
-  width: "85%",
+});
+
+const SideContainer = styled.div({
+  width: "5%",
+});
+
+const SideMenu = styled.div({
+  position: "sticky",
+  top: "20px",
+  textAlign: "center",
 });
 
 const Title = styled.h2({
