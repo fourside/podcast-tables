@@ -13,13 +13,15 @@ export const ProgramCard: React.FC<Props> = ({ program }) => {
   const weight = calcWeightFromDuration(program.duration);
   const info = stripHtmlElement(program.info);
   return (
-    <Container weight={weight} title={info}>
-      <CardHeader>
+    <Container weight={weight}>
+      <CardHeader title={program.title}>
         <Time>{time}</Time>
         <Title>{program.title}</Title>
       </CardHeader>
-      <Personality personality={program.personality} />
-      <Info>{info}</Info>
+      <CardBody>
+        <Personality personality={program.personality} />
+        <Info weight={weight} title={info}>{info}</Info>
+      </CardBody>
     </Container>
   )
 };
@@ -31,12 +33,14 @@ const Container = styled.div({
   color: "#444",
 }, (props: { weight: number }) => {
   return {
-    minHeight: `calc(1.5em * 4.5 * ${props.weight})`,
+    minHeight: `calc(1.5em * 4 * ${props.weight})`,
   };
 });
 
 const CardHeader = styled.div({
   paddingBottom: "4px",
+});
+const CardBody = styled.div({
 });
 
 const Time = styled.span({
@@ -47,16 +51,29 @@ const Time = styled.span({
 const Title = styled.h4({
   margin: "0px",
   color: "#333",
+  overflow: "hidden",
+  whiteSpace: "nowrap",
+  textOverflow: "ellipsis",
 });
 
-const _Personality = styled.div({});
+const _Personality = styled.div({
+  overflow: "hidden",
+  whiteSpace: "nowrap",
+  textOverflow: "ellipsis",
+});
 
 const Info = styled.div({
+  color: "#777",
+  fontSize: "small",
+  paddingTop: "4px",
   overflow: "hidden",
   display: "-webkit-box",
-  "-webkit-line-clamp": "3",
   "-webkit-box-orient": "vertical",
   wordBreak: "break-all",
+}, (props: { weight: number }) => {
+  return {
+    "-webkit-line-clamp": `${props.weight * 3}`,
+  };
 });
 
 const Personality: React.FC<{ personality?: string }> = ({ personality }) => {
@@ -64,7 +81,7 @@ const Personality: React.FC<{ personality?: string }> = ({ personality }) => {
     return null;
   }
   return (
-    <_Personality>
+    <_Personality title={personality}>
       <Mic size={16} color={"#999"} />
       {personality}
     </_Personality>
