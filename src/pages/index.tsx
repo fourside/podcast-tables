@@ -10,6 +10,7 @@ type Props = {
   stations: Station[];
 };
 const Index: React.FC<Props> = ({ stations }) => {
+
   return (
     <Layout>
       <Container>
