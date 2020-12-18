@@ -12,9 +12,10 @@ const AuthProvider: React.FC = ({ children }) => {
   const [currentUser, setCurrentUser] = useState<firebase.User | null | undefined>(undefined);
 
   useEffect(() => {
-    firebase.auth().onAuthStateChanged((user) => {
+    const unsubscribe = firebase.auth().onAuthStateChanged((user) => {
       setCurrentUser(user);
-    })
+    });
+    return unsubscribe;
   }, []);
 
   return (
