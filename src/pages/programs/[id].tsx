@@ -1,8 +1,10 @@
 import { GetStaticPropsContext, GetStaticPropsResult, GetStaticPathsResult } from "next";
-import { useRouter } from "next/router";
+import Router, { useRouter } from "next/router";
+import { useEffect } from "react";
 
 import Layout from "../../components/layout";
 import { ProgramColumns } from "../../components/programColumns";
+import { useAuth } from "../../context/Auth";
 import { getPrograms } from "../../lib/client";
 import { ProgramPerDate } from "../../lib/station";
 
@@ -14,6 +16,16 @@ const Programs: React.FC<Props> = ({ programs, stationId }) => {
   const router = useRouter();
   if (router.isFallback && !programs) {
     return <div>not found</div>
+  }
+  const { currentUser } = useAuth();
+  useEffect(() => {
+    if (currentUser === null) {
+      Router.push("/login");
+    }
+  }, [currentUser])
+
+  if (!currentUser) {
+    return null;
   }
 
   return (
