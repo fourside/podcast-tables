@@ -5,6 +5,7 @@ import Router from "next/router";
 
 import { Loading } from "../components/Loading";
 import "../styles/globals.css";
+import { AuthProvider } from "../context/Auth";
 
 const MyApp: NextComponentType<AppContext, AppInitialProps, AppProps> = ({ Component, pageProps }: AppProps) => {
   const [loading, setLoading] = useState(false)
@@ -17,7 +18,11 @@ const MyApp: NextComponentType<AppContext, AppInitialProps, AppProps> = ({ Compo
     return <Loading />;
   }
 
-  return <Component {...pageProps} />;
+  return (
+    <AuthProvider>
+      <Component {...pageProps} />
+    </AuthProvider>
+  );
 }
 
 export default MyApp

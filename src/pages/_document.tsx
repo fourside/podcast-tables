@@ -10,7 +10,7 @@ class Document extends NextDocument {
     return (
       <Html lang={"ja"}>
         <Head>
-          <link rel="preload" href="/fonts/NotoSansJP-Regular.otf" as="font" type="font/otf" />
+          <link rel="preload" href="/fonts/NotoSansJP-Regular.otf" as="font" type="font/otf" crossOrigin="true" />
         </Head>
         <body>
           <Main />
