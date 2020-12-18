@@ -2,11 +2,14 @@ import React from "react";
 import Link from "next/link";
 import Router from "next/router";
 import styled from "styled-components";
-import { signOut } from "../lib/firebase";
+import { User } from "react-feather";
 
+import { signOut } from "../lib/firebase";
 import { Button } from "./Button";
+import { useAuth } from "../context/Auth";
 
 export const Header: React.FC = () => {
+  const { currentUser } = useAuth();
 
   const handleSignOut = async () => {
     await signOut();
@@ -21,8 +24,11 @@ export const Header: React.FC = () => {
         </Link>
       </LeftContainer>
       <RightContainer>
-        <UserName>hogehoe</UserName>
-        <Button label={"SignOut"} onClick={handleSignOut} />
+        <UserName>
+          <User size={20} style={{ marginRight: "4px", verticalAlign: "middle" }} />
+          {currentUser?.email}
+          </UserName>
+        <Button onClick={handleSignOut} label={"Sign out"} />
       </RightContainer>
     </_Header>
   );
@@ -51,5 +57,6 @@ const Title = styled.h1({
 });
 
 const UserName = styled.div({
+  color: "#333",
 });
 
