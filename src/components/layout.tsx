@@ -7,7 +7,6 @@ const Layout: React.FC = ({ children }) => {
     <Container>
       <Head>
         <title>podcast tables</title>
-        <link rel="preload" as="font" type="font/otf" href="fonts/NotoSansJP-Regular.otf" />
       </Head>
       <Header>
         <h1>podcast tables</h1>
