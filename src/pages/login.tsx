@@ -16,6 +16,10 @@ const Login: React.FC = () => {
     await signIn();
   };
 
+  if (currentUser === undefined) {
+    return null;
+  }
+
   return (
      <div className="container">
       <button onClick={handleSignIn}>googleでSingInする</button>
