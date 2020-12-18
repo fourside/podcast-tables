@@ -82,7 +82,7 @@ const Personality: React.FC<{ personality?: string }> = ({ personality }) => {
   }
   return (
     <_Personality title={personality}>
-      <Mic size={16} color={"#999"} />
+      <Mic size={16} color={"#999"} style={{ marginRight: "4px", verticalAlign: "middle" }} />
       {personality}
     </_Personality>
   );
