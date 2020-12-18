@@ -1,6 +1,7 @@
 import { GetStaticPropsContext, GetStaticPropsResult, GetStaticPathsResult } from "next";
 import { useRouter } from "next/router";
 
+import Layout from "../../components/layout";
 import { ProgramColumns } from "../../components/programColumns";
 import { getPrograms } from "../../lib/client";
 import { ProgramPerDate } from "../../lib/station";
@@ -16,7 +17,9 @@ const Programs: React.FC<Props> = ({ programs, stationId }) => {
   }
 
   return (
-    <ProgramColumns stationId={stationId} programPerDates={programs} />
+    <Layout>
+      <ProgramColumns stationId={stationId} programPerDates={programs} />
+    </Layout>
   )
 };
 

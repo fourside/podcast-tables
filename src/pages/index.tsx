@@ -10,9 +10,11 @@ type Props = {
   stations: Station[];
 };
 const Index: React.FC<Props> = ({ stations }) => {
-
   return (
     <Layout>
+      <Header>
+        Stations
+      </Header>
       <Container>
         {stations.map((station) => (
           <StationCard key={station.id} station={station} />
@@ -22,7 +24,14 @@ const Index: React.FC<Props> = ({ stations }) => {
   );
 };
 
+const Header = styled.h2({
+  textAlign: "center",
+  letterSpacing: "6px",
+});
+
 const Container = styled.div({
+  maxWidth: "720px",
+  margin: "3rem auto 6rem",
   minHeight: "100vh",
   display: "flex",
   justifyContent: "center",

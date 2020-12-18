@@ -1,29 +1,18 @@
 import React from "react";
 import Head from "next/head";
-import styled from "styled-components";
+
+import { Header } from "./Header";
 
 const Layout: React.FC = ({ children }) => {
   return (
-    <Container>
+    <div>
       <Head>
         <title>podcast tables</title>
       </Head>
-      <Header>
-        <h1>podcast tables</h1>
-      </Header>
+      <Header />
       <main>{children}</main>
-    </Container>
+    </div>
   );
 }
 export default Layout;
 
-const Container = styled.div({
-  maxWidth: "720px",
-  margin: "3rem auto 6rem",
-});
-
-const Header = styled.header({
-  display: "flex",
-  flexDirection: "column",
-  alignItems: "center",
-});
