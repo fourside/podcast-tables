@@ -1,4 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
+import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
 
 import firebase from "../lib/firebase";
 
@@ -30,3 +31,19 @@ export { AuthContext, AuthProvider }
 export const useAuth: () => AuthContextProps = () => {
   return useContext(AuthContext);
 }
+
+const uiConfig = {
+  signInFlow: "redirect",
+  signInOptions: [
+    firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+  ],
+};
+
+export const SignInButton: React.FC = () => {
+  return (
+    <StyledFirebaseAuth
+      uiConfig={uiConfig}
+      firebaseAuth={firebase.auth()}
+    />
+  )
+};

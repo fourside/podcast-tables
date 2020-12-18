@@ -17,12 +17,6 @@ if (!firebase.apps.length) {
 
 export default firebase;
 
-const provider = new firebase.auth.GoogleAuthProvider();
-
-export async function signIn(): Promise<void> {
-  await firebase.auth().signInWithRedirect(provider);
-}
-
 export async function signOut(): Promise<void> {
   await firebase.auth().signOut();
 }

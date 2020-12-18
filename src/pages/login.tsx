@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import Router from "next/router";
-import { signIn } from "../lib/firebase";
-import { useAuth } from "../context/Auth";
+
+import { useAuth, SignInButton } from "../context/Auth";
 
 const Login: React.FC = () => {
   const { currentUser } = useAuth();
@@ -12,17 +12,13 @@ const Login: React.FC = () => {
     }
   }, [currentUser]);
 
-  const handleSignIn = async () => {
-    await signIn();
-  };
-
   if (currentUser === undefined) {
     return null;
   }
 
   return (
      <div className="container">
-      <button onClick={handleSignIn}>googleでSingInする</button>
+       <SignInButton />
      </div>
   )
 }
