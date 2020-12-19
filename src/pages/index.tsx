@@ -17,7 +17,7 @@ const Index: React.FC<Props> = ({ stations }) => {
   const { currentUser } = useAuth()
   useEffect(() => {
     if (currentUser === null) {
-      Router.push("/login");
+      Router.push("/signin");
     }
   }, [currentUser])
 

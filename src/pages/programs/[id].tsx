@@ -20,7 +20,7 @@ const Programs: React.FC<Props> = ({ programs, stationId }) => {
   const { currentUser } = useAuth();
   useEffect(() => {
     if (currentUser === null) {
-      Router.push("/login");
+      Router.push("/signin");
     }
   }, [currentUser])
 

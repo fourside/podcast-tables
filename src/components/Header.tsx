@@ -13,7 +13,7 @@ export const Header: React.FC = () => {
 
   const handleSignOut = async () => {
     await signOut();
-    Router.push("/login");
+    Router.push("/signin");
   };
 
   return (
