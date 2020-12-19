@@ -3,13 +3,9 @@ import styled from "styled-components";
 type Props = {
   label: string;
   onClick: () => void;
-}
+};
 export const Button: React.FC<Props> = ({ label, onClick }) => {
-  return (
-    <_Button onClick={onClick} >
-      {label}
-    </_Button>
-  );
+  return <_Button onClick={onClick}>{label}</_Button>;
 };
 
 const _Button = styled.button({

@@ -20,21 +20,23 @@ export const Header: React.FC = () => {
     <_Header>
       <LeftContainer>
         <Link href={"/"}>
-          <a><Title>podcast tables</Title></a>
+          <a>
+            <Title>podcast tables</Title>
+          </a>
         </Link>
       </LeftContainer>
-        {currentUser && (
-          <RightContainer>
-            <UserName>
-              <User size={20} style={{ marginRight: "4px", verticalAlign: "middle" }} />
-              {currentUser?.email}
-              </UserName>
-            <Button onClick={handleSignOut} label={"Sign out"} />
-          </RightContainer>
-        )}
+      {currentUser && (
+        <RightContainer>
+          <UserName>
+            <User size={20} style={{ marginRight: "4px", verticalAlign: "middle" }} />
+            {currentUser?.email}
+          </UserName>
+          <Button onClick={handleSignOut} label={"Sign out"} />
+        </RightContainer>
+      )}
     </_Header>
   );
-}
+};
 
 const _Header = styled.header({
   display: "flex",
@@ -61,4 +63,3 @@ const Title = styled.h1({
 const UserName = styled.div({
   color: "#333",
 });
-

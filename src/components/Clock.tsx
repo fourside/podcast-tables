@@ -4,19 +4,19 @@ import styled, { keyframes } from "styled-components";
 import { formatHourMinuteFromTimeStamp } from "../lib/day";
 
 export const Clock: React.FC = () => {
-  const [now, setNow] = useState(Date.now)
+  const [now, setNow] = useState(Date.now);
   useEffect(() => {
     const id = setInterval(() => {
       setNow(Date.now);
-    }, 1000 * 60)
+    }, 1000 * 60);
 
     return () => {
       clearInterval(id);
-    }
-  }, [])
+    };
+  }, []);
 
   const hourMinute = formatHourMinuteFromTimeStamp(now);
-  const [hour, min] = hourMinute.split(":")
+  const [hour, min] = hourMinute.split(":");
   return (
     <_Clock>
       {hour}
@@ -24,7 +24,7 @@ export const Clock: React.FC = () => {
       {min}
     </_Clock>
   );
-}
+};
 
 const _Clock = styled.div({
   color: "#ccc",

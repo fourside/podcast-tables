@@ -4,8 +4,8 @@ import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
 import firebase from "../lib/firebase";
 
 type AuthContextProps = {
-  currentUser: firebase.User | null | undefined
-}
+  currentUser: firebase.User | null | undefined;
+};
 
 const AuthContext = createContext<AuthContextProps>({ currentUser: undefined });
 
@@ -19,31 +19,20 @@ const AuthProvider: React.FC = ({ children }) => {
     return unsubscribe;
   }, []);
 
-  return (
-    <AuthContext.Provider value={{ currentUser: currentUser }}>
-      {children}
-    </AuthContext.Provider>
-  )
-}
+  return <AuthContext.Provider value={{ currentUser: currentUser }}>{children}</AuthContext.Provider>;
+};
 
-export { AuthContext, AuthProvider }
+export { AuthContext, AuthProvider };
 
 export const useAuth: () => AuthContextProps = () => {
   return useContext(AuthContext);
-}
+};
 
 const uiConfig = {
   signInFlow: "redirect",
-  signInOptions: [
-    firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-  ],
+  signInOptions: [firebase.auth.GoogleAuthProvider.PROVIDER_ID],
 };
 
 export const SignInButton: React.FC = () => {
-  return (
-    <StyledFirebaseAuth
-      uiConfig={uiConfig}
-      firebaseAuth={firebase.auth()}
-    />
-  )
+  return <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()} />;
 };

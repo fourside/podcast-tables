@@ -25,8 +25,8 @@ const Login: React.FC = () => {
         <SignInButton />
       </Container>
     </Layout>
-  )
-}
+  );
+};
 
 export default Login;
 

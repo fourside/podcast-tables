@@ -11,18 +11,18 @@ import { ProgramPerDate } from "../../lib/station";
 type Props = {
   programs: ProgramPerDate[];
   stationId: string;
-}
+};
 const Programs: React.FC<Props> = ({ programs, stationId }) => {
   const router = useRouter();
   if (router.isFallback && !programs) {
-    return <div>not found</div>
+    return <div>not found</div>;
   }
   const { currentUser } = useAuth();
   useEffect(() => {
     if (currentUser === null) {
       Router.push("/signin");
     }
-  }, [currentUser])
+  }, [currentUser]);
 
   if (!currentUser) {
     return null;
@@ -32,14 +32,16 @@ const Programs: React.FC<Props> = ({ programs, stationId }) => {
     <Layout>
       <ProgramColumns stationId={stationId} programPerDates={programs} />
     </Layout>
-  )
+  );
 };
 
 export default Programs;
 
 const REVALIDATE_SEC = 60 * 60;
 
-export async function getStaticProps(context: GetStaticPropsContext<{ id: string }>): Promise<GetStaticPropsResult<Props>> {
+export async function getStaticProps(
+  context: GetStaticPropsContext<{ id: string }>
+): Promise<GetStaticPropsResult<Props>> {
   const id = context.params?.id;
   const stationId = id ?? "";
   const programs = await getPrograms(stationId);

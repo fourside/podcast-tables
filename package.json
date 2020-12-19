@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "eslint . --ext .ts,.tsx",
     "emulator:start": "firebase emulators:start",
-    "prettier": "prettier --write \"**/*.ts\"",
+    "prettier": "prettier --write \"**/*.ts\", \"**/*.tsx\"",
     "precommit": "tsc --noEmit && lint-staged"
   },
   "dependencies": {
