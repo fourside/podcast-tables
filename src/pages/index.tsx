@@ -13,14 +13,14 @@ type Props = {
   stations: Station[];
 };
 const Index: React.FC<Props> = ({ stations }) => {
-  const { currentUser } = useAuth();
+  const { authState } = useAuth();
   useEffect(() => {
-    if (currentUser === null) {
+    if (authState === "fail") {
       Router.push("/signin");
     }
-  }, [currentUser]);
+  }, [authState]);
 
-  if (!currentUser) {
+  if (authState === "unknown") {
     return null;
   }
 

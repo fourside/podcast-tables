@@ -9,7 +9,7 @@ import { Button } from "./Button";
 import { useAuth } from "../context/Auth";
 
 export const Header: React.FC = () => {
-  const { currentUser } = useAuth();
+  const { user } = useAuth();
 
   const handleSignOut = async () => {
     await signOut();
@@ -25,11 +25,11 @@ export const Header: React.FC = () => {
           </a>
         </Link>
       </LeftContainer>
-      {currentUser && (
+      {user && (
         <RightContainer>
           <UserName>
             <User size={20} style={{ marginRight: "4px", verticalAlign: "middle" }} />
-            {currentUser?.email}
+            {user.email}
           </UserName>
           <Button onClick={handleSignOut} label={"Sign out"} />
         </RightContainer>

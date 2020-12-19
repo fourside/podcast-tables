@@ -17,14 +17,14 @@ const Programs: React.FC<Props> = ({ programs, stationId }) => {
   if (router.isFallback && !programs) {
     return <div>not found</div>;
   }
-  const { currentUser } = useAuth();
+  const { authState } = useAuth();
   useEffect(() => {
-    if (currentUser === null) {
+    if (authState === "fail") {
       Router.push("/signin");
     }
-  }, [currentUser]);
+  }, [authState]);
 
-  if (!currentUser) {
+  if (authState === "unknown") {
     return null;
   }
 

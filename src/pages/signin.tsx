@@ -6,15 +6,15 @@ import Layout from "../components/layout";
 import { useAuth, SignInButton } from "../context/Auth";
 
 const Login: React.FC = () => {
-  const { currentUser } = useAuth();
+  const { authState } = useAuth();
 
   useEffect(() => {
-    if (currentUser) {
+    if (authState === "success") {
       Router.push("/");
     }
-  }, [currentUser]);
+  }, [authState]);
 
-  if (currentUser === undefined) {
+  if (authState === "unknown") {
     return null;
   }
 

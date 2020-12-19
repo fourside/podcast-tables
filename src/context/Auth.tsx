@@ -3,23 +3,40 @@ import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
 
 import firebase from "../lib/firebase";
 
-type AuthContextProps = {
-  currentUser: firebase.User | null | undefined;
+type FirebaseUser = firebase.User | null | undefined;
+
+type AuthedProps = {
+  authState: "success";
+  user: FirebaseUser;
+};
+type UnauthedProps = {
+  authState: "fail";
+  user?: null;
+};
+type unknownAuthProps = {
+  authState: "unknown";
+  user?: null;
 };
 
-const AuthContext = createContext<AuthContextProps>({ currentUser: undefined });
+type AuthContextProps = AuthedProps | UnauthedProps | unknownAuthProps;
+
+const AuthContext = createContext<AuthContextProps>({ authState: "unknown" });
 
 const AuthProvider: React.FC = ({ children }) => {
-  const [currentUser, setCurrentUser] = useState<firebase.User | null | undefined>(undefined);
+  const [firebaseAuthState, setFirebaseAuthState] = useState<AuthContextProps>({ authState: "unknown" });
 
   useEffect(() => {
     const unsubscribe = firebase.auth().onAuthStateChanged((user) => {
-      setCurrentUser(user);
+      if (user === null) {
+        setFirebaseAuthState({ authState: "fail" })
+      } else {
+        setFirebaseAuthState({ authState: "success", user });
+      }
     });
     return unsubscribe;
   }, []);
 
-  return <AuthContext.Provider value={{ currentUser: currentUser }}>{children}</AuthContext.Provider>;
+  return <AuthContext.Provider value={firebaseAuthState}>{children}</AuthContext.Provider>;
 };
 
 export { AuthContext, AuthProvider };
