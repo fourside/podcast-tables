@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import { ProgramPerDate} from "../lib/station";
+import { ProgramPerDate } from "../lib/station";
 import { Menu } from "./menu";
 import { ProgramColumn } from "./programColumn";
 
@@ -9,8 +9,7 @@ type Props = {
   programPerDates: ProgramPerDate[];
 };
 export const ProgramColumns: React.FC<Props> = ({ stationId, programPerDates }) => {
-
-  const dateList = programPerDates.map(programPerDate => programPerDate.date);
+  const dateList = programPerDates.map((programPerDate) => programPerDate.date);
 
   return (
     <Container>
@@ -18,12 +17,12 @@ export const ProgramColumns: React.FC<Props> = ({ stationId, programPerDates }) 
         <Menu title={stationId} dateList={dateList} />
       </SideContainer>
       <ColumnContainer>
-        {programPerDates.map(programPerDate => (
+        {programPerDates.map((programPerDate) => (
           <ProgramColumn programPerDate={programPerDate} key={programPerDate.date} />
         ))}
       </ColumnContainer>
     </Container>
-  )
+  );
 };
 
 const Container = styled.div({

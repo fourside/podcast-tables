@@ -13,23 +13,20 @@ type Props = {
   stations: Station[];
 };
 const Index: React.FC<Props> = ({ stations }) => {
-
-  const { currentUser } = useAuth()
+  const { authState } = useAuth();
   useEffect(() => {
-    if (currentUser === null) {
-      Router.push("/login");
+    if (authState === "fail") {
+      Router.push("/signin");
     }
-  }, [currentUser])
+  }, [authState]);
 
-  if (!currentUser) {
+  if (authState === "unknown") {
     return null;
   }
 
   return (
     <Layout>
-      <Header>
-        Stations
-      </Header>
+      <Header>Stations</Header>
       <Container>
         {stations.map((station) => (
           <StationCard key={station.id} station={station} />
@@ -63,4 +60,4 @@ export async function getStaticProps(): Promise<GetStaticPropsResult<Props>> {
       stations,
     },
   };
-};
+}

@@ -1,0 +1,6 @@
+{
+  "projects": {
+    "local": "podcast-table",
+    "prod": "podcast-tables-prod"
+  }
+}

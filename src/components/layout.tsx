@@ -13,6 +13,5 @@ const Layout: React.FC = ({ children }) => {
       <main>{children}</main>
     </div>
   );
-}
+};
 export default Layout;
-

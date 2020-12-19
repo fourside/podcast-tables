@@ -8,22 +8,20 @@ import { columnId } from "../lib/util";
 type Props = {
   title: string;
   dateList: string[];
-}
+};
 export const Menu: React.FC<Props> = ({ title, dateList }) => {
   return (
     <StickyMenu>
       <Title>{title}</Title>
       <Clock />
-      {dateList.map(date => {
+      {dateList.map((date) => {
         const label = formatMonthDate(date);
         const index = diffDateFrom(date);
         const idAttribute = columnId(index);
-        return (
-          <LinkButton label={label} href={`#${idAttribute}`} key={date} />
-        )
+        return <LinkButton label={label} href={`#${idAttribute}`} key={date} />;
       })}
     </StickyMenu>
-  )
+  );
 };
 
 const StickyMenu = styled.div({

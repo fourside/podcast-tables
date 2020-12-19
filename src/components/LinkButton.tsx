@@ -2,14 +2,10 @@ import styled from "styled-components";
 
 type Props = {
   label: string;
-  href: string
-}
+  href: string;
+};
 export const LinkButton: React.FC<Props> = ({ label, href }) => {
-  return (
-    <_Button href={href}>
-      {label}
-    </_Button>
-  );
+  return <_Button href={href}>{label}</_Button>;
 };
 
 const _Button = styled.a({

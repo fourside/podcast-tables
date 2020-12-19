@@ -14,8 +14,8 @@ export const StationCard: React.FC<Props> = ({ station }) => {
         <CardLink>{station.name}</CardLink>
       </Link>
     </Card>
-  )
-}
+  );
+};
 
 const Card = styled.div({
   borderRadius: "10px",

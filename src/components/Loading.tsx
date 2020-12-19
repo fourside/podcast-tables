@@ -5,7 +5,7 @@ export const Loading: React.FC = () => {
     <Container>
       <Pulse />
     </Container>
-  )
+  );
 };
 
 const Container = styled.div({

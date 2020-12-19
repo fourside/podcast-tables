@@ -9,30 +9,34 @@ import { Button } from "./Button";
 import { useAuth } from "../context/Auth";
 
 export const Header: React.FC = () => {
-  const { currentUser } = useAuth();
+  const { user } = useAuth();
 
   const handleSignOut = async () => {
     await signOut();
-    Router.push("/login");
+    Router.push("/signin");
   };
 
   return (
     <_Header>
       <LeftContainer>
         <Link href={"/"}>
-          <a><Title>podcast tables</Title></a>
+          <a>
+            <Title>podcast tables</Title>
+          </a>
         </Link>
       </LeftContainer>
-      <RightContainer>
-        <UserName>
-          <User size={20} style={{ marginRight: "4px", verticalAlign: "middle" }} />
-          {currentUser?.email}
+      {user && (
+        <RightContainer>
+          <UserName>
+            <User size={20} style={{ marginRight: "4px", verticalAlign: "middle" }} />
+            {user.email}
           </UserName>
-        <Button onClick={handleSignOut} label={"Sign out"} />
-      </RightContainer>
+          <Button onClick={handleSignOut} label={"Sign out"} />
+        </RightContainer>
+      )}
     </_Header>
   );
-}
+};
 
 const _Header = styled.header({
   display: "flex",
@@ -59,4 +63,3 @@ const Title = styled.h1({
 const UserName = styled.div({
   color: "#333",
 });
-

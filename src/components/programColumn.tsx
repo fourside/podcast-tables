@@ -2,12 +2,12 @@ import styled from "styled-components";
 
 import { diffDateFrom, formatMonthDay } from "../lib/day";
 import { columnId } from "../lib/util";
-import { ProgramPerDate} from "../lib/station";
+import { ProgramPerDate } from "../lib/station";
 import { ProgramCard } from "./programCard";
 
 type Props = {
   programPerDate: ProgramPerDate;
-}
+};
 export const ProgramColumn: React.FC<Props> = ({ programPerDate }) => {
   const index = diffDateFrom(programPerDate.date);
   const idAttribute = columnId(index);
@@ -20,7 +20,7 @@ export const ProgramColumn: React.FC<Props> = ({ programPerDate }) => {
         <ProgramCard program={program} key={program.id} />
       ))}
     </Column>
-  )
+  );
 };
 
 const Column = styled.div({
