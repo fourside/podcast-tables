@@ -23,13 +23,15 @@ export const Header: React.FC = () => {
           <a><Title>podcast tables</Title></a>
         </Link>
       </LeftContainer>
-      <RightContainer>
-        <UserName>
-          <User size={20} style={{ marginRight: "4px", verticalAlign: "middle" }} />
-          {currentUser?.email}
-          </UserName>
-        <Button onClick={handleSignOut} label={"Sign out"} />
-      </RightContainer>
+        {currentUser && (
+          <RightContainer>
+            <UserName>
+              <User size={20} style={{ marginRight: "4px", verticalAlign: "middle" }} />
+              {currentUser?.email}
+              </UserName>
+            <Button onClick={handleSignOut} label={"Sign out"} />
+          </RightContainer>
+        )}
     </_Header>
   );
 }
