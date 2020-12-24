@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "eslint . --ext .ts,.tsx",
     "emulator:start": "firebase emulators:start",
-    "prettier": "prettier --write \"**/*.ts\", \"**/*.tsx\"",
+    "prettier": "prettier --write \"**/*.ts\" \"**/*.tsx\"",
     "precommit": "tsc --noEmit && lint-staged"
   },
   "dependencies": {
@@ -21,6 +21,7 @@
     "react-dom": "17.0.1",
     "react-feather": "^2.0.9",
     "react-firebaseui": "^4.1.0",
+    "react-hook-form": "^6.13.1",
     "styled-components": "^5.2.1"
   },
   "devDependencies": {

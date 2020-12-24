@@ -28,7 +28,7 @@ const AuthProvider: React.FC = ({ children }) => {
   useEffect(() => {
     const unsubscribe = firebase.auth().onAuthStateChanged((user) => {
       if (user === null) {
-        setFirebaseAuthState({ authState: "fail" })
+        setFirebaseAuthState({ authState: "fail" });
       } else {
         setFirebaseAuthState({ authState: "success", user });
       }

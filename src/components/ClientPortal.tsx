@@ -1,12 +1,12 @@
 import { useRef, useEffect, useState } from "react";
-import { createPortal } from "react-dom"
+import { createPortal } from "react-dom";
 
 type Props = {
   selector: string;
 };
 export const ClientPortal: React.FC<Props> = ({ children, selector }) => {
-  const ref = useRef<Element>()
-  const [mounted, setMounted] = useState(false)
+  const ref = useRef<Element>();
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     const elem = document.querySelector(selector);
@@ -15,7 +15,7 @@ export const ClientPortal: React.FC<Props> = ({ children, selector }) => {
     }
     ref.current = elem;
     setMounted(true);
-  }, [selector])
+  }, [selector]);
 
-  return mounted && ref.current ? createPortal(children, ref.current) : null
-} ;
+  return mounted && ref.current ? createPortal(children, ref.current) : null;
+};

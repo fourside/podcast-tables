@@ -5,6 +5,7 @@ import { Program, ProgramPerDate } from "../lib/station";
 import { Menu } from "./menu";
 import { ProgramColumn } from "./programColumn";
 import { Modal } from "./Modal";
+import { ProgramForm } from "./ProgramForm";
 
 type Props = {
   stationId: string;
@@ -12,15 +13,25 @@ type Props = {
 };
 export const ProgramColumns: React.FC<Props> = ({ stationId, programPerDates }) => {
   const dateList = programPerDates.map((programPerDate) => programPerDate.date);
-  const [open, setOpen] = useState(false)
-  const [program, setProgram] = useState<Program | undefined>(undefined)
+  const [open, setOpen] = useState(false);
+  const [program, setProgram] = useState<Program>({
+    id: "",
+    from: "",
+    to: "",
+    duration: 0,
+    title: "",
+    url: "",
+    info: "",
+    img: "",
+    personality: "",
+  });
 
-  const closeModal = () => setOpen(false)
+  const closeModal = () => setOpen(false);
 
   const handleClick = (program: Program) => {
     setOpen(true);
     setProgram(program);
-  }
+  };
 
   return (
     <Container>
@@ -32,7 +43,9 @@ export const ProgramColumns: React.FC<Props> = ({ stationId, programPerDates }) 
           <ProgramColumn programPerDate={programPerDate} key={programPerDate.date} onClick={handleClick} />
         ))}
       </ColumnContainer>
-      <Modal isOpen={open} onClose={closeModal}>{program?.title}</Modal>
+      <Modal isOpen={open} onClose={closeModal}>
+        <ProgramForm stationId={stationId} program={program} />
+      </Modal>
     </Container>
   );
 };

@@ -18,6 +18,10 @@ export function stripHtmlElement(html: string): string {
   return decoded.replace(/(<([^>]+)>)/gi, "");
 }
 
+export function decodeHtml(htmlString: string): string {
+  return decode(htmlString);
+}
+
 export function mergeSameProgramPerDates(programPerDates: ProgramPerDate[]): ProgramPerDate[] {
   const result = programPerDates.reduce<ProgramPerDate[]>((acc, programPerDate) => {
     const samePrograms: Program[] = [];

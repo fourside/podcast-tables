@@ -7,15 +7,15 @@ import { calcWeightFromDuration, stripHtmlElement } from "../lib/util";
 
 type Props = {
   program: Program;
-  onClick: (program: Program) => void
+  onClick: (program: Program) => void;
 };
 export const ProgramCard: React.FC<Props> = ({ program, onClick }) => {
   const time = formatHourMinute(program.from);
   const weight = calcWeightFromDuration(program.duration);
   const info = stripHtmlElement(program.info);
   const handleClick = () => {
-    onClick(program)
-  }
+    onClick(program);
+  };
   return (
     <Container weight={weight}>
       <CardHeader title={program.title}>

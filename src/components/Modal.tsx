@@ -8,7 +8,6 @@ type Props = {
 };
 
 export const Modal: React.FC<Props> = ({ isOpen, onClose, children }) => {
-
   if (!isOpen) {
     return null;
   }
@@ -22,14 +21,12 @@ export const Modal: React.FC<Props> = ({ isOpen, onClose, children }) => {
               <X />
             </CloseButton>
           </ModalHead>
-          <ModalBody>
-            {children}
-          </ModalBody>
+          <ModalBody>{children}</ModalBody>
         </ModalContainer>
       </ModalBackdrop>
     </ClientPortal>
-  )
-}
+  );
+};
 
 const ModalBackdrop = styled.div({
   position: "fixed",
@@ -48,6 +45,9 @@ const ModalContainer = styled.div({
   backgroundColor: "#fff",
   margin: "32px",
   padding: "32px",
+  width: "600px",
+  height: "600px",
+  overflow: "hidden",
 });
 
 const ModalHead = styled.div({});
