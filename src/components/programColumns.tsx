@@ -1,8 +1,10 @@
 import styled from "styled-components";
+import { useState } from "react";
 
-import { ProgramPerDate } from "../lib/station";
+import { Program, ProgramPerDate } from "../lib/station";
 import { Menu } from "./menu";
 import { ProgramColumn } from "./programColumn";
+import { Modal } from "./Modal";
 
 type Props = {
   stationId: string;
@@ -10,6 +12,15 @@ type Props = {
 };
 export const ProgramColumns: React.FC<Props> = ({ stationId, programPerDates }) => {
   const dateList = programPerDates.map((programPerDate) => programPerDate.date);
+  const [open, setOpen] = useState(false)
+  const [program, setProgram] = useState<Program | undefined>(undefined)
+
+  const closeModal = () => setOpen(false)
+
+  const handleClick = (program: Program) => {
+    setOpen(true);
+    setProgram(program);
+  }
 
   return (
     <Container>
@@ -18,9 +29,10 @@ export const ProgramColumns: React.FC<Props> = ({ stationId, programPerDates }) 
       </SideContainer>
       <ColumnContainer>
         {programPerDates.map((programPerDate) => (
-          <ProgramColumn programPerDate={programPerDate} key={programPerDate.date} />
+          <ProgramColumn programPerDate={programPerDate} key={programPerDate.date} onClick={handleClick} />
         ))}
       </ColumnContainer>
+      <Modal isOpen={open} onClose={closeModal}>{program?.title}</Modal>
     </Container>
   );
 };

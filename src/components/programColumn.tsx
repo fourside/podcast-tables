@@ -2,13 +2,14 @@ import styled from "styled-components";
 
 import { diffDateFrom, formatMonthDay } from "../lib/day";
 import { columnId } from "../lib/util";
-import { ProgramPerDate } from "../lib/station";
+import { Program, ProgramPerDate } from "../lib/station";
 import { ProgramCard } from "./programCard";
 
 type Props = {
   programPerDate: ProgramPerDate;
+  onClick: (program: Program) => void;
 };
-export const ProgramColumn: React.FC<Props> = ({ programPerDate }) => {
+export const ProgramColumn: React.FC<Props> = ({ programPerDate, onClick }) => {
   const index = diffDateFrom(programPerDate.date);
   const idAttribute = columnId(index);
   const date = formatMonthDay(programPerDate.date);
@@ -17,7 +18,7 @@ export const ProgramColumn: React.FC<Props> = ({ programPerDate }) => {
     <Column key={programPerDate.date} id={idAttribute}>
       <Date>{date}</Date>
       {programPerDate.programs.map((program) => (
-        <ProgramCard program={program} key={program.id} />
+        <ProgramCard program={program} key={program.id} onClick={onClick} />
       ))}
     </Column>
   );
