@@ -32,3 +32,8 @@ export function formatFull(fromDay: string): string {
   const d = dayjs(fromDay, "YYYYMMDDHHmm");
   return d.format("YYYY/MM/DD HH:mm");
 }
+
+export function unformatFull(fromDay: string): string {
+  const d = dayjs(fromDay, "YYYY/MM/DD HH:mm");
+  return d.format("YYYYMMDDHHmm");
+}

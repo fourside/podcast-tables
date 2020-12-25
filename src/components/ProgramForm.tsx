@@ -3,33 +3,34 @@ import { useForm } from "react-hook-form";
 
 import { Program } from "../lib/station";
 import { PostParams } from "../lib/client";
-import { decodeHtml } from "../lib/util";
-import { formatFull } from "../lib/day";
+import { decodeHtml, formatProgram, unformatPostParams } from "../lib/util";
 
 type Props = {
   stationId: string;
   program: Program;
 };
 export const ProgramForm: React.FC<Props> = ({ stationId, program }) => {
-  const { handleSubmit } = useForm<PostParams>();
+  const { handleSubmit, register } = useForm<PostParams>();
+  const formatted = formatProgram(program);
   const infoHtml = decodeHtml(program.info);
 
-  const onSubmit = (params: PostParams) => {
-    console.log(params);
+  const onSubmit = (formatted: PostParams) => {
+    const program = unformatPostParams(formatted);
+    console.log(program);
   };
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
       <FormControl>
-        <Input type="text" width={20} readOnly={true} name="stationId" value={stationId} />
-        <Input type="text" width={77} readOnly={true} name="title" value={program.title} />
+        <Input type="text" width={20} readOnly={true} name="stationId" value={stationId} ref={register} />
+        <Input type="text" width={77} readOnly={true} name="title" value={formatted.title} ref={register} />
       </FormControl>
       <FormControl>
-        <Input type="text" readOnly={true} name="personality" value={program.personality} />
+        <Input type="text" readOnly={true} name="personality" value={formatted.personality} ref={register} />
       </FormControl>
       <FormControl>
-        <Input type="text" width={40} readOnly={true} name="from" value={formatFull(program.from)} />
-        <Input type="text" width={15} readOnly={true} name="duration" value={program.duration / 60} />
+        <Input type="text" width={40} readOnly={true} name="fromTime" value={formatted.from} ref={register} />
+        <Input type="text" width={15} readOnly={true} name="duration" value={formatted.duration} ref={register} />
         <EmptySpan width={40} />
       </FormControl>
       <FormControl>
@@ -85,6 +86,7 @@ const Info = styled.div({
   padding: "12px",
   color: "#555",
   fontSize: "small",
+  width: "100%",
   "& > a": {
     color: "#09b",
   },
@@ -97,9 +99,10 @@ const SubmitButton = styled.input({
   padding: "8px 12px",
   cursor: "pointer",
   width: "100px",
+  outline: "none",
   "&:hover": {
     backgroundColor: "#888",
     color: "#eee",
-    border: "none",
+    border: "1px solid #888",
   },
 });

@@ -1,4 +1,6 @@
 import { decode } from "he";
+import { PostParams } from "./client";
+import { formatFull, unformatFull } from "./day";
 import { ProgramPerDate, Program } from "./station";
 
 export function columnId(index: number): string {
@@ -20,6 +22,22 @@ export function stripHtmlElement(html: string): string {
 
 export function decodeHtml(htmlString: string): string {
   return decode(htmlString);
+}
+
+export function formatProgram(program: Program): Program {
+  return {
+    ...program,
+    from: formatFull(program.from),
+    duration: program.duration / 60,
+  };
+}
+
+export function unformatPostParams(formatted: PostParams): PostParams {
+  return {
+    ...formatted,
+    fromTime: unformatFull(formatted.fromTime),
+    duration: String(parseInt(formatted.duration) * 60),
+  };
 }
 
 export function mergeSameProgramPerDates(programPerDates: ProgramPerDate[]): ProgramPerDate[] {
