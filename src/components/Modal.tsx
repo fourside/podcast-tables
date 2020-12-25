@@ -40,13 +40,9 @@ const ModalBackdrop = styled.div({
 });
 
 const ModalContainer = styled.div({
-  border: "1px solid #eee",
-  borderRadius: "10px",
-  backgroundColor: "#fff",
-  margin: "32px",
-  padding: "32px",
+  backgroundColor: "transparent",
+  paddingTop: "16px",
   width: "600px",
-  height: "600px",
   overflow: "hidden",
 });
 
@@ -54,11 +50,14 @@ const ModalHead = styled.div({});
 
 const CloseButton = styled.span({
   float: "right",
-  margin: "-24px",
-  color: "#aaa",
+  margin: "4px",
+  color: "#333",
   cursor: "pointer",
   width: "24px",
   height: "24px",
+  "&:hover": {
+    color: "#ddd",
+  },
 });
 
 const ModalBody = styled.div({});

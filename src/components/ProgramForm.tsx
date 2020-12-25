@@ -21,19 +21,16 @@ export const ProgramForm: React.FC<Props> = ({ stationId, program }) => {
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
       <FormControl>
-        <Input type="text" readOnly={true} name="stationId" value={stationId} />
-      </FormControl>
-      <FormControl>
-        <Input type="text" readOnly={true} name="title" value={program.title} />
+        <Input type="text" width={20} readOnly={true} name="stationId" value={stationId} />
+        <Input type="text" width={77} readOnly={true} name="title" value={program.title} />
       </FormControl>
       <FormControl>
         <Input type="text" readOnly={true} name="personality" value={program.personality} />
       </FormControl>
       <FormControl>
-        <Input type="text" readOnly={true} name="from" value={formatFull(program.from)} />
-      </FormControl>
-      <FormControl>
-        <Input type="text" readOnly={true} name="duration" value={program.duration / 60} />
+        <Input type="text" width={40} readOnly={true} name="from" value={formatFull(program.from)} />
+        <Input type="text" width={15} readOnly={true} name="duration" value={program.duration / 60} />
+        <EmptySpan width={40} />
       </FormControl>
       <FormControl>
         <Info dangerouslySetInnerHTML={{ __html: infoHtml }} />
@@ -49,20 +46,37 @@ const Form = styled.form({
   border: "1px solid #eee",
   borderRadius: "10px",
   padding: "8px 16px",
+  backgroundColor: "#fff",
 });
 
 const FormControl = styled.div({
   margin: "8px 0",
+  width: "100%",
+  display: "flex",
+  justifyContent: "space-between",
 });
 
-const Input = styled.input({
-  border: "1px solid #eee",
-  borderRadius: "10px",
-  outline: "none",
-  padding: "12px",
-  boxSizing: "border-box",
-  width: "100%",
-  display: "inline-block",
+const Input = styled.input(
+  {
+    border: "1px solid #eee",
+    borderRadius: "10px",
+    outline: "none",
+    padding: "12px",
+  },
+  (props: { width?: number }) => {
+    if (props.width) {
+      return {
+        width: `${props.width}%`,
+      };
+    }
+    return {
+      width: "100%",
+    };
+  }
+);
+
+const EmptySpan = styled.span({}, (props: { width: number }) => {
+  return { width: `${props.width}%` };
 });
 
 const Info = styled.div({
