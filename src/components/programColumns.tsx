@@ -6,6 +6,8 @@ import { Menu } from "./menu";
 import { ProgramColumn } from "./programColumn";
 import { Modal } from "./Modal";
 import { ProgramForm } from "./ProgramForm";
+import { PostParams, postProgram } from "../lib/client";
+import { unformatPostParams } from "../lib/util";
 
 type Props = {
   stationId: string;
@@ -33,6 +35,17 @@ export const ProgramColumns: React.FC<Props> = ({ stationId, programPerDates }) 
     setProgram(program);
   };
 
+  const handleSubmit = async (formatted: PostParams) => {
+    const program = unformatPostParams(formatted);
+    try {
+      const res = await postProgram(program);
+      console.log(res);
+    } catch (err) {
+      console.error(err);
+    }
+    setOpen(false);
+  };
+
   return (
     <Container>
       <SideContainer>
@@ -44,7 +57,7 @@ export const ProgramColumns: React.FC<Props> = ({ stationId, programPerDates }) 
         ))}
       </ColumnContainer>
       <Modal isOpen={open} onClose={closeModal}>
-        <ProgramForm stationId={stationId} program={program} />
+        <ProgramForm stationId={stationId} program={program} onSubmit={handleSubmit} />
       </Modal>
     </Container>
   );

@@ -36,7 +36,6 @@ export function unformatPostParams(formatted: PostParams): PostParams {
   return {
     ...formatted,
     fromTime: unformatFull(formatted.fromTime),
-    duration: String(parseInt(formatted.duration) * 60),
   };
 }
 

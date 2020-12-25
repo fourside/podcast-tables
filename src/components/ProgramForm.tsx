@@ -3,21 +3,17 @@ import { useForm } from "react-hook-form";
 
 import { Program } from "../lib/station";
 import { PostParams } from "../lib/client";
-import { decodeHtml, formatProgram, unformatPostParams } from "../lib/util";
+import { decodeHtml, formatProgram } from "../lib/util";
 
 type Props = {
   stationId: string;
   program: Program;
+  onSubmit: (postParams: PostParams) => Promise<void>;
 };
-export const ProgramForm: React.FC<Props> = ({ stationId, program }) => {
+export const ProgramForm: React.FC<Props> = ({ stationId, program, onSubmit }) => {
   const { handleSubmit, register } = useForm<PostParams>();
   const formatted = formatProgram(program);
   const infoHtml = decodeHtml(program.info);
-
-  const onSubmit = (formatted: PostParams) => {
-    const program = unformatPostParams(formatted);
-    console.log(program);
-  };
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>

@@ -64,6 +64,7 @@ const Title = styled.h4({
   overflow: "hidden",
   whiteSpace: "nowrap",
   textOverflow: "ellipsis",
+  cursor: "pointer",
 });
 
 const _Personality = styled.div({
