@@ -6,6 +6,7 @@ import Router from "next/router";
 import { Loading } from "../components/Loading";
 import "../styles/globals.css";
 import { AuthProvider } from "../context/Auth";
+import { ToastProvider } from "../context/Toast";
 
 const MyApp: NextComponentType<AppContext, AppInitialProps, AppProps> = ({ Component, pageProps }: AppProps) => {
   const [loading, setLoading] = useState(false);
@@ -20,7 +21,9 @@ const MyApp: NextComponentType<AppContext, AppInitialProps, AppProps> = ({ Compo
 
   return (
     <AuthProvider>
-      <Component {...pageProps} />
+      <ToastProvider>
+        <Component {...pageProps} />
+      </ToastProvider>
     </AuthProvider>
   );
 };

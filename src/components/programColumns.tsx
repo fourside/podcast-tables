@@ -8,6 +8,7 @@ import { Modal } from "./Modal";
 import { ProgramForm } from "./ProgramForm";
 import { PostParams, postProgram } from "../lib/client";
 import { unformatPostParams } from "../lib/util";
+import { useToast } from "../context/Toast";
 
 type Props = {
   stationId: string;
@@ -29,6 +30,7 @@ export const ProgramColumns: React.FC<Props> = ({ stationId, programPerDates }) 
   });
 
   const closeModal = () => setOpen(false);
+  const { setToast } = useToast();
 
   const handleClick = (program: Program) => {
     setOpen(true);
@@ -39,8 +41,10 @@ export const ProgramColumns: React.FC<Props> = ({ stationId, programPerDates }) 
     const program = unformatPostParams(formatted);
     try {
       const res = await postProgram(program);
+      setToast({ text: "OK" });
       console.log(res);
     } catch (err) {
+      setToast({ text: `ERROR: ${err.message}`, level: "error" });
       console.error(err);
     }
     setOpen(false);
