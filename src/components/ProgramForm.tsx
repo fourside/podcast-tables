@@ -58,7 +58,7 @@ export const ProgramForm: React.FC<Props> = ({ stationId, program, onSubmit }) =
       <ErrorMessage>{errors.fromTime?.message}</ErrorMessage>
       <ErrorMessage>{errors.duration?.message}</ErrorMessage>
       <FormControl>
-        <Info dangerouslySetInnerHTML={{ __html: infoHtml }} />
+        {infoHtml && <Info dangerouslySetInnerHTML={{ __html: infoHtml }} />}
       </FormControl>
       <FormControl>
         <SubmitButton label={"SEND"} isSubmitting={isSubmitting} isValid={!isSubmitting || isValid} />
