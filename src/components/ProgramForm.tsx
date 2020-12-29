@@ -6,6 +6,7 @@ import { Program } from "../lib/station";
 import { PostParams } from "../lib/client";
 import { decodeHtml, formatProgram } from "../lib/util";
 import { SubmitButton } from "./SubmitButton";
+import { EditableInput } from "./EditableInput";
 import { formSchema } from "../lib/formSchema";
 
 type Props = {
@@ -14,69 +15,44 @@ type Props = {
   onSubmit: (postParams: PostParams) => Promise<void>;
 };
 export const ProgramForm: React.FC<Props> = ({ stationId, program, onSubmit }) => {
+  const formatted = formatProgram(program);
+
   const { handleSubmit, register, formState, errors } = useForm<PostParams>({
     mode: "onBlur",
     resolver: yupResolver(formSchema),
+    defaultValues: {
+      stationId,
+      title: formatted.title,
+      personality: formatted.personality,
+      fromTime: formatted.fromTime,
+      duration: formatted.duration,
+    },
   });
   const { isSubmitting, isValid } = formState;
 
-  const formatted = formatProgram(program);
   const infoHtml = decodeHtml(program.info);
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
       <FormControl>
-        <Input
-          type="text"
+        <EditableInput
           width={20}
-          readOnly={true}
+          forceReadOnly={true}
           name="stationId"
-          value={stationId}
-          ref={register}
+          register={register}
           hasError={!!errors.stationId}
         />
-        <Input
-          type="text"
-          width={77}
-          readOnly={true}
-          name="title"
-          value={formatted.title}
-          ref={register}
-          hasError={!!errors.title}
-        />
+        <EditableInput width={77} name="title" register={register} hasError={!!errors.title} />
       </FormControl>
       <ErrorMessage>{errors.stationId?.message}</ErrorMessage>
       <ErrorMessage>{errors.title?.message}</ErrorMessage>
       <FormControl>
-        <Input
-          type="text"
-          readOnly={true}
-          name="personality"
-          value={formatted.personality}
-          ref={register}
-          hasError={!!errors.personality}
-        />
+        <EditableInput name="personality" register={register} hasError={!!errors.personality} />
       </FormControl>
       <ErrorMessage>{errors.personality?.message}</ErrorMessage>
       <FormControl>
-        <Input
-          type="text"
-          width={40}
-          readOnly={true}
-          name="fromTime"
-          value={formatted.from}
-          ref={register}
-          hasError={!!errors.fromTime}
-        />
-        <Input
-          type="text"
-          width={15}
-          readOnly={true}
-          name="duration"
-          value={formatted.duration}
-          ref={register}
-          hasError={!!errors.duration}
-        />
+        <EditableInput width={40} name="fromTime" register={register} hasError={!!errors.fromTime} />
+        <EditableInput width={15} name="duration" register={register} hasError={!!errors.duration} />
         <EmptySpan width={40} />
       </FormControl>
       <ErrorMessage>{errors.fromTime?.message}</ErrorMessage>
@@ -110,36 +86,6 @@ const ErrorMessage = styled.div({
   fontSize: "small",
   marginTop: "-8px",
   paddingLeft: "8px",
-});
-
-const _Input = styled.input(
-  {
-    border: "1px solid #eee",
-    borderRadius: "10px",
-    outline: "none",
-    padding: "12px",
-  },
-  (props: { width?: number }) => {
-    if (props.width) {
-      return {
-        width: `${props.width}%`,
-      };
-    }
-    return {
-      width: "100%",
-    };
-  }
-);
-
-const Input = styled(_Input)({}, (props: { hasError: boolean }) => {
-  if (props.hasError) {
-    return {
-      border: "1px solid #f22",
-    };
-  }
-  return {
-    border: "1px solid #eee",
-  };
 });
 
 const EmptySpan = styled.span({}, (props: { width: number }) => {

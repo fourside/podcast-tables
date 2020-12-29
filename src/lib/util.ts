@@ -24,11 +24,13 @@ export function decodeHtml(htmlString: string): string {
   return decode(htmlString);
 }
 
-export function formatProgram(program: Program): Program {
+export function formatProgram(program: Program): PostParams {
   return {
-    ...program,
-    from: formatFull(program.from),
-    duration: program.duration / 60,
+    stationId: "",
+    title: program.title,
+    personality: program.personality,
+    fromTime: formatFull(program.from),
+    duration: String(program.duration / 60),
   };
 }
 
