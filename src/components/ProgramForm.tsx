@@ -7,6 +7,7 @@ import { PostParams } from "../lib/client";
 import { decodeHtml, formatProgram } from "../lib/util";
 import { SubmitButton } from "./SubmitButton";
 import { EditableInput } from "./EditableInput";
+import { ErrorFormMessage } from "./ErrorFormMessage";
 import { formSchema } from "../lib/formSchema";
 
 type Props = {
@@ -44,22 +45,20 @@ export const ProgramForm: React.FC<Props> = ({ stationId, program, onSubmit }) =
         />
         <EditableInput width={77} name="title" register={register} hasError={!!errors.title} />
       </FormControl>
-      <ErrorMessage>{errors.stationId?.message}</ErrorMessage>
-      <ErrorMessage>{errors.title?.message}</ErrorMessage>
+      <ErrorFormMessage message={errors.stationId?.message} />
+      <ErrorFormMessage message={errors.title?.message} />
       <FormControl>
         <EditableInput name="personality" register={register} hasError={!!errors.personality} />
       </FormControl>
-      <ErrorMessage>{errors.personality?.message}</ErrorMessage>
+      <ErrorFormMessage message={errors.personality?.message} />
       <FormControl>
         <EditableInput width={40} name="fromTime" register={register} hasError={!!errors.fromTime} />
         <EditableInput width={15} name="duration" register={register} hasError={!!errors.duration} />
         <EmptySpan width={40} />
       </FormControl>
-      <ErrorMessage>{errors.fromTime?.message}</ErrorMessage>
-      <ErrorMessage>{errors.duration?.message}</ErrorMessage>
-      <FormControl>
-        {infoHtml && <Info dangerouslySetInnerHTML={{ __html: infoHtml }} />}
-      </FormControl>
+      <ErrorFormMessage message={errors.fromTime?.message} />
+      <ErrorFormMessage message={errors.duration?.message} />
+      <FormControl>{infoHtml && <Info dangerouslySetInnerHTML={{ __html: infoHtml }} />}</FormControl>
       <FormControl>
         <SubmitButton label={"SEND"} isSubmitting={isSubmitting} isValid={!isSubmitting || isValid} />
       </FormControl>
@@ -79,13 +78,6 @@ const FormControl = styled.div({
   width: "100%",
   display: "flex",
   justifyContent: "space-between",
-});
-
-const ErrorMessage = styled.div({
-  color: "#d00",
-  fontSize: "small",
-  marginTop: "-8px",
-  paddingLeft: "8px",
 });
 
 const EmptySpan = styled.span({}, (props: { width: number }) => {
