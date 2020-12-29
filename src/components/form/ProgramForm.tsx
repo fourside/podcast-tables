@@ -2,13 +2,13 @@ import styled from "styled-components";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 
-import { Program } from "../lib/station";
-import { PostParams } from "../lib/client";
-import { decodeHtml, formatProgram } from "../lib/util";
+import { Program } from "../../lib/station";
+import { PostParams } from "../../lib/client";
+import { decodeHtml, formatProgram } from "../../lib/util";
 import { SubmitButton } from "./SubmitButton";
 import { EditableInput } from "./EditableInput";
 import { ErrorFormMessage } from "./ErrorFormMessage";
-import { formSchema } from "../lib/formSchema";
+import { formSchema } from "../../lib/formSchema";
 
 type Props = {
   stationId: string;
