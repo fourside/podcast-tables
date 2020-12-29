@@ -19,7 +19,7 @@ export const Toast: React.FC<Props> = ({ toast }) => {
     <ClientPortal selector="#toast">
       <_Toast level={toast.level ?? "success"}>{toast.text}</_Toast>
     </ClientPortal>
-  )
+  );
 };
 
 const fadeout = keyframes({

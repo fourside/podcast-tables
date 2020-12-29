@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { Program } from "../lib/station";
 import { PostParams } from "../lib/client";
 import { decodeHtml, formatProgram } from "../lib/util";
+import { SubmitButton } from "./SubmitButton";
 
 type Props = {
   stationId: string;
@@ -11,7 +12,11 @@ type Props = {
   onSubmit: (postParams: PostParams) => Promise<void>;
 };
 export const ProgramForm: React.FC<Props> = ({ stationId, program, onSubmit }) => {
-  const { handleSubmit, register } = useForm<PostParams>();
+  const { handleSubmit, register, formState } = useForm<PostParams>({
+    mode: "onBlur",
+  });
+  const { isSubmitting, isValid } = formState;
+
   const formatted = formatProgram(program);
   const infoHtml = decodeHtml(program.info);
 
@@ -33,7 +38,7 @@ export const ProgramForm: React.FC<Props> = ({ stationId, program, onSubmit }) =
         <Info dangerouslySetInnerHTML={{ __html: infoHtml }} />
       </FormControl>
       <FormControl>
-        <SubmitButton type="submit" name="submit" value={"SEND"} />
+        <SubmitButton label={"SEND"} isSubmitting={isSubmitting} isValid={!isSubmitting || isValid} />
       </FormControl>
     </Form>
   );
@@ -85,20 +90,5 @@ const Info = styled.div({
   width: "100%",
   "& > a": {
     color: "#09b",
-  },
-});
-
-const SubmitButton = styled.input({
-  border: "1px solid #eee",
-  borderRadius: "10px",
-  color: "#333",
-  padding: "8px 12px",
-  cursor: "pointer",
-  width: "100px",
-  outline: "none",
-  "&:hover": {
-    backgroundColor: "#888",
-    color: "#eee",
-    border: "1px solid #888",
   },
 });
