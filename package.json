@@ -12,6 +12,7 @@
     "precommit": "tsc --noEmit && lint-staged"
   },
   "dependencies": {
+    "@hookform/resolvers": "^1.2.0",
     "dayjs": "^1.9.7",
     "firebase": "^8.2.1",
     "firebaseui-ja": "^1.0.0",
@@ -22,7 +23,8 @@
     "react-feather": "^2.0.9",
     "react-firebaseui": "^4.1.0",
     "react-hook-form": "^6.13.1",
-    "styled-components": "^5.2.1"
+    "styled-components": "^5.2.1",
+    "yup": "^0.32.8"
   },
   "devDependencies": {
     "@types/he": "^1.1.1",
