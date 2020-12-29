@@ -21,6 +21,24 @@ export async function getPrograms(stationId: string): Promise<ProgramPerDate[]> 
   return mergeSameProgramPerDates(convertedJson);
 }
 
+export type PostParams = {
+  stationId: string;
+  title: string;
+  fromTime: string;
+  duration: string;
+  personality: string;
+};
+
+export async function postProgram(postParams: PostParams): Promise<void> {
+  const endpoint = getApiEndpoint();
+  const url = `${endpoint}/program`;
+  const response = await fetch(url, {
+    method: "POST",
+    body: JSON.stringify(postParams),
+  });
+  console.log("post response", response);
+}
+
 function convert(programPerDateResponses: ProgramsPerDateResponse[]): ProgramPerDate[] {
   return programPerDateResponses.map((res) => {
     const programs = res.programs.map((res) => {

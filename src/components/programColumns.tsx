@@ -1,8 +1,14 @@
 import styled from "styled-components";
+import { useState } from "react";
 
-import { ProgramPerDate } from "../lib/station";
+import { Program, ProgramPerDate } from "../lib/station";
 import { Menu } from "./menu";
 import { ProgramColumn } from "./programColumn";
+import { Modal } from "./Modal";
+import { ProgramForm } from "./form/ProgramForm";
+import { PostParams, postProgram } from "../lib/client";
+import { unformatPostParams } from "../lib/util";
+import { useToast } from "../context/Toast";
 
 type Props = {
   stationId: string;
@@ -10,6 +16,39 @@ type Props = {
 };
 export const ProgramColumns: React.FC<Props> = ({ stationId, programPerDates }) => {
   const dateList = programPerDates.map((programPerDate) => programPerDate.date);
+  const [open, setOpen] = useState(false);
+  const [program, setProgram] = useState<Program>({
+    id: "",
+    from: "",
+    to: "",
+    duration: 0,
+    title: "",
+    url: "",
+    info: "",
+    img: "",
+    personality: "",
+  });
+
+  const closeModal = () => setOpen(false);
+  const { setToast } = useToast();
+
+  const handleClick = (program: Program) => {
+    setOpen(true);
+    setProgram(program);
+  };
+
+  const handleSubmit = async (formatted: PostParams) => {
+    const program = unformatPostParams(formatted);
+    try {
+      const res = await postProgram(program);
+      setToast({ text: "OK" });
+      console.log(res);
+    } catch (err) {
+      setToast({ text: `ERROR: ${err.message}`, level: "error" });
+      console.error(err);
+    }
+    setOpen(false);
+  };
 
   return (
     <Container>
@@ -18,9 +57,12 @@ export const ProgramColumns: React.FC<Props> = ({ stationId, programPerDates }) 
       </SideContainer>
       <ColumnContainer>
         {programPerDates.map((programPerDate) => (
-          <ProgramColumn programPerDate={programPerDate} key={programPerDate.date} />
+          <ProgramColumn programPerDate={programPerDate} key={programPerDate.date} onClick={handleClick} />
         ))}
       </ColumnContainer>
+      <Modal isOpen={open} onClose={closeModal}>
+        <ProgramForm stationId={stationId} program={program} onSubmit={handleSubmit} />
+      </Modal>
     </Container>
   );
 };

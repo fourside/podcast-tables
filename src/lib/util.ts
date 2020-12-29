@@ -1,4 +1,6 @@
 import { decode } from "he";
+import { PostParams } from "./client";
+import { formatFull, unformatFull } from "./day";
 import { ProgramPerDate, Program } from "./station";
 
 export function columnId(index: number): string {
@@ -16,6 +18,27 @@ export function calcWeightFromDuration(durationSec: number): number {
 export function stripHtmlElement(html: string): string {
   const decoded = decode(html);
   return decoded.replace(/(<([^>]+)>)/gi, "");
+}
+
+export function decodeHtml(htmlString: string): string {
+  return decode(htmlString);
+}
+
+export function formatProgram(program: Program): PostParams {
+  return {
+    stationId: "",
+    title: program.title,
+    personality: program.personality,
+    fromTime: formatFull(program.from),
+    duration: String(program.duration / 60),
+  };
+}
+
+export function unformatPostParams(formatted: PostParams): PostParams {
+  return {
+    ...formatted,
+    fromTime: unformatFull(formatted.fromTime),
+  };
 }
 
 export function mergeSameProgramPerDates(programPerDates: ProgramPerDate[]): ProgramPerDate[] {

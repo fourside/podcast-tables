@@ -27,3 +27,13 @@ export function diffDateFrom(monthDay: string): number {
   const d = dayjs(monthDay, "YYYYMMDD");
   return d.diff(now, "day");
 }
+
+export function formatFull(fromDay: string): string {
+  const d = dayjs(fromDay, "YYYYMMDDHHmmss");
+  return d.format("YYYY/MM/DD HH:mm");
+}
+
+export function unformatFull(fromDay: string): string {
+  const d = dayjs(fromDay, "YYYY/MM/DD HH:mm");
+  return d.format("YYYYMMDDHHmm");
+}

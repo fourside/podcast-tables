@@ -14,6 +14,8 @@ class Document extends NextDocument {
         <body>
           <Main />
           <NextScript />
+          <div id="toast" />
+          <div id="modal" />
         </body>
       </Html>
     );
