@@ -1,4 +1,4 @@
-import { getApiEndpoint } from "./env";
+import { getApiEndpoint, getWritableUserMailAddress } from "./env";
 import { Station, ProgramsPerDateResponse, ProgramPerDate } from "./station";
 import { mergeSameProgramPerDates } from "./util";
 
@@ -29,7 +29,11 @@ export type PostParams = {
   personality: string;
 };
 
-export async function postProgram(postParams: PostParams): Promise<void> {
+export async function postProgram(postParams: PostParams, userMailAddress: string | null | undefined): Promise<void> {
+  const writableUser = getWritableUserMailAddress();
+  if (writableUser !== userMailAddress) {
+    return;
+  }
   const endpoint = getApiEndpoint();
   const url = `${endpoint}/program`;
   const response = await fetch(url, {

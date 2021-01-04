@@ -5,3 +5,7 @@ export function getApiEndpoint(): string {
   }
   return apiEndpoint;
 }
+
+export function getWritableUserMailAddress(): string {
+  return process.env.WRITABLE_USER_MAIL_ADDRESS || "";
+}

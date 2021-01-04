@@ -9,12 +9,14 @@ import { ProgramForm } from "./form/ProgramForm";
 import { PostParams, postProgram } from "../lib/client";
 import { unformatPostParams } from "../lib/util";
 import { useToast } from "../context/Toast";
+import { useAuth } from "../context/Auth";
 
 type Props = {
   stationId: string;
   programPerDates: ProgramPerDate[];
 };
 export const ProgramColumns: React.FC<Props> = ({ stationId, programPerDates }) => {
+  const { user } = useAuth();
   const dateList = programPerDates.map((programPerDate) => programPerDate.date);
   const [open, setOpen] = useState(false);
   const [program, setProgram] = useState<Program>({
@@ -40,7 +42,7 @@ export const ProgramColumns: React.FC<Props> = ({ stationId, programPerDates }) 
   const handleSubmit = async (formatted: PostParams) => {
     const program = unformatPostParams(formatted);
     try {
-      const res = await postProgram(program);
+      const res = await postProgram(program, user?.email);
       setToast({ text: "OK" });
       console.log(res);
     } catch (err) {
