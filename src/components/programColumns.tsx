@@ -42,7 +42,7 @@ export const ProgramColumns: React.FC<Props> = ({ stationId, programPerDates }) 
   const handleSubmit = async (formatted: PostParams) => {
     const program = unformatPostParams(formatted);
     try {
-      const res = await postProgram(program, user?.email);
+      const res = await postProgram(program, user);
       setToast({ text: "OK" });
       console.log(res);
     } catch (err) {

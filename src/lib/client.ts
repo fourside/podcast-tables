@@ -1,6 +1,7 @@
 import { getApiEndpoint, getWritableUserMailAddress } from "./env";
 import { Station, ProgramsPerDateResponse, ProgramPerDate } from "./station";
 import { mergeSameProgramPerDates } from "./util";
+import { FirebaseUser } from "../context/Auth";
 
 export async function getStations(): Promise<Station[]> {
   const endpoint = getApiEndpoint();
@@ -29,15 +30,19 @@ export type PostParams = {
   personality: string;
 };
 
-export async function postProgram(postParams: PostParams, userMailAddress: string | null | undefined): Promise<void> {
+export async function postProgram(postParams: PostParams, user: FirebaseUser): Promise<void> {
   const writableUser = getWritableUserMailAddress();
-  if (writableUser !== userMailAddress) {
+  if (writableUser !== user?.email) {
     return;
   }
   const endpoint = getApiEndpoint();
   const url = `${endpoint}/program`;
+  const idToken = await user.getIdToken();
   const response = await fetch(url, {
     method: "POST",
+    headers: {
+      Authorization: `Bearer ${idToken}`,
+    },
     body: JSON.stringify(postParams),
   });
   console.log("post response", response);
