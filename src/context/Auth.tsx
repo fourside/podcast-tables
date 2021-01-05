@@ -3,7 +3,7 @@ import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
 
 import firebase from "../lib/firebase";
 
-type FirebaseUser = firebase.User | null | undefined;
+export type FirebaseUser = firebase.User | null | undefined;
 
 type AuthedProps = {
   authState: "success";
