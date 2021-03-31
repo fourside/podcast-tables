@@ -48,6 +48,14 @@ export async function postProgram(postParams: PostParams, user: FirebaseUser): P
   console.log("post response", response);
 }
 
+export async function getQueuedTask(): Promise<PostParams[]> {
+  const endpoint = getApiEndpoint();
+  const url = `${endpoint}/programs/queue`;
+  const response = await fetch(url);
+  const json = await response.json();
+  return json as PostParams[];
+}
+
 function convert(programPerDateResponses: ProgramsPerDateResponse[]): ProgramPerDate[] {
   return programPerDateResponses.map((res) => {
     const programs = res.programs.map((res) => {
