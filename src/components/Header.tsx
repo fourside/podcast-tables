@@ -7,6 +7,7 @@ import { User } from "react-feather";
 import { signOut } from "../lib/firebase";
 import { Button } from "./Button";
 import { useAuth } from "../context/Auth";
+import { DropdownMenu } from "./DropdownMenu";
 
 export const Header: React.FC = () => {
   const { user } = useAuth();
@@ -31,6 +32,7 @@ export const Header: React.FC = () => {
             <User size={20} style={{ marginRight: "4px", verticalAlign: "middle" }} />
             {user.email}
           </UserName>
+          <DropdownMenu />
           <Button onClick={handleSignOut} label={"Sign out"} />
         </RightContainer>
       )}

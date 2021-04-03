@@ -30,6 +30,8 @@ export type PostParams = {
   personality: string;
 };
 
+export type RecordingTask = PostParams;
+
 export async function postProgram(postParams: PostParams, user: FirebaseUser): Promise<void> {
   const writableUser = getWritableUserMailAddress();
   if (writableUser !== user?.email) {
@@ -48,12 +50,12 @@ export async function postProgram(postParams: PostParams, user: FirebaseUser): P
   console.log("post response", response);
 }
 
-export async function getQueuedTask(): Promise<PostParams[]> {
+export async function getRecordingTask(): Promise<RecordingTask[]> {
   const endpoint = getApiEndpoint();
   const url = `${endpoint}/programs/queue`;
   const response = await fetch(url);
   const json = await response.json();
-  return json as PostParams[];
+  return json as RecordingTask[];
 }
 
 function convert(programPerDateResponses: ProgramsPerDateResponse[]): ProgramPerDate[] {
