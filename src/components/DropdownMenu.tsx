@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
+import { ChevronDown } from "react-feather";
 import { getRecordingTask, RecordingTask } from "../lib/client";
 import { RecordingTaskItem } from "./RecordingTaskItem";
 
@@ -41,9 +42,12 @@ export const DropdownMenu: React.FC = () => {
 
   return (
     <MenuContainer ref={containerRef}>
-      <div>
-        <a onClick={toggleOpen}>recording</a>
-      </div>
+      <MenuLabel>
+        <a onClick={toggleOpen}>
+          <ChevronDown size={16} style={{ marginRight: "4px", verticalAlign: "middle" }} />
+          recording
+        </a>
+      </MenuLabel>
       {open && recordingTasks.length > 0 && (
         <MenuList>
           {recordingTasks.map((recording, i) => (
@@ -62,8 +66,21 @@ const MenuContainer = styled.div({
   position: "relative",
 });
 
-const MenuList = styled.ul({
-  listStyle: "none",
+const MenuLabel = styled.div({
+  color: "#333",
+  cursor: "pointer",
+});
+
+const dropDownOpen = keyframes({
+  from: {
+    opacity: 0,
+  },
+  to: {
+    opacity: 1,
+  },
+});
+
+const _MenuList = styled.div({
   position: "absolute",
   bottom: -8,
   right: 0,
@@ -71,11 +88,16 @@ const MenuList = styled.ul({
   padding: 0,
   transform: "translateY(100%)",
   background: "white",
-  border: "1px solid #444",
+  border: "1px solid #ccc",
   borderRadius: "8px",
+  boxShadow: "4px 4px 12px 2px rgba(0,0,0,0.1)",
 });
 
-const MenuItem = styled.li({
+const MenuList = styled(_MenuList)`
+  animation: ${dropDownOpen} 0.5s;
+`;
+
+const MenuItem = styled.div({
   display: "block",
   borderBottom: "1px solid #ccc",
   "&:last-child": {
