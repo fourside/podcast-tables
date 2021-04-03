@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { getRecordingTask, RecordingTask } from "../lib/client";
+import { RecordingTaskItem } from "./RecordingTaskItem";
 
 export const DropdownMenu: React.FC = () => {
   const [open, setOpen] = useState(false);
@@ -46,7 +47,9 @@ export const DropdownMenu: React.FC = () => {
       {open && recordingTasks.length > 0 && (
         <MenuList>
           {recordingTasks.map((recording, i) => (
-            <MenuItem key={i}>{recording.title}</MenuItem>
+            <MenuItem key={i}>
+              <RecordingTaskItem recordingTask={recording} />
+            </MenuItem>
           ))}
         </MenuList>
       )}
@@ -62,14 +65,20 @@ const MenuContainer = styled.div({
 const MenuList = styled.ul({
   listStyle: "none",
   position: "absolute",
-  bottom: 0,
+  bottom: -8,
   right: 0,
   margin: 0,
   padding: 0,
   transform: "translateY(100%)",
   background: "white",
+  border: "1px solid #444",
+  borderRadius: "8px",
 });
 
 const MenuItem = styled.li({
   display: "block",
+  borderBottom: "1px solid #ccc",
+  "&:last-child": {
+    borderBottom: "none",
+  },
 });
