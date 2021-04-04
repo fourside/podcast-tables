@@ -50,10 +50,18 @@ export async function postProgram(postParams: PostParams, user: FirebaseUser): P
   console.log("post response", response);
 }
 
-export async function getRecordingTask(): Promise<RecordingTask[]> {
+export async function getRecordingTask(user: FirebaseUser): Promise<RecordingTask[]> {
+  if (!user) {
+    throw new Error("not authenticated");
+  }
   const endpoint = getApiEndpoint();
   const url = `${endpoint}/programs/queue`;
-  const response = await fetch(url);
+  const idToken = await user.getIdToken();
+  const response = await fetch(url, {
+    headers: {
+      Authorization: `Bearer ${idToken}`,
+    },
+  });
   const json = await response.json();
   return json as RecordingTask[];
 }
