@@ -8,21 +8,29 @@ import { useAuth } from "../context/Auth";
 export const DropdownMenu: React.FC = () => {
   const [open, setOpen] = useState(false);
   const [recordingTasks, setRecordingTasks] = useState<RecordingTask[]>([]);
+  const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string>();
   const containerRef = useRef<HTMLDivElement>(null);
   const { user } = useAuth();
 
   useEffect(() => {
     (async () => {
+      if (!open) {
+        return;
+      }
       try {
+        setLoading(true);
+        setRecordingTasks([]);
         const result = await getRecordingTask(user);
         setRecordingTasks(result);
       } catch (error) {
         console.error(error);
-        setErrorMessage(error);
+        setErrorMessage(error.message);
+      } finally {
+        setLoading(false);
       }
     })();
-  }, []);
+  }, [open]);
 
   const handleClickOutside = useCallback((event: MouseEvent) => {
     if (event.target instanceof Node && containerRef.current?.contains(event.target)) {
@@ -50,16 +58,18 @@ export const DropdownMenu: React.FC = () => {
           recording
         </a>
       </MenuLabel>
-      {open && recordingTasks.length > 0 && (
+      {open && (
         <MenuList>
+          {loading && <>loading...</>}
+          {recordingTasks.length === 0 && !errorMessage && <>no recording task</>}
           {recordingTasks.map((recording, i) => (
             <MenuItem key={i}>
               <RecordingTaskItem recordingTask={recording} />
             </MenuItem>
           ))}
+          {errorMessage && <div>{errorMessage}</div>}
         </MenuList>
       )}
-      {open && errorMessage && <div>{errorMessage}</div>}
     </MenuContainer>
   );
 };
@@ -93,6 +103,7 @@ const _MenuList = styled.div({
   border: "1px solid #ccc",
   borderRadius: "8px",
   boxShadow: "4px 4px 12px 2px rgba(0,0,0,0.1)",
+  width: 250,
 });
 
 const MenuList = styled(_MenuList)`
