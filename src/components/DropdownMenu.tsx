@@ -4,6 +4,7 @@ import { ChevronDown, AlertCircle } from "react-feather";
 import { getRecordingTask, RecordingTask } from "../lib/client";
 import { RecordingTaskItem } from "./RecordingTaskItem";
 import { useAuth } from "../context/Auth";
+import { Loading } from "./Loading";
 
 export const DropdownMenu: React.FC = () => {
   const [open, setOpen] = useState(false);
@@ -60,7 +61,7 @@ export const DropdownMenu: React.FC = () => {
       </MenuLabel>
       {open && (
         <MenuList>
-          {loading && <>loading...</>}
+          {loading && <Loading />}
           {recordingTasks.length === 0 && !errorMessage && <>no recording task</>}
           {recordingTasks.map((recording, i) => (
             <MenuItem key={i}>
