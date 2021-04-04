@@ -62,7 +62,7 @@ export const DropdownMenu: React.FC = () => {
       {open && (
         <MenuList>
           {loading && <Loading />}
-          {recordingTasks.length === 0 && !errorMessage && (
+          {!loading && recordingTasks.length === 0 && !errorMessage && (
             <NoTasks>
               <Icon>
                 <AlertTriangle size={16} style={{ marginRight: "4px", verticalAlign: "middle" }} />
@@ -70,12 +70,13 @@ export const DropdownMenu: React.FC = () => {
               No recording task
             </NoTasks>
           )}
-          {recordingTasks.map((recording, i) => (
-            <MenuItem key={i}>
-              <RecordingTaskItem recordingTask={recording} />
-            </MenuItem>
-          ))}
-          {errorMessage && (
+          {!loading &&
+            recordingTasks.map((recording, i) => (
+              <MenuItem key={i}>
+                <RecordingTaskItem recordingTask={recording} />
+              </MenuItem>
+            ))}
+          {!loading && errorMessage && (
             <ErrorMessage>
               <Icon>
                 <AlertCircle size={16} style={{ marginRight: "4px", verticalAlign: "middle" }} />
