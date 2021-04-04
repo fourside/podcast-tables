@@ -3,17 +3,19 @@ import styled, { keyframes } from "styled-components";
 import { ChevronDown } from "react-feather";
 import { getRecordingTask, RecordingTask } from "../lib/client";
 import { RecordingTaskItem } from "./RecordingTaskItem";
+import { useAuth } from "../context/Auth";
 
 export const DropdownMenu: React.FC = () => {
   const [open, setOpen] = useState(false);
   const [recordingTasks, setRecordingTasks] = useState<RecordingTask[]>([]);
   const [errorMessage, setErrorMessage] = useState<string>();
   const containerRef = useRef<HTMLDivElement>(null);
+  const { user } = useAuth();
 
   useEffect(() => {
     (async () => {
       try {
-        const result = await getRecordingTask();
+        const result = await getRecordingTask(user);
         setRecordingTasks(result);
       } catch (error) {
         console.error(error);
