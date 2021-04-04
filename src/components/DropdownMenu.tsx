@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import styled, { keyframes } from "styled-components";
-import { ChevronDown, AlertCircle } from "react-feather";
+import { ChevronDown, AlertCircle, AlertTriangle } from "react-feather";
 import { getRecordingTask, RecordingTask } from "../lib/client";
 import { RecordingTaskItem } from "./RecordingTaskItem";
 import { useAuth } from "../context/Auth";
@@ -62,7 +62,14 @@ export const DropdownMenu: React.FC = () => {
       {open && (
         <MenuList>
           {loading && <Loading />}
-          {recordingTasks.length === 0 && !errorMessage && <>no recording task</>}
+          {recordingTasks.length === 0 && !errorMessage && (
+            <NoTasks>
+              <Icon>
+                <AlertTriangle size={16} style={{ marginRight: "4px", verticalAlign: "middle" }} />
+              </Icon>
+              No recording task
+            </NoTasks>
+          )}
           {recordingTasks.map((recording, i) => (
             <MenuItem key={i}>
               <RecordingTaskItem recordingTask={recording} />
@@ -134,3 +141,10 @@ const ErrorMessage = styled.div({
 });
 
 const Icon = styled.span({});
+
+const NoTasks = styled.div({
+  display: "flex",
+  gap: "8px",
+  color: "#666",
+  padding: "16px",
+});
