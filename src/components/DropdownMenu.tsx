@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import styled, { keyframes } from "styled-components";
-import { ChevronDown } from "react-feather";
+import { ChevronDown, AlertCircle } from "react-feather";
 import { getRecordingTask, RecordingTask } from "../lib/client";
 import { RecordingTaskItem } from "./RecordingTaskItem";
 import { useAuth } from "../context/Auth";
@@ -67,7 +67,14 @@ export const DropdownMenu: React.FC = () => {
               <RecordingTaskItem recordingTask={recording} />
             </MenuItem>
           ))}
-          {errorMessage && <div>{errorMessage}</div>}
+          {errorMessage && (
+            <ErrorMessage>
+              <Icon>
+                <AlertCircle size={16} style={{ marginRight: "4px", verticalAlign: "middle" }} />
+              </Icon>
+              {errorMessage}
+            </ErrorMessage>
+          )}
         </MenuList>
       )}
     </MenuContainer>
@@ -117,3 +124,12 @@ const MenuItem = styled.div({
     borderBottom: "none",
   },
 });
+
+const ErrorMessage = styled.div({
+  display: "flex",
+  gap: "8px",
+  color: "#f03",
+  padding: "16px",
+});
+
+const Icon = styled.span({});
