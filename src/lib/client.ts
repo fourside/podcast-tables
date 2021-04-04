@@ -62,6 +62,9 @@ export async function getRecordingTask(user: FirebaseUser): Promise<RecordingTas
       Authorization: `Bearer ${idToken}`,
     },
   });
+  if (response.status === 204) {
+    return [];
+  }
   const json = await response.json();
   return json as RecordingTask[];
 }
