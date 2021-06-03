@@ -49,4 +49,4 @@ jobs:
           curl -X POST \
                -H 'Content-type: application/json' \
                --data "$data" \
-               ${{ github.SLACK_INCOMING_WEBHOOK }}
+               ${{ secrets.SLACK_INCOMING_WEBHOOK }}
