@@ -29,6 +29,8 @@ jobs:
 
       - name: Notify slack if `npm audit` return 1
         if: failure()
+        env:
+          SLACK_INCOMING_WEBHOOK: ${{ secrets.SLACK_INCOMING_WEBHOOK }}
         run: |
           audit=${{ steps.get_branch_name.outputs.audit }}
           data=$(cat <<EOF
@@ -49,4 +51,4 @@ jobs:
           curl -X POST \
                -H 'Content-type: application/json' \
                --data "$data" \
-               ${{ secrets.SLACK_INCOMING_WEBHOOK }}
+               ${SLACK_INCOMING_WEBHOOK}
