@@ -1,0 +1,52 @@
+name: audit
+
+on:
+  schedule:
+    - cron: '*/10 * * * 1-5'
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup Node
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14.x'
+
+      - name: Setup dependencies
+        run: npm ci
+
+      - name: Check npm audit
+        run: |
+          npm audit | sed -r "s:\x1B\[[0-9;]*[mK]::g" > audit.txt
+          pipestatus=${PIPESTATUS[0]}
+          echo "##[set-output name=audit;]$(cat audit.txt)"
+          if [ $pipestatus -ne 0 ]; then exit 1; fi
+
+      - name: Notify slack if `npm audit` return 1
+        if: failure()
+        run: |
+          audit=${{ steps.get_branch_name.outputs.audit }}
+          data=$(cat <<EOF
+          {
+            "blocks": [
+              {
+                "type": "section",
+                "text": {
+                  "type": "mrkdwn",
+                  text: "```$audit```"
+                }
+              }
+            ]
+          }
+          EOF
+          )
+          echo $data
+          curl -X POST \
+               -H 'Content-type: application/json' \
+               --data "$data" \
+               ${{ github.SLACK_INCOMING_WEBHOOK }}
