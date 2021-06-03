@@ -21,6 +21,7 @@ jobs:
         run: npm ci
 
       - name: Check npm audit
+        id: check_npm_audit
         run: |
           npm audit | sed -r "s:\x1B\[[0-9;]*[mK]::g" > audit.txt
           pipestatus=${PIPESTATUS[0]}
@@ -32,7 +33,7 @@ jobs:
         env:
           SLACK_INCOMING_WEBHOOK: ${{ secrets.SLACK_INCOMING_WEBHOOK }}
         run: |
-          audit=${{ steps.get_branch_name.outputs.audit }}
+          audit=${{ steps.check_npm_audit.outputs.audit }}
           data=$(cat <<EOF
           {
             "blocks": [
