@@ -23,7 +23,7 @@ jobs:
       - name: Check npm audit
         id: check_npm_audit
         run: |
-          npm audit | sed -r "s:\x1B\[[0-9;]*[mK]::g" > audit.txt
+          npm audit --parseable |awk -F $'\t' '{printf "[%s] %s - `%s` %s %s\n", $3,$2, $4,$5,$6}' | uniq > audit.txt
           pipestatus=${PIPESTATUS[0]}
           echo "##[set-output name=audit;]$(cat audit.txt)"
           if [ $pipestatus -ne 0 ]; then exit 1; fi
@@ -34,6 +34,7 @@ jobs:
           SLACK_INCOMING_WEBHOOK: ${{ secrets.SLACK_INCOMING_WEBHOOK }}
         run: |
           audit=${{ steps.check_npm_audit.outputs.audit }}
+          chomped_audit=${audit:0:2800}
           data=$(cat <<EOF
           {
             "blocks": [
@@ -41,7 +42,7 @@ jobs:
                 "type": "section",
                 "text": {
                   "type": "mrkdwn",
-                  text: "```$audit```"
+                  "text": "*podcast-tables npm audit security report*\n\`\`\`$chomped_audit\`\`\`"
                 }
               }
             ]
