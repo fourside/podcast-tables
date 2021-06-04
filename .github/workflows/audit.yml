@@ -28,7 +28,7 @@ jobs:
           echo "##[set-output name=audit;]$(cat audit.txt)"
           if [ $pipestatus -ne 0 ]; then exit 1; fi
 
-      - name: Notify slack if `npm audit` return 1
+      - name: Notify slack if npm audit return 1
         if: failure()
         env:
           SLACK_INCOMING_WEBHOOK: ${{ secrets.SLACK_INCOMING_WEBHOOK }}
@@ -42,7 +42,7 @@ jobs:
                 "type": "section",
                 "text": {
                   "type": "mrkdwn",
-                  "text": "*podcast-tables npm audit security report*\n\\`\\`\\`$chomped_audit\\`\\`\\`"
+                  "text": "*podcast-tables npm audit security report*\n$chomped_audit"
                 }
               }
             ]
