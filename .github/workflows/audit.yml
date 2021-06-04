@@ -43,7 +43,7 @@ jobs:
                 "type": "section",
                 "text": {
                   "type": "mrkdwn",
-                  "text": "*podcast-tables npm audit security report*\n```$chomped_audit```"
+                  "text": "*podcast-tables npm audit security report*\n\`\`\`$chomped_audit\`\`\`"
                 }
               }
             ]
