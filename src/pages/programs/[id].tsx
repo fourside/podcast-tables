@@ -13,16 +13,18 @@ type Props = {
   stationId: string;
 };
 const Programs: React.FC<Props> = ({ programs, stationId }) => {
-  const router = useRouter();
-  if (router.isFallback && !programs) {
-    return <div>not found</div>;
-  }
   const { authState } = useAuth();
+
   useEffect(() => {
     if (authState === "fail") {
       Router.push("/signin");
     }
   }, [authState]);
+
+  const router = useRouter();
+  if (router.isFallback && !programs) {
+    return <div>not found</div>;
+  }
 
   if (authState === "unknown") {
     return null;

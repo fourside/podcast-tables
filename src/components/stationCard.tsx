@@ -10,7 +10,7 @@ type Props = {
 export const StationCard: React.FC<Props> = ({ station }) => {
   return (
     <Card>
-      <Link href={`/programs/${station.id}`}>
+      <Link href={`/programs/${station.id}`} passHref>
         <CardLink>{station.name}</CardLink>
       </Link>
     </Card>

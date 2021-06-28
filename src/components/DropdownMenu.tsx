@@ -31,7 +31,7 @@ export const DropdownMenu: React.FC = () => {
         setLoading(false);
       }
     })();
-  }, [open]);
+  }, [open, user]);
 
   const handleClickOutside = useCallback((event: MouseEvent) => {
     if (event.target instanceof Node && containerRef.current?.contains(event.target)) {
@@ -45,7 +45,7 @@ export const DropdownMenu: React.FC = () => {
     return () => {
       document.removeEventListener("click", handleClickOutside);
     };
-  }, []);
+  }, [handleClickOutside]);
 
   const toggleOpen = () => {
     setOpen(!open);
