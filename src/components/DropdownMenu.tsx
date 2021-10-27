@@ -25,8 +25,12 @@ export const DropdownMenu: React.FC = () => {
         const result = await getRecordingTask(user);
         setRecordingTasks(result);
       } catch (error) {
-        console.error(error);
-        setErrorMessage(error.message);
+        if (error instanceof Error) {
+          console.error(error);
+          setErrorMessage(error.message);
+        } else {
+          throw error
+        }
       } finally {
         setLoading(false);
       }

@@ -46,8 +46,12 @@ export const ProgramColumns: React.FC<Props> = ({ stationId, programPerDates }) 
       setToast({ text: "OK" });
       console.log(res);
     } catch (err) {
-      setToast({ text: `ERROR: ${err.message}`, level: "error" });
-      console.error(err);
+      if (err instanceof Error) {
+        setToast({ text: `ERROR: ${err.message}`, level: "error" });
+        console.error(err);
+      } else {
+        throw err;
+      }
     }
     setOpen(false);
   };
