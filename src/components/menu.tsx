@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
 import { diffDateFrom, formatMonthDate } from "../lib/day";
-import { LinkButton } from "./LinkButton";
-import { Clock } from "./Clock";
+import { LinkButton } from "./link-button";
+import { Clock } from "./clock";
 import { columnId } from "../lib/util";
 
 type Props = {

@@ -1,4 +1,4 @@
-import { ClientPortal } from "./ClientPortal";
+import { ClientPortal } from "./client-portal";
 import styled, { keyframes } from "styled-components";
 
 export const FADEOUT_TIME_MS = 4000;

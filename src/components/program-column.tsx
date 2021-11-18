@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { diffDateFrom, formatMonthDay } from "../lib/day";
 import { columnId } from "../lib/util";
 import { Program, ProgramPerDate } from "../lib/station";
-import { ProgramCard } from "./programCard";
+import { ProgramCard } from "./program-card";
 
 type Props = {
   programPerDate: ProgramPerDate;

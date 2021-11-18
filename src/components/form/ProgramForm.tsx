@@ -5,9 +5,9 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { Program } from "../../lib/station";
 import { PostParams } from "../../lib/client";
 import { decodeHtml, formatProgram } from "../../lib/util";
-import { SubmitButton } from "./SubmitButton";
-import { EditableInput } from "./EditableInput";
-import { ErrorFormMessage } from "./ErrorFormMessage";
+import { SubmitButton } from "./submit-button";
+import { EditableInput } from "./editable-input";
+import { ErrorFormMessage } from "./error-form-message";
 import { formSchema } from "../../lib/formSchema";
 
 type Props = {

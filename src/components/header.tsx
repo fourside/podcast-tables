@@ -5,9 +5,9 @@ import styled from "styled-components";
 import { User } from "react-feather";
 
 import { signOut } from "../lib/firebase";
-import { Button } from "./Button";
+import { Button } from "./button";
 import { useAuth } from "../context/Auth";
-import { DropdownMenu } from "./DropdownMenu";
+import { DropdownMenu } from "./dropdown-menu";
 
 export const Header: React.FC = () => {
   const { user } = useAuth();

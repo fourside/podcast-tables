@@ -4,7 +4,7 @@ import Router from "next/router";
 import styled from "styled-components";
 
 import Layout from "../components/layout";
-import { StationCard } from "../components/stationCard";
+import { StationCard } from "../components/station-card";
 import { getStations } from "../lib/client";
 import { Station } from "../lib/station";
 import { useAuth } from "../context/Auth";

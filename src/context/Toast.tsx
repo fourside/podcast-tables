@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { FADEOUT_TIME_MS, Toast, ToastType } from "../components/Toast";
+import { FADEOUT_TIME_MS, Toast, ToastType } from "../components/toast";
 
 type ToastContextProps = {
   setToast: (toast: ToastType) => void;

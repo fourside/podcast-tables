@@ -1,4 +1,4 @@
-import { ClientPortal } from "./ClientPortal";
+import { ClientPortal } from "./client-portal";
 import styled from "styled-components";
 import { X } from "react-feather";
 

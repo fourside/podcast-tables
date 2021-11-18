@@ -2,9 +2,9 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import styled, { keyframes } from "styled-components";
 import { ChevronDown, AlertCircle, AlertTriangle } from "react-feather";
 import { getRecordingTask, RecordingTask } from "../lib/client";
-import { RecordingTaskItem } from "./RecordingTaskItem";
+import { RecordingTaskItem } from "./recording-task-item";
 import { useAuth } from "../context/Auth";
-import { Loading } from "./Loading";
+import { Loading } from "./loading";
 
 export const DropdownMenu: React.FC = () => {
   const [open, setOpen] = useState(false);

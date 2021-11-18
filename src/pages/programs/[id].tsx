@@ -3,7 +3,7 @@ import Router, { useRouter } from "next/router";
 import { useEffect } from "react";
 
 import Layout from "../../components/layout";
-import { ProgramColumns } from "../../components/programColumns";
+import { ProgramColumns } from "../../components/program-columns";
 import { useAuth } from "../../context/Auth";
 import { getPrograms } from "../../lib/client";
 import { ProgramPerDate } from "../../lib/station";

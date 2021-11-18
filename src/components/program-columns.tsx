@@ -3,8 +3,8 @@ import { useState } from "react";
 
 import { Program, ProgramPerDate } from "../lib/station";
 import { Menu } from "./menu";
-import { ProgramColumn } from "./programColumn";
-import { Modal } from "./Modal";
+import { ProgramColumn } from "./program-column";
+import { Modal } from "./modal";
 import { ProgramForm } from "./form/ProgramForm";
 import { PostParams, postProgram } from "../lib/client";
 import { unformatPostParams } from "../lib/util";
