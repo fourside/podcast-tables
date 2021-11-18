@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { GetStaticPropsResult } from "next";
+import { GetStaticPropsResult, NextPage } from "next";
 import Router from "next/router";
 import styled from "styled-components";
 
@@ -12,7 +12,7 @@ import { useAuth } from "../context/Auth";
 type Props = {
   stations: Station[];
 };
-const Index: React.FC<Props> = ({ stations }) => {
+const IndexPage: NextPage<Props> = ({ stations }) => {
   const { authState } = useAuth();
   useEffect(() => {
     if (authState === "fail") {
@@ -51,7 +51,7 @@ const Container = styled.div({
   flexWrap: "wrap",
 });
 
-export default Index;
+export default IndexPage;
 
 export async function getStaticProps(): Promise<GetStaticPropsResult<Props>> {
   const stations = await getStations();

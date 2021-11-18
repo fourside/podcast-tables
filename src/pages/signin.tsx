@@ -1,3 +1,4 @@
+import { NextPage } from "next";
 import { useEffect } from "react";
 import Router from "next/router";
 import styled from "styled-components";
@@ -5,7 +6,7 @@ import styled from "styled-components";
 import Layout from "../components/layout";
 import { useAuth, SignInButton } from "../context/Auth";
 
-const Login: React.FC = () => {
+const SignInPage: NextPage = () => {
   const { authState } = useAuth();
 
   useEffect(() => {
@@ -28,7 +29,7 @@ const Login: React.FC = () => {
   );
 };
 
-export default Login;
+export default SignInPage;
 
 const Title = styled.h2({
   marginBottom: "2em",
