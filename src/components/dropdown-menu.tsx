@@ -3,7 +3,7 @@ import styled, { keyframes } from "styled-components";
 import { ChevronDown, AlertCircle, AlertTriangle } from "react-feather";
 import { getRecordingTask, RecordingTask } from "../lib/client";
 import { RecordingTaskItem } from "./recording-task-item";
-import { useAuth } from "../context/Auth";
+import { useAuth } from "../context/auth";
 import { Loading } from "./loading";
 
 export const DropdownMenu: React.FC = () => {

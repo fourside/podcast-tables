@@ -1,6 +1,6 @@
 import { object, string, SchemaOf } from "yup";
 
-import { PostParams } from "../lib/client";
+import { PostParams } from "./client";
 
 const fileNamePattern = /^[^ \n\\]+$/;
 const notWhiteSpacePattern = /^[^ \n]+$/;

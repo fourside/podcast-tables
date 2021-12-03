@@ -6,7 +6,7 @@ import { User } from "react-feather";
 
 import { signOut } from "../lib/firebase";
 import { Button } from "./button";
-import { useAuth } from "../context/Auth";
+import { useAuth } from "../context/auth";
 import { DropdownMenu } from "./dropdown-menu";
 
 export const Header: React.FC = () => {

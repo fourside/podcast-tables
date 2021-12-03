@@ -5,8 +5,8 @@ import Router from "next/router";
 
 import { Loading } from "../components/loading";
 import "../styles/globals.css";
-import { AuthProvider } from "../context/Auth";
-import { ToastProvider } from "../context/Toast";
+import { AuthProvider } from "../context/auth";
+import { ToastProvider } from "../context/toast";
 
 const MyApp: NextComponentType<AppContext, AppInitialProps, AppProps> = ({ Component, pageProps }: AppProps) => {
   const [loading, setLoading] = useState(false);

@@ -4,7 +4,7 @@ import Router from "next/router";
 import styled from "styled-components";
 
 import Layout from "../components/layout";
-import { useAuth, SignInButton } from "../context/Auth";
+import { useAuth, SignInButton } from "../context/auth";
 
 const SignInPage: NextPage = () => {
   const { authState } = useAuth();

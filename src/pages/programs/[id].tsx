@@ -4,7 +4,7 @@ import { useEffect } from "react";
 
 import Layout from "../../components/layout";
 import { ProgramColumns } from "../../components/program-columns";
-import { useAuth } from "../../context/Auth";
+import { useAuth } from "../../context/auth";
 import { getPrograms } from "../../lib/client";
 import { ProgramPerDate } from "../../lib/station";
 

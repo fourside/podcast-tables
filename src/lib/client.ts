@@ -1,7 +1,7 @@
 import { getApiEndpoint, getWritableUserMailAddress } from "./env";
 import { Station, ProgramsPerDateResponse, ProgramPerDate } from "./station";
 import { mergeSameProgramPerDates } from "./util";
-import { FirebaseUser } from "../context/Auth";
+import { FirebaseUser } from "../context/auth";
 
 export async function getStations(): Promise<Station[]> {
   const endpoint = getApiEndpoint();

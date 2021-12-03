@@ -8,7 +8,7 @@ import { decodeHtml, formatProgram } from "../../lib/util";
 import { SubmitButton } from "./submit-button";
 import { EditableInput } from "./editable-input";
 import { ErrorFormMessage } from "./error-form-message";
-import { formSchema } from "../../lib/formSchema";
+import { formSchema } from "../../lib/form-schema";
 
 type Props = {
   stationId: string;
