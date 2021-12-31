@@ -23,7 +23,7 @@ export function decodeHtml(htmlString: string): string {
 export function formatProgram(program: Program): PostParams {
   return {
     stationId: "",
-    title: program.title,
+    title: program.title.trim(),
     personality: program.personality,
     fromTime: formatFull(program.from),
     duration: String(program.duration / 60),
