@@ -22,12 +22,6 @@ export function formatHourMinuteFromTimeStamp(timestamp: number): string {
   return d.format("HH:mm");
 }
 
-export function diffDateFrom(monthDay: string): number {
-  const now = dayjs(dayjs().format("YYYYMMDD"), "YYYYMMDD");
-  const d = dayjs(monthDay, "YYYYMMDD");
-  return d.diff(now, "day");
-}
-
 export function formatFull(fromDay: string): string {
   const d = dayjs(fromDay, "YYYYMMDDHHmmss");
   return d.format("YYYY/MM/DD HH:mm");
@@ -36,4 +30,8 @@ export function formatFull(fromDay: string): string {
 export function unformatFull(fromDay: string): string {
   const d = dayjs(fromDay, "YYYY/MM/DD HH:mm");
   return d.format("YYYYMMDDHHmm");
+}
+
+export function getToday(): string {
+  return dayjs().format("YYYYMMDD");
 }

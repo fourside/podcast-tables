@@ -3,10 +3,6 @@ import { PostParams } from "./client";
 import { formatFull, unformatFull } from "./day";
 import { ProgramPerDate, Program } from "./station";
 
-export function columnId(index: number): string {
-  return `column_${index}`;
-}
-
 export function calcWeightFromDuration(durationSec: number): number {
   const hour = durationSec / (60 * 60);
   if (hour < 1) {

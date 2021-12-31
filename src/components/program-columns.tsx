@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 import { Program, ProgramPerDate } from "../lib/station";
 import { Menu } from "./menu";
@@ -9,9 +9,9 @@ import { PostParams, postProgram } from "../lib/client";
 import { unformatPostParams } from "../lib/util";
 import { useToast } from "../context/toast";
 import { useAuth } from "../context/auth";
-import { diffDateFrom, formatMonthDay } from "../lib/day";
-import { columnId } from "../lib/util";
+import { formatMonthDay, getToday } from "../lib/day";
 import { ProgramCard } from "./program-card";
+import ProgramsPage from "../pages/programs/[id]";
 
 type Props = {
   stationId: string;
@@ -32,6 +32,7 @@ export const ProgramColumns: React.FC<Props> = ({ stationId, programPerDates }) 
     img: "",
     personality: "",
   });
+  const [activeDate, setActiveDate] = useState(getToday());
 
   const closeModal = () => setOpen(false);
   const { setToast } = useToast();
@@ -58,14 +59,18 @@ export const ProgramColumns: React.FC<Props> = ({ stationId, programPerDates }) 
     setOpen(false);
   };
 
+  const handleMenuClick = useCallback((date: string) => {
+    setActiveDate(date);
+  }, []);
+
   return (
     <Container>
       <SideContainer>
-        <Menu title={stationId} dateList={dateList} />
+        <Menu title={stationId} dateList={dateList} activeDate={activeDate} onMenuClick={handleMenuClick} />
       </SideContainer>
       <ColumnContainer>
         {programPerDates.map((programPerDate) => (
-          <ProgramColumn programPerDate={programPerDate} key={programPerDate.date} onClick={handleClick} />
+          <ProgramColumn key={programPerDate.date} programPerDate={programPerDate} activeDate={activeDate} onClick={handleClick} />
         ))}
       </ColumnContainer>
       <Modal isOpen={open} onClose={closeModal}>
@@ -85,8 +90,6 @@ const ColumnContainer = styled.div({
   display: "flex",
   flexWrap: "nowrap",
   overflowY: "hidden",
-  scrollSnapType: "x mandatory",
-  scrollBehavior: "smooth",
 });
 
 const SideContainer = styled.div({
@@ -97,18 +100,24 @@ const SideContainer = styled.div({
 
 type ProgramColumnProps = {
   programPerDate: ProgramPerDate;
+  activeDate: string;
   onClick: (program: Program) => void;
 };
-const ProgramColumn: React.FC<ProgramColumnProps> = ({ programPerDate, onClick }) => {
-  const index = diffDateFrom(programPerDate.date);
-  const idAttribute = columnId(index);
-  const date = formatMonthDay(programPerDate.date);
+const ProgramColumn: React.FC<ProgramColumnProps> = (props) => {
+  const date = formatMonthDay(props.programPerDate.date);
+  const columnRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (props.programPerDate.date === props.activeDate) {
+      columnRef.current?.scrollIntoView({ behavior: "smooth", block: "start", inline: "center" });
+    }
+  }, [props.activeDate, props.programPerDate.date]);
 
   return (
-    <Column key={programPerDate.date} id={idAttribute}>
+    <Column ref={columnRef}>
       <Date>{date}</Date>
-      {programPerDate.programs.map((program) => (
-        <ProgramCard program={program} key={program.id} onClick={onClick} />
+      {props.programPerDate.programs.map((program) => (
+        <ProgramCard program={program} key={program.id} onClick={props.onClick} />
       ))}
     </Column>
   );
