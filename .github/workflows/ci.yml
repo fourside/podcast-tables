@@ -31,3 +31,7 @@ jobs:
 
       - name: Build
         run: npm run build
+        env:
+          API_ENDPOINT: ${{ secrets.API_ENDPOINT }}
+          FIREBASE_API_KEY: ${{ secrets.FIREBASE_API_KEY }}
+          FIREBASE_AUTH_DOMAIN: ${{ secrets.FIREBASE_AUTH_DOMAIN }}
