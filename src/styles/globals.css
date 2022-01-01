@@ -1,9 +1,3 @@
-@font-face {
-  font-family: "NotoSansJP";
-  src: url("/fonts/NotoSansJP-Regular.otf");
-  font-display: swap;
-}
-
 html,
 body {
   padding: 0;
@@ -11,6 +5,7 @@ body {
   font-family: -apple-system, NotoSansJP, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
   line-height: 1.5;
+  font-family: 'Noto Sans JP', sans-serif;
 }
 
 a {

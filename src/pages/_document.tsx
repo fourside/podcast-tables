@@ -9,7 +9,9 @@ class Document extends NextDocument {
     return (
       <Html lang={"ja"}>
         <Head>
-          <link rel="preload" href="/fonts/NotoSansJP-Regular.otf" as="font" type="font/otf" crossOrigin="true" />
+          <link rel="preconnect" href="https://fonts.googleapis.com" />
+          <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="true" />
+          <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400&display=swap" rel="stylesheet" />
         </Head>
         <body>
           <Main />
