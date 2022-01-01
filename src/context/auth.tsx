@@ -1,9 +1,9 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
+import { User, getAuth, onAuthStateChanged, GoogleAuthProvider } from "firebase/auth";
+import { initializeFirebaseApp } from "../lib/firebase";
 
-import firebase from "../lib/firebase";
-
-export type FirebaseUser = firebase.User | null | undefined;
+export type FirebaseUser = User | null | undefined;
 
 type AuthedProps = {
   authState: "success";
@@ -26,7 +26,9 @@ const AuthProvider: React.FC = ({ children }) => {
   const [firebaseAuthState, setFirebaseAuthState] = useState<AuthContextProps>({ authState: "unknown" });
 
   useEffect(() => {
-    const unsubscribe = firebase.auth().onAuthStateChanged((user) => {
+    initializeFirebaseApp();
+    const auth = getAuth();
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user === null) {
         setFirebaseAuthState({ authState: "fail" });
       } else {
@@ -47,9 +49,10 @@ export const useAuth: () => AuthContextProps = () => {
 
 const uiConfig = {
   signInFlow: "redirect",
-  signInOptions: [firebase.auth.GoogleAuthProvider.PROVIDER_ID],
+  signInOptions: [GoogleAuthProvider.PROVIDER_ID],
 };
 
 export const SignInButton: React.FC = () => {
-  return <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()} />;
+  const auth = getAuth();
+  return <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={auth} />;
 };
