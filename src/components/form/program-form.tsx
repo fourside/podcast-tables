@@ -58,7 +58,7 @@ export const ProgramForm: React.FC<Props> = ({ stationId, program, onSubmit }) =
       </FormControl>
       <ErrorFormMessage message={errors.fromTime?.message} />
       <ErrorFormMessage message={errors.duration?.message} />
-      <FormControl>{infoHtml && <Info dangerouslySetInnerHTML={{ __html: infoHtml }} />}</FormControl>
+      {infoHtml && <Info dangerouslySetInnerHTML={{ __html: infoHtml }} />}
       <FormControl>
         <SubmitButton label={"SEND"} isSubmitting={isSubmitting} isValid={!isSubmitting || isValid} />
       </FormControl>
@@ -67,17 +67,15 @@ export const ProgramForm: React.FC<Props> = ({ stationId, program, onSubmit }) =
 };
 
 const Form = styled.form({
-  border: "1px solid #eee",
-  borderRadius: "10px",
-  padding: "8px 16px",
-  backgroundColor: "#fff",
+  display: "flex",
+  flexDirection: "column",
+  gap: "8px",
 });
 
 const FormControl = styled.div({
-  margin: "8px 0",
   width: "100%",
   display: "flex",
-  justifyContent: "space-between",
+  gap: "16px",
 });
 
 const EmptySpan = styled.span({}, (props: { width: number }) => {

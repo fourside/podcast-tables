@@ -33,24 +33,31 @@ const ModalBackdrop = styled.div({
   top: "0%",
   left: "0%",
   width: "100%",
-  height: "100%",
+  height: "100vh",
   backgroundColor: "rgba(0,0,0,0.3)",
   display: "flex",
   justifyContent: "center",
+  alignItems: "center",
 });
 
 const ModalContainer = styled.div({
-  backgroundColor: "transparent",
-  paddingTop: "16px",
   width: "600px",
   overflow: "hidden",
+  display: "flex",
+  alignItems: "center",
+  border: "1px solid #eee",
+  borderRadius: "10px",
+  padding: "24px 24px 16px 24px",
+  backgroundColor: "#fff",
+  position: "relative",
 });
 
 const ModalHead = styled.div({});
 
 const CloseButton = styled.span({
-  float: "right",
-  margin: "4px",
+  position: "absolute",
+  top: "4px",
+  right: "4px",
   color: "#333",
   cursor: "pointer",
   width: "24px",
@@ -60,4 +67,6 @@ const CloseButton = styled.span({
   },
 });
 
-const ModalBody = styled.div({});
+const ModalBody = styled.div({
+  maxHeight: "100%",
+});
