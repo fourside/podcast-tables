@@ -8,7 +8,7 @@ export interface ProgramsPerDateResponse {
   programs: ProgramResponse[];
 }
 
-interface ProgramResponse {
+export interface ProgramResponse {
   id: string;
   ft: string;
   to: string;

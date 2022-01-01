@@ -2,13 +2,14 @@ import { getApiEndpoint, getWritableUserMailAddress } from "./env";
 import { Station, ProgramsPerDateResponse, ProgramPerDate } from "./station";
 import { mergeSameProgramPerDates } from "./util";
 import { FirebaseUser } from "../context/auth";
+import { programsPerDateArraySchema, recordingTaskArraySchema, stationArraySchema } from "./schema";
 
 export async function getStations(): Promise<Station[]> {
   const endpoint = getApiEndpoint();
   const url = `${endpoint}/stations`;
   const response = await fetch(url);
   const json = await response.json();
-  return json as Station[];
+  return stationArraySchema.parse(json);
 }
 
 export async function getPrograms(stationId: string): Promise<ProgramPerDate[]> {
@@ -16,8 +17,9 @@ export async function getPrograms(stationId: string): Promise<ProgramPerDate[]> 
   const url = `${endpoint}/programs/${stationId}`;
   const response = await fetch(url);
   console.log("res", response);
-  const json = (await response.json()) as ProgramsPerDateResponse[];
-  const convertedJson = convert(json);
+  const json = await response.json();
+  const programPerDateJson = programsPerDateArraySchema.parse(json);
+  const convertedJson = convert(programPerDateJson);
   return mergeSameProgramPerDates(convertedJson);
 }
 
@@ -65,7 +67,7 @@ export async function getRecordingTask(user: FirebaseUser): Promise<RecordingTas
     return [];
   }
   const json = await response.json();
-  return json as RecordingTask[];
+  return recordingTaskArraySchema.parse(json);
 }
 
 function convert(programPerDateResponses: ProgramsPerDateResponse[]): ProgramPerDate[] {
