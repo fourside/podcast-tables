@@ -112,7 +112,7 @@ const ProgramColumn: React.FC<ProgramColumnProps> = (props) => {
 
   useEffect(() => {
     if (props.programPerDate.date === props.activeDate) {
-      columnRef.current?.scrollIntoView({ behavior: "smooth", block: "start", inline: "center" });
+      columnRef.current?.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
     }
   }, [props.activeDate, props.programPerDate.date]);
 
@@ -137,7 +137,6 @@ const Column = styled.div({
   flexShrink: 0,
   gap: "4px",
   padding: "8px",
-  scrollSnapAlign: "center",
 });
 
 const Date = styled.h3({
