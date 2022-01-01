@@ -8,12 +8,12 @@ module.exports = {
     WRITABLE_USER_MAIL_ADDRESS: process.env.WRITABLE_USER_MAIL_ADDRESS,
   },
   webpack: (config) => {
-    return (merge(config, {
+    return merge(config, {
       resolve: {
         alias: {
           firebaseui: "firebaseui-ja",
-        }
-      }
-    }))
-  }
-}
+        },
+      },
+    });
+  },
+};
