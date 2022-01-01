@@ -29,7 +29,7 @@ export const DropdownMenu: React.FC = () => {
           console.error(error);
           setErrorMessage(error.message);
         } else {
-          throw error
+          throw error;
         }
       } finally {
         setLoading(false);

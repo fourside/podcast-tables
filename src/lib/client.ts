@@ -17,7 +17,6 @@ export async function getPrograms(stationId: string): Promise<ProgramPerDate[]> 
   const response = await fetch(url);
   console.log("res", response);
   const json = (await response.json()) as ProgramsPerDateResponse[];
-  // console.log("res body", JSON.stringify(json, null , "  "))
   const convertedJson = convert(json);
   return mergeSameProgramPerDates(convertedJson);
 }

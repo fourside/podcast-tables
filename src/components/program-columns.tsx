@@ -11,7 +11,6 @@ import { useToast } from "../context/toast";
 import { useAuth } from "../context/auth";
 import { formatMonthDay, getToday } from "../lib/day";
 import { ProgramCard } from "./program-card";
-import ProgramsPage from "../pages/programs/[id]";
 
 type Props = {
   stationId: string;
@@ -70,7 +69,12 @@ export const ProgramColumns: React.FC<Props> = ({ stationId, programPerDates }) 
       </SideContainer>
       <ColumnContainer>
         {programPerDates.map((programPerDate) => (
-          <ProgramColumn key={programPerDate.date} programPerDate={programPerDate} activeDate={activeDate} onClick={handleClick} />
+          <ProgramColumn
+            key={programPerDate.date}
+            programPerDate={programPerDate}
+            activeDate={activeDate}
+            onClick={handleClick}
+          />
         ))}
       </ColumnContainer>
       <Modal isOpen={open} onClose={closeModal}>
@@ -96,7 +100,6 @@ const SideContainer = styled.div({
   width: "10%",
   paddingRight: "16px",
 });
-
 
 type ProgramColumnProps = {
   programPerDate: ProgramPerDate;
