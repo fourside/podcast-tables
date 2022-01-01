@@ -1,6 +1,10 @@
 const { merge } = require("webpack-merge");
+const withBundleAnalyzer = require("@next/bundle-analyzer")({
+  enabled: process.env.ANALYZE === "true",
+});
 
-module.exports = {
+/** @type {import('next').NextConfig} */
+const nextCOnfig = {
   env: {
     API_ENDPOINT: process.env.API_ENDPOINT,
     FIREBASE_API_KEY: process.env.FIREBASE_API_KEY,
@@ -17,3 +21,5 @@ module.exports = {
     });
   },
 };
+
+module.exports = withBundleAnalyzer(nextCOnfig);
