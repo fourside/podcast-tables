@@ -4,7 +4,7 @@ import Router from "next/router";
 import styled from "styled-components";
 
 import Layout from "../components/layout";
-import { StationCard } from "../components/station-card";
+import { StationCards } from "../components/station-card";
 import { getStations } from "../lib/client";
 import { Station } from "../lib/station";
 import { useAuth } from "../context/auth";
@@ -28,9 +28,7 @@ const IndexPage: NextPage<Props> = ({ stations }) => {
     <Layout>
       <Header>Stations</Header>
       <Container>
-        {stations.map((station) => (
-          <StationCard key={station.id} station={station} />
-        ))}
+        <StationCards stations={stations} />
       </Container>
     </Layout>
   );
@@ -45,10 +43,6 @@ const Container = styled.div({
   maxWidth: "720px",
   margin: "3rem auto 6rem",
   minHeight: "100vh",
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  flexWrap: "wrap",
 });
 
 export default IndexPage;
