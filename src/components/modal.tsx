@@ -43,8 +43,6 @@ const ModalBackdrop = styled.div({
 const ModalContainer = styled.div({
   width: "600px",
   overflow: "hidden",
-  display: "flex",
-  alignItems: "center",
   border: "1px solid #eee",
   borderRadius: "10px",
   padding: "24px 24px 16px 24px",
