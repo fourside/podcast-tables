@@ -1,70 +1,33 @@
-import { ClientPortal } from "./client-portal";
-import styled from "styled-components";
+import { FC } from "react";
 import { X } from "react-feather";
+import { ClientPortal } from "./client-portal";
 
 type Props = {
   isOpen?: boolean;
   onClose: () => void;
 };
 
-export const Modal: React.FC<Props> = ({ isOpen, onClose, children }) => {
+export const Modal: FC<Props> = ({ isOpen, onClose, children }) => {
   if (!isOpen) {
     return null;
   }
 
   return (
     <ClientPortal selector="#modal">
-      <ModalBackdrop>
-        <ModalContainer>
-          <ModalHead>
-            <CloseButton onClick={onClose} title="close modal">
+      <div className="fixed top-0 left-0 w-full h-screen flex justify-center items-center bg-black/30">
+        <div className="relative overflow-hidden p-6 w-[600px] rounded-xl bg-white">
+          <div>
+            <button
+              onClick={onClose}
+              title="close modal"
+              className="absolute top-1 right-1 cursor-pointer w-6 h-6 border-none bg-transparent text-slate-600 hover:text-slate-300"
+            >
               <X />
-            </CloseButton>
-          </ModalHead>
-          <ModalBody>{children}</ModalBody>
-        </ModalContainer>
-      </ModalBackdrop>
+            </button>
+          </div>
+          <div className="max-h-full">{children}</div>
+        </div>
+      </div>
     </ClientPortal>
   );
 };
-
-const ModalBackdrop = styled.div({
-  position: "fixed",
-  top: "0%",
-  left: "0%",
-  width: "100%",
-  height: "100vh",
-  backgroundColor: "rgba(0,0,0,0.3)",
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-});
-
-const ModalContainer = styled.div({
-  width: "600px",
-  overflow: "hidden",
-  border: "1px solid #eee",
-  borderRadius: "10px",
-  padding: "24px 24px 16px 24px",
-  backgroundColor: "#fff",
-  position: "relative",
-});
-
-const ModalHead = styled.div({});
-
-const CloseButton = styled.span({
-  position: "absolute",
-  top: "4px",
-  right: "4px",
-  color: "#333",
-  cursor: "pointer",
-  width: "24px",
-  height: "24px",
-  "&:hover": {
-    color: "#ddd",
-  },
-});
-
-const ModalBody = styled.div({
-  maxHeight: "100%",
-});

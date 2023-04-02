@@ -1,15 +1,13 @@
-import React from "react";
 import Link from "next/link";
 import Router from "next/router";
-import styled from "styled-components";
+import { FC } from "react";
 import { User } from "react-feather";
-
+import { useAuth } from "../context/auth";
 import { signOut } from "../lib/firebase";
 import { Button } from "./button";
-import { useAuth } from "../context/auth";
 import { DropdownMenu } from "./dropdown-menu";
 
-export const Header: React.FC = () => {
+export const Header: FC = () => {
   const { user } = useAuth();
 
   const handleSignOut = async () => {
@@ -18,50 +16,24 @@ export const Header: React.FC = () => {
   };
 
   return (
-    <_Header>
-      <LeftContainer>
+    <header className="flex justify-between border-b border-b-slate-200">
+      <div className="p-4">
         <Link href={"/"}>
           <a>
-            <Title>podcast tables</Title>
+            <h1 className="text-slate-800 m-0 text-3xl">podcast tables</h1>
           </a>
         </Link>
-      </LeftContainer>
+      </div>
       {user && (
-        <RightContainer>
-          <UserName>
-            <User size={20} style={{ marginRight: "4px", verticalAlign: "middle" }} />
+        <div className="flex items-center gap-8 p-2">
+          <div className="text-slate-800 flex gap-1 items-center">
+            <User size={20} style={{ flexShrink: 0 }} />
             {user.email}
-          </UserName>
+          </div>
           <DropdownMenu />
           <Button onClick={handleSignOut} label={"Sign out"} />
-        </RightContainer>
+        </div>
       )}
-    </_Header>
+    </header>
   );
 };
-
-const _Header = styled.header({
-  display: "flex",
-  borderBottom: "1px solid #eee",
-  justifyContent: "space-between",
-});
-
-const LeftContainer = styled.div({
-  padding: "0.5em 0 1em 1em",
-});
-
-const RightContainer = styled.div({
-  display: "flex",
-  alignItems: "center",
-  gap: "32px",
-  padding: "8px",
-});
-
-const Title = styled.h1({
-  color: "#333",
-  margin: "0",
-});
-
-const UserName = styled.div({
-  color: "#333",
-});

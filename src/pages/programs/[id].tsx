@@ -1,7 +1,6 @@
-import { GetStaticPropsContext, GetStaticPropsResult, GetStaticPathsResult, NextPage } from "next";
+import { GetStaticPathsResult, GetStaticPropsContext, GetStaticPropsResult, NextPage } from "next";
 import Router, { useRouter } from "next/router";
 import { useEffect } from "react";
-
 import Layout from "../../components/layout";
 import { ProgramColumns } from "../../components/program-columns";
 import { useAuth } from "../../context/auth";
@@ -12,6 +11,7 @@ type Props = {
   programs: ProgramPerDate[];
   stationId: string;
 };
+
 const ProgramsPage: NextPage<Props> = ({ programs, stationId }) => {
   const { authState } = useAuth();
 

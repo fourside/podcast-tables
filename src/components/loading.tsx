@@ -1,34 +1,9 @@
-import styled, { keyframes } from "styled-components";
+import { FC } from "react";
 
-export const Loading: React.FC = () => {
+export const Loading: FC = () => {
   return (
-    <Container>
-      <Pulse />
-    </Container>
+    <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+      <div className="w-[64px] h-[64px] rounded-full bg-slate-800 animate-scalePulse" />
+    </div>
   );
 };
-
-const Container = styled.div({
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-});
-
-const pulseAnimation = keyframes({
-  "0%": {
-    transform: "scale(0)",
-  },
-  "100%": {
-    transform: "scale(1)",
-    opacity: 0,
-  },
-});
-
-const Pulse = styled.div`
-  width: 64px;
-  height: 64px;
-  border-radius: 100%;
-  background-color: #333;
-  animation: ${pulseAnimation} 1.2s infinite cubic-bezier(0.455, 0.03, 0.515, 0.955);
-`;

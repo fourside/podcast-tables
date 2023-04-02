@@ -1,6 +1,4 @@
 import Link from "next/link";
-import styled from "styled-components";
-
 import { Station } from "../lib/station";
 
 type Props = {
@@ -9,21 +7,13 @@ type Props = {
 
 export const StationCards: React.FC<Props> = (props) => {
   return (
-    <Container>
+    <div className="flex justify-center items-center flex-wrap gap-y-6 gap-x-4">
       {props.stations.map((station) => (
         <StationCard key={station.id} station={station} />
       ))}
-    </Container>
+    </div>
   );
 };
-
-const Container = styled.div({
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  flexWrap: "wrap",
-  gap: "24px 16px",
-});
 
 type StationCardProps = {
   station: Station;
@@ -31,31 +21,10 @@ type StationCardProps = {
 
 const StationCard: React.FC<StationCardProps> = ({ station }) => {
   return (
-    <Card>
+    <div className="w-[200px] h-[100px] py-8 px-4 flex justify-center items-center rounded-xl border border-slate-200 shadow-md cursor-pointer">
       <Link href={`/programs/${station.id}`} passHref>
-        <CardLink>{station.name}</CardLink>
+        <a className="text-center text-slate-700 font-bold leading-4">{station.name}</a>
       </Link>
-    </Card>
+    </div>
   );
 };
-
-const Card = styled.div({
-  width: "200px",
-  height: "100px",
-  padding: "32px 16px",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-  borderRadius: "10px",
-  border: "1px #eee solid",
-  boxShadow: "4px 4px 12px 2px rgba(0,0,0,0.1)",
-  cursor: "pointer",
-});
-
-const CardLink = styled.a({
-  textAlign: "center",
-  display: "block",
-  lineHeight: 1.5,
-  color: "#444",
-  fontWeight: "bold",
-});

@@ -1,6 +1,6 @@
+import { getAuth, GoogleAuthProvider, onAuthStateChanged, User } from "firebase/auth";
 import { createContext, useContext, useEffect, useState } from "react";
 import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
-import { User, getAuth, onAuthStateChanged, GoogleAuthProvider } from "firebase/auth";
 import { initializeFirebaseApp } from "../lib/firebase";
 
 export type FirebaseUser = User | null | undefined;

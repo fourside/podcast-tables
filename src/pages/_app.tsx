@@ -1,12 +1,11 @@
-import { useState } from "react";
 import { NextComponentType } from "next";
 import { AppContext, AppInitialProps, AppProps } from "next/app";
 import Router from "next/router";
-
+import { useState } from "react";
 import { Loading } from "../components/loading";
-import "../styles/globals.css";
 import { AuthProvider } from "../context/auth";
 import { ToastProvider } from "../context/toast";
+import "../styles/globals.css";
 
 const MyApp: NextComponentType<AppContext, AppInitialProps, AppProps> = ({ Component, pageProps }: AppProps) => {
   const [loading, setLoading] = useState(false);

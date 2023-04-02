@@ -1,6 +1,5 @@
-import styled from "styled-components";
+import { FC } from "react";
 import { Mic } from "react-feather";
-
 import { formatHourMinute } from "../lib/day";
 import { Program } from "../lib/station";
 import { calcWeightFromDuration, stripHtmlElement } from "../lib/util";
@@ -9,7 +8,8 @@ type Props = {
   program: Program;
   onClick: (program: Program) => void;
 };
-export const ProgramCard: React.FC<Props> = ({ program, onClick }) => {
+
+export const ProgramCard: FC<Props> = ({ program, onClick }) => {
   const time = formatHourMinute(program.from);
   const weight = calcWeightFromDuration(program.duration);
   const info = stripHtmlElement(program.info);
@@ -17,87 +17,27 @@ export const ProgramCard: React.FC<Props> = ({ program, onClick }) => {
     onClick(program);
   };
   return (
-    <Container weight={weight}>
-      <CardHeader title={program.title}>
-        <Time>{time}</Time>
-        <Title>
+    <div
+      className="flex flex-col gap-1 p-3 text-slate-600 border border-slate-200 rounded-xl"
+      style={{ minHeight: `${1.5 * 4 * weight}em` }}
+    >
+      <div title={program.title} className="grid grid-cols-[1fr,auto] gap-2">
+        <h4 className="text-slate-700 cursor-pointer truncate font-bold">
           <a onClick={handleClick}>{program.title}</a>
-        </Title>
-      </CardHeader>
-      <CardBody>
-        <Personality personality={program.personality} />
-        <Info weight={weight} title={info}>
-          {info}
-        </Info>
-      </CardBody>
-    </Container>
-  );
-};
-
-const Container = styled.div(
-  {
-    borderRadius: "10px",
-    border: "1px #eee solid",
-    padding: "12px",
-    color: "#444",
-  },
-  (props: { weight: number }) => {
-    return {
-      minHeight: `calc(1.5em * 4 * ${props.weight})`,
-    };
-  }
-);
-
-const CardHeader = styled.div({
-  paddingBottom: "4px",
-});
-const CardBody = styled.div({});
-
-const Time = styled.span({
-  color: "#ccc",
-  float: "right",
-});
-
-const Title = styled.h4({
-  margin: "0px",
-  color: "#333",
-  overflow: "hidden",
-  whiteSpace: "nowrap",
-  textOverflow: "ellipsis",
-  cursor: "pointer",
-});
-
-const _Personality = styled.div({
-  overflow: "hidden",
-  whiteSpace: "nowrap",
-  textOverflow: "ellipsis",
-});
-
-const Info = styled.div(
-  {
-    color: "#777",
-    fontSize: "small",
-    paddingTop: "4px",
-    overflow: "hidden",
-    display: "-webkit-box",
-    "-webkit-box-orient": "vertical",
-    wordBreak: "break-all",
-  },
-  (props: { weight: number }) => {
-    return {
-      "-webkit-line-clamp": `${props.weight * 3}`,
-    };
-  }
-);
-
-const Personality: React.FC<{ personality?: string }> = ({ personality }) => {
-  if (!personality) {
-    return null;
-  }
-  return (
-    <_Personality title={personality}>
-      <Mic size={16} color={"#999"} style={{ marginRight: "4px", verticalAlign: "middle" }} />
-      {personality}
-    </_Personality>
+        </h4>
+        <div className="text-slate-200">{time}</div>
+      </div>
+      <div title={program.personality} className="grid grid-cols-[auto,1fr] items-center gap-1">
+        <Mic size={16} color={"#999"} />
+        <div className="truncate text-slate-500">{program.personality}</div>
+      </div>
+      <div
+        title={info}
+        className="text-slate-400 break-all overflow-hidden text-sm"
+        style={{ display: "-webkit-box", WebkitLineClamp: weight * 3 }}
+      >
+        {info}
+      </div>
+    </div>
   );
 };

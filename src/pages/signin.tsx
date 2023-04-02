@@ -1,10 +1,8 @@
 import { NextPage } from "next";
-import { useEffect } from "react";
 import Router from "next/router";
-import styled from "styled-components";
-
+import { useEffect } from "react";
 import Layout from "../components/layout";
-import { useAuth, SignInButton } from "../context/auth";
+import { SignInButton, useAuth } from "../context/auth";
 
 const SignInPage: NextPage = () => {
   const { authState } = useAuth();
@@ -21,26 +19,12 @@ const SignInPage: NextPage = () => {
 
   return (
     <Layout>
-      <Container>
-        <Title>Sign in</Title>
+      <div className="max-w-[360px] min-h-[240px] mx-auto my-12 rounded-xl border-slate-100 flex flex-col gap-8">
+        <h2 className="text-center text-slate-700">Sign in</h2>
         <SignInButton />
-      </Container>
+      </div>
     </Layout>
   );
 };
 
 export default SignInPage;
-
-const Title = styled.h2({
-  marginBottom: "2em",
-  textAlign: "center",
-  color: "#888",
-});
-
-const Container = styled.div({
-  maxWidth: "360px",
-  minHeight: "240px",
-  margin: "3rem auto 6rem",
-  border: "1px solid #eee",
-  borderRadius: "10px",
-});

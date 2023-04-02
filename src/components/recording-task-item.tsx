@@ -1,59 +1,25 @@
-import styled from "styled-components";
+import { FC } from "react";
 import { Clock } from "react-feather";
 import { RecordingTask } from "../lib/client";
 
 type Props = {
   recordingTask: RecordingTask;
 };
-export const RecordingTaskItem: React.FC<Props> = (props) => {
+
+export const RecordingTaskItem: FC<Props> = (props) => {
   return (
-    <Container title={props.recordingTask.title}>
-      <Title>{props.recordingTask.title}</Title>
-      <div>
-        <Station>{props.recordingTask.stationId}</Station>
-        <Personality>{props.recordingTask.personality}</Personality>
+    <div title={props.recordingTask.title} className="w-300 py-16 px-32">
+      <h1 className="text-slate-600 text-base m-0 truncate">{props.recordingTask.title}</h1>
+      <div className="flex gap-2 justify-center">
+        <div className="bg-slate-500 text-slate-100 text-xs rounded-lg py-1 px-2">{props.recordingTask.stationId}</div>
+        <div className="text-sm text-slate-500">{props.recordingTask.personality}</div>
       </div>
       <div>
         <Clock size={16} color={"#999"} style={{ marginRight: "4px", verticalAlign: "middle" }} />
-        <Time>
+        <span className="text-slate-400 text-sm">
           {props.recordingTask.fromTime}({props.recordingTask.duration} min)
-        </Time>
+        </span>
       </div>
-    </Container>
+    </div>
   );
 };
-
-const Container = styled.div({
-  overflow: "visible",
-  width: 300,
-  padding: "16px 32px",
-});
-
-const Title = styled.h1({
-  color: "#444",
-  fontSize: "100%",
-  margin: 0,
-  overflow: "hidden",
-  whiteSpace: "nowrap",
-  textOverflow: "ellipsis",
-});
-
-const Personality = styled.span({
-  fontSize: "small",
-  color: "#666",
-});
-
-const Station = styled.span({
-  display: "inline-block",
-  backgroundColor: "#999",
-  color: "#eee",
-  fontSize: "x-small",
-  borderRadius: "8px",
-  padding: "2px 8px",
-  marginRight: "8px",
-});
-
-const Time = styled.span({
-  color: "#999",
-  fontSize: "small",
-});

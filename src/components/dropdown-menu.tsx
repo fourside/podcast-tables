@@ -1,12 +1,11 @@
-import { useCallback, useEffect, useRef, useState } from "react";
-import styled, { keyframes } from "styled-components";
-import { ChevronDown, AlertCircle, AlertTriangle } from "react-feather";
-import { getRecordingTask, RecordingTask } from "../lib/client";
-import { RecordingTaskItem } from "./recording-task-item";
+import { FC, useCallback, useEffect, useRef, useState } from "react";
+import { AlertCircle, AlertTriangle, ChevronDown } from "react-feather";
 import { useAuth } from "../context/auth";
+import { getRecordingTask, RecordingTask } from "../lib/client";
 import { Loading } from "./loading";
+import { RecordingTaskItem } from "./recording-task-item";
 
-export const DropdownMenu: React.FC = () => {
+export const DropdownMenu: FC = () => {
   const [open, setOpen] = useState(false);
   const [recordingTasks, setRecordingTasks] = useState<RecordingTask[]>([]);
   const [loading, setLoading] = useState(false);
@@ -37,7 +36,7 @@ export const DropdownMenu: React.FC = () => {
     })();
   }, [open, user]);
 
-  const handleClickOutside = useCallback((event: MouseEvent) => {
+  const handleClickOutside = useCallback((event: Event) => {
     if (event.target instanceof Node && containerRef.current?.contains(event.target)) {
       return;
     }
@@ -56,100 +55,36 @@ export const DropdownMenu: React.FC = () => {
   };
 
   return (
-    <MenuContainer ref={containerRef}>
-      <MenuLabel>
-        <a onClick={toggleOpen}>
-          <ChevronDown size={16} style={{ marginRight: "4px", verticalAlign: "middle" }} />
+    <div ref={containerRef} className="relative">
+      <div className="text-slate-800">
+        <a onClick={toggleOpen} className="cursor-pointer flex items-center gap-1">
+          <ChevronDown size={16} style={{ flexShrink: 0 }} />
           recording
         </a>
-      </MenuLabel>
+      </div>
       {open && (
-        <MenuList>
+        <div className="absolute -bottom-2 right-0 m-0 p-0 translate-y-full bg-white border border-slate-300 rounded-lg shadow-md w-[250px]">
           {loading && <Loading />}
           {!loading && recordingTasks.length === 0 && !errorMessage && (
-            <NoTasks>
-              <Icon>
-                <AlertTriangle size={16} style={{ marginRight: "4px", verticalAlign: "middle" }} />
-              </Icon>
+            <div className="flex items-center gap-2 text-slate-600 p-4">
+              <AlertTriangle size={16} />
               No recording task
-            </NoTasks>
+            </div>
           )}
           {!loading &&
             recordingTasks.map((recording, i) => (
-              <MenuItem key={i}>
+              <div key={i} className="border-b border-b-slate-300 last:border-b-0">
                 <RecordingTaskItem recordingTask={recording} />
-              </MenuItem>
+              </div>
             ))}
           {!loading && errorMessage && (
-            <ErrorMessage>
-              <Icon>
-                <AlertCircle size={16} style={{ marginRight: "4px", verticalAlign: "middle" }} />
-              </Icon>
+            <div className="flex items-center gap-2 p-4 text-red-600">
+              <AlertCircle size={16} className="flex-shrink-0" />
               {errorMessage}
-            </ErrorMessage>
+            </div>
           )}
-        </MenuList>
+        </div>
       )}
-    </MenuContainer>
+    </div>
   );
 };
-
-const MenuContainer = styled.div({
-  position: "relative",
-});
-
-const MenuLabel = styled.div({
-  color: "#333",
-  cursor: "pointer",
-});
-
-const dropDownOpen = keyframes({
-  from: {
-    opacity: 0,
-  },
-  to: {
-    opacity: 1,
-  },
-});
-
-const _MenuList = styled.div({
-  position: "absolute",
-  bottom: -8,
-  right: 0,
-  margin: 0,
-  padding: 0,
-  transform: "translateY(100%)",
-  background: "white",
-  border: "1px solid #ccc",
-  borderRadius: "8px",
-  boxShadow: "4px 4px 12px 2px rgba(0,0,0,0.1)",
-  width: 250,
-});
-
-const MenuList = styled(_MenuList)`
-  animation: ${dropDownOpen} 0.5s;
-`;
-
-const MenuItem = styled.div({
-  display: "block",
-  borderBottom: "1px solid #ccc",
-  "&:last-child": {
-    borderBottom: "none",
-  },
-});
-
-const ErrorMessage = styled.div({
-  display: "flex",
-  gap: "8px",
-  color: "#f03",
-  padding: "16px",
-});
-
-const Icon = styled.span({});
-
-const NoTasks = styled.div({
-  display: "flex",
-  gap: "8px",
-  color: "#666",
-  padding: "16px",
-});

@@ -1,14 +1,13 @@
-import { useState } from "react";
-import styled from "styled-components";
+import { FC, useState } from "react";
 
 type Props = {
-  width?: number;
   name: string;
   hasError: boolean;
   register: () => void;
   forceReadOnly?: boolean;
 };
-export const EditableInput: React.FC<Props> = (props) => {
+
+export const EditableInput: FC<Props> = (props) => {
   const [readOnly, setReadOnly] = useState(true);
 
   const handleClick = () => {
@@ -18,47 +17,19 @@ export const EditableInput: React.FC<Props> = (props) => {
     setReadOnly(true);
   };
 
-  if (props.forceReadOnly || readOnly) {
-    return (
-      <Input
-        type="text"
-        width={props.width}
-        name={props.name}
-        hasError={props.hasError}
-        ref={props.register}
-        onClick={handleClick}
-        readOnly={true}
-      />
-    );
-  }
   return (
-    <Input
-      type="text"
-      width={props.width}
-      name={props.name}
-      hasError={props.hasError}
+    <input
       ref={props.register}
+      type="text"
+      name={props.name}
+      onClick={handleClick}
+      readOnly={props.forceReadOnly || readOnly}
       onBlur={handleBlur}
+      className="border border-slate-300 rounded-xl p-3 text-slate-800 text-xs w-full outline-blue-500"
+      style={{
+        borderColor: props.hasError ? "#ef4444" : "#eee",
+        backgroundColor: props.forceReadOnly || readOnly ? "#fafafa" : "transparent",
+      }}
     />
   );
 };
-
-const Input = styled.input(
-  {
-    border: "1px solid #eee",
-    borderRadius: "10px",
-    outline: "none",
-    padding: "12px",
-    color: "#333",
-  },
-  (props: { width?: number; hasError: boolean; readOnly?: boolean }) => {
-    const widthStyle = props.width ? { width: `${props.width}%` } : { width: "100%" };
-    const borderColor = props.hasError ? "#f22" : "#eee";
-    const backgroundColor = props.readOnly ? "#fafafa" : "transparent";
-    return {
-      ...widthStyle,
-      backgroundColor,
-      border: `1px solid ${borderColor}`,
-    };
-  }
-);
