@@ -1,13 +1,11 @@
-import { useEffect } from "react";
 import { GetStaticPropsResult, NextPage } from "next";
 import Router from "next/router";
-import styled from "styled-components";
-
+import { useEffect } from "react";
 import Layout from "../components/layout";
 import { StationCards } from "../components/station-card";
+import { useAuth } from "../context/auth";
 import { getStations } from "../lib/client";
 import { Station } from "../lib/station";
-import { useAuth } from "../context/auth";
 
 type Props = {
   stations: Station[];
@@ -26,24 +24,13 @@ const IndexPage: NextPage<Props> = ({ stations }) => {
 
   return (
     <Layout>
-      <Header>Stations</Header>
-      <Container>
+      <h2 className="text-3xl text-center tracking-widest my-5">Stations</h2>
+      <div className="max-w-[720px] min-h-screen mx-auto my-12">
         <StationCards stations={stations} />
-      </Container>
+      </div>
     </Layout>
   );
 };
-
-const Header = styled.h2({
-  textAlign: "center",
-  letterSpacing: "6px",
-});
-
-const Container = styled.div({
-  maxWidth: "720px",
-  margin: "3rem auto 6rem",
-  minHeight: "100vh",
-});
 
 export default IndexPage;
 

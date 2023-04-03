@@ -1,4 +1,4 @@
-import { FirebaseOptions, FirebaseApp, initializeApp } from "firebase/app";
+import { FirebaseApp, FirebaseOptions, initializeApp } from "firebase/app";
 import { getAuth, signOut as firebaseSignOut } from "firebase/auth";
 
 const config: FirebaseOptions = {

@@ -1,22 +1,21 @@
-import styled from "styled-components";
-import { useCallback, useEffect, useRef, useState } from "react";
-
+import { FC, useCallback, useEffect, useRef, useState } from "react";
+import { useAuth } from "../context/auth";
+import { useToast } from "../context/toast";
+import { PostParams, postProgram } from "../lib/client";
+import { formatMonthDay, getToday } from "../lib/day";
 import { Program, ProgramPerDate } from "../lib/station";
+import { unformatPostParams } from "../lib/util";
+import { ProgramForm } from "./form/program-form";
 import { Menu } from "./menu";
 import { Modal } from "./modal";
-import { ProgramForm } from "./form/program-form";
-import { PostParams, postProgram } from "../lib/client";
-import { unformatPostParams } from "../lib/util";
-import { useToast } from "../context/toast";
-import { useAuth } from "../context/auth";
-import { formatMonthDay, getToday } from "../lib/day";
 import { ProgramCard } from "./program-card";
 
 type Props = {
   stationId: string;
   programPerDates: ProgramPerDate[];
 };
-export const ProgramColumns: React.FC<Props> = ({ stationId, programPerDates }) => {
+
+export const ProgramColumns: FC<Props> = ({ stationId, programPerDates }) => {
   const { user } = useAuth();
   const dateList = programPerDates.map((programPerDate) => programPerDate.date);
   const [open, setOpen] = useState(false);
@@ -63,11 +62,11 @@ export const ProgramColumns: React.FC<Props> = ({ stationId, programPerDates }) 
   }, []);
 
   return (
-    <Container>
-      <SideContainer>
+    <div className="flex w-11/12 mx-auto p-2">
+      <div className="w-1/12">
         <Menu title={stationId} dateList={dateList} activeDate={activeDate} onMenuClick={handleMenuClick} />
-      </SideContainer>
-      <ColumnContainer>
+      </div>
+      <div className="flex gap-3 overflow-y-hidden">
         {programPerDates.map((programPerDate) => (
           <ProgramColumn
             key={programPerDate.date}
@@ -76,37 +75,21 @@ export const ProgramColumns: React.FC<Props> = ({ stationId, programPerDates }) 
             onClick={handleClick}
           />
         ))}
-      </ColumnContainer>
+      </div>
       <Modal isOpen={open} onClose={closeModal}>
         <ProgramForm stationId={stationId} program={program} onSubmit={handleSubmit} />
       </Modal>
-    </Container>
+    </div>
   );
 };
-
-const Container = styled.div({
-  display: "flex",
-  margin: "0 auto",
-  width: "90%",
-});
-
-const ColumnContainer = styled.div({
-  display: "flex",
-  flexWrap: "nowrap",
-  overflowY: "hidden",
-});
-
-const SideContainer = styled.div({
-  width: "10%",
-  paddingRight: "16px",
-});
 
 type ProgramColumnProps = {
   programPerDate: ProgramPerDate;
   activeDate: string;
   onClick: (program: Program) => void;
 };
-const ProgramColumn: React.FC<ProgramColumnProps> = (props) => {
+
+const ProgramColumn: FC<ProgramColumnProps> = (props) => {
   const date = formatMonthDay(props.programPerDate.date);
   const columnRef = useRef<HTMLDivElement>(null);
 
@@ -117,30 +100,14 @@ const ProgramColumn: React.FC<ProgramColumnProps> = (props) => {
   }, [props.activeDate, props.programPerDate.date]);
 
   return (
-    <Column ref={columnRef}>
-      <Date>{date}</Date>
+    <div
+      ref={columnRef}
+      className="flex flex-col gap-1 flex-shrink-0 p-2 w-1/4 border border-slate-200 rounded-xl shadow-md shadow-slate-300"
+    >
+      <h3 className="whitespace-nowrap m-2 font-bold text-lg">{date}</h3>
       {props.programPerDate.programs.map((program) => (
         <ProgramCard program={program} key={program.id} onClick={props.onClick} />
       ))}
-    </Column>
+    </div>
   );
 };
-
-const Column = styled.div({
-  borderRadius: "10px",
-  border: "1px #eee solid",
-  margin: "8px",
-  boxShadow: "4px 4px 12px 2px rgba(0,0,0,0.1)",
-  width: "calc(100% / 4)",
-  display: "flex",
-  flexDirection: "column",
-  flexShrink: 0,
-  gap: "4px",
-  padding: "8px",
-});
-
-const Date = styled.h3({
-  margin: "8px",
-  paddingLeft: "2px",
-  whiteSpace: "nowrap",
-});

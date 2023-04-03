@@ -1,9 +1,7 @@
-import { useState, useEffect } from "react";
-import styled, { keyframes } from "styled-components";
-
+import { FC, useEffect, useState } from "react";
 import { formatHourMinuteFromTimeStamp } from "../lib/day";
 
-export const Clock: React.FC = () => {
+export const Clock: FC = () => {
   const [now, setNow] = useState(Date.now);
   useEffect(() => {
     const id = setInterval(() => {
@@ -18,26 +16,10 @@ export const Clock: React.FC = () => {
   const hourMinute = formatHourMinuteFromTimeStamp(now);
   const [hour, min] = hourMinute.split(":");
   return (
-    <_Clock>
+    <div className="text-slate-300">
       {hour}
-      <Blink>:</Blink>
+      <span className="text-slate-300 px-px animate-blink">:</span>
       {min}
-    </_Clock>
+    </div>
   );
 };
-
-const _Clock = styled.div({
-  color: "#ccc",
-});
-
-const blink = keyframes`
-  0% { color: #ccc; }
-  50% { color: #fefefe; }
-  100% { color: #ccc; }
-`;
-
-const Blink = styled.span`
-  color: #ccc;
-  padding: 0 1px;
-  animation: ${blink} 1.5s infinite;
-`;

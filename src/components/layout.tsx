@@ -1,9 +1,8 @@
-import React from "react";
 import Head from "next/head";
-
+import { FC } from "react";
 import { Header } from "./header";
 
-const Layout: React.FC = ({ children }) => {
+const Layout: FC = ({ children }) => {
   return (
     <div>
       <Head>
@@ -14,4 +13,5 @@ const Layout: React.FC = ({ children }) => {
     </div>
   );
 };
+
 export default Layout;
