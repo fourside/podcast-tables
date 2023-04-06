@@ -1,8 +1,8 @@
-import { yupResolver } from "@hookform/resolvers/yup";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { FC } from "react";
 import { useForm } from "react-hook-form";
 import { PostParams } from "../../lib/client";
-import { formSchema } from "../../lib/form-schema";
+import { formSchema, FormSchemaType } from "../../lib/form-schema";
 import { Program } from "../../lib/station";
 import { decodeHtml, formatProgram } from "../../lib/util";
 import { EditableInput } from "./editable-input";
@@ -17,7 +17,6 @@ type Props = {
 
 export const ProgramForm: FC<Props> = ({ stationId, program, onSubmit }) => {
   const formatted = formatProgram(program);
-  const resolver = yupResolver(formSchema);
   const {
     handleSubmit,
     register,
@@ -25,7 +24,7 @@ export const ProgramForm: FC<Props> = ({ stationId, program, onSubmit }) => {
     formState: { errors },
   } = useForm<PostParams>({
     mode: "onBlur",
-    resolver,
+    resolver: zodResolver(formSchema),
     defaultValues: {
       stationId,
       title: formatted.title,
