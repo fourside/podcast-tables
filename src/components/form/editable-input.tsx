@@ -1,10 +1,11 @@
 import { FC, useState } from "react";
-import type { FieldValues, UseFormRegister } from "react-hook-form";
+import type { UseFormRegister } from "react-hook-form";
+import { PostParams } from "../../lib/client";
 
 type Props = {
-  name: string;
+  name: keyof PostParams;
   hasError: boolean;
-  register: UseFormRegister<FieldValues>;
+  register: UseFormRegister<PostParams>;
   forceReadOnly?: boolean;
 };
 
