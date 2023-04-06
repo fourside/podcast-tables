@@ -28,7 +28,6 @@ const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
     initializeFirebaseApp();
     const auth = getAuth();
     const unsubscribe = onAuthStateChanged(auth, (user) => {
-      console.log("onAuthStateChanged", user);
       if (user === null) {
         setFirebaseAuthState({ authState: "fail" });
       } else {
