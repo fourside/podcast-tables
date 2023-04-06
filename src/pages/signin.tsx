@@ -1,4 +1,4 @@
-import { NextPage } from "next";
+import type { NextPage } from "next";
 import Router from "next/router";
 import { FC, useEffect, useState } from "react";
 import Layout from "../components/layout";

@@ -1,5 +1,5 @@
-import { NextComponentType } from "next";
-import { AppContext, AppInitialProps, AppProps } from "next/app";
+import type { NextComponentType } from "next";
+import type { AppContext, AppInitialProps, AppProps } from "next/app";
 import Router from "next/router";
 import { useState } from "react";
 import { Loading } from "../components/loading";
