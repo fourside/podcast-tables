@@ -1,9 +1,10 @@
 import { FC, useState } from "react";
+import type { FieldValues, UseFormRegister } from "react-hook-form";
 
 type Props = {
   name: string;
   hasError: boolean;
-  register: () => void;
+  register: UseFormRegister<FieldValues>;
   forceReadOnly?: boolean;
 };
 
@@ -19,9 +20,8 @@ export const EditableInput: FC<Props> = (props) => {
 
   return (
     <input
-      ref={props.register}
+      {...props.register(props.name)}
       type="text"
-      name={props.name}
       onClick={handleClick}
       readOnly={props.forceReadOnly || readOnly}
       onBlur={handleBlur}

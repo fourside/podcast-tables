@@ -17,10 +17,15 @@ type Props = {
 
 export const ProgramForm: FC<Props> = ({ stationId, program, onSubmit }) => {
   const formatted = formatProgram(program);
-
-  const { handleSubmit, register, formState, errors } = useForm<PostParams>({
+  const resolver = yupResolver(formSchema);
+  const {
+    handleSubmit,
+    register,
+    formState,
+    formState: { errors },
+  } = useForm<PostParams>({
     mode: "onBlur",
-    resolver: yupResolver(formSchema),
+    resolver,
     defaultValues: {
       stationId,
       title: formatted.title,
