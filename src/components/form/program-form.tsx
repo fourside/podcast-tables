@@ -2,7 +2,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { FC } from "react";
 import { useForm } from "react-hook-form";
 import { PostParams } from "../../lib/client";
-import { formSchema, FormSchemaType } from "../../lib/form-schema";
+import { formSchema } from "../../lib/form-schema";
 import { Program } from "../../lib/station";
 import { decodeHtml, formatProgram } from "../../lib/util";
 import { EditableInput } from "./editable-input";
