@@ -1,8 +1,8 @@
 import Head from "next/head";
-import { FC } from "react";
+import { FC, PropsWithChildren } from "react";
 import { Header } from "./header";
 
-const Layout: FC = ({ children }) => {
+const Layout: FC<PropsWithChildren> = ({ children }) => {
   return (
     <div>
       <Head>

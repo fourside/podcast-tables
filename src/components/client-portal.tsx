@@ -1,11 +1,11 @@
-import { FC, useEffect, useRef, useState } from "react";
+import { FC, PropsWithChildren, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 
 type Props = {
   selector: string;
 };
 
-export const ClientPortal: FC<Props> = ({ children, selector }) => {
+export const ClientPortal: FC<PropsWithChildren<Props>> = ({ children, selector }) => {
   const ref = useRef<Element>();
   const [mounted, setMounted] = useState(false);
 

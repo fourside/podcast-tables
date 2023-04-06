@@ -1,5 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { FC } from "react";
+import { FC, PropsWithChildren } from "react";
 import { useForm } from "react-hook-form";
 import { PostParams } from "../../lib/client";
 import { formSchema } from "../../lib/form-schema";
@@ -80,4 +80,6 @@ export const ProgramForm: FC<Props> = ({ stationId, program, onSubmit }) => {
   );
 };
 
-const FormControlGroup: FC = ({ children }) => <div className="flex flex-col items-start gap-1 w-full">{children}</div>;
+const FormControlGroup: FC<PropsWithChildren> = ({ children }) => (
+  <div className="flex flex-col items-start gap-1 w-full">{children}</div>
+);

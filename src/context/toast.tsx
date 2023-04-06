@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { FC, PropsWithChildren, createContext, useContext, useEffect, useState } from "react";
 import { FADEOUT_TIME_MS, Toast, ToastType } from "../components/toast";
 
 type ToastContextProps = {
@@ -10,7 +10,7 @@ const ToastContext = createContext<ToastContextProps>({
   },
 });
 
-export const ToastProvider: React.FC = (props) => {
+export const ToastProvider: FC<PropsWithChildren> = (props) => {
   const [toast, setToast] = useState<ToastType | undefined>(undefined);
 
   const value: ToastContextProps = {
