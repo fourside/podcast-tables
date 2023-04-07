@@ -1,14 +1,14 @@
 import { FC, useCallback, useEffect, useRef, useState } from "react";
+import { Mic } from "react-feather";
 import { useAuth } from "../context/auth";
 import { useToast } from "../context/toast";
 import { PostParams, postProgram } from "../lib/client";
-import { formatMonthDay, getToday } from "../lib/day";
+import { formatHourMinute, formatMonthDay, getToday } from "../lib/day";
 import { Program, ProgramPerDate } from "../lib/station";
-import { unformatPostParams } from "../lib/util";
-import { ProgramForm } from "./form/program-form";
+import { calcWeightFromDuration, stripHtmlElement, unformatPostParams } from "../lib/util";
 import { Menu } from "./menu";
 import { Modal } from "./modal";
-import { ProgramCard } from "./program-card";
+import { ProgramForm } from "./program-form";
 
 type Props = {
   stationId: string;
@@ -108,6 +108,46 @@ const ProgramColumn: FC<ProgramColumnProps> = (props) => {
       {props.programPerDate.programs.map((program) => (
         <ProgramCard program={program} key={program.id} onClick={props.onClick} />
       ))}
+    </div>
+  );
+};
+
+type ProgramCardProps = {
+  program: Program;
+  onClick: (program: Program) => void;
+};
+
+const ProgramCard: FC<ProgramCardProps> = ({ program, onClick }) => {
+  const time = formatHourMinute(program.from);
+  const weight = calcWeightFromDuration(program.duration);
+  const info = stripHtmlElement(program.info);
+
+  const handleClick = () => {
+    onClick(program);
+  };
+
+  return (
+    <div
+      className="flex flex-col gap-1 p-3 text-slate-600 border border-slate-200 rounded-xl"
+      style={{ minHeight: `${1.5 * 4 * weight}em` }}
+    >
+      <div title={program.title} className="grid grid-cols-[1fr,auto] gap-2">
+        <h4 className="text-slate-700 cursor-pointer truncate font-bold">
+          <a onClick={handleClick}>{program.title}</a>
+        </h4>
+        <div className="text-slate-200">{time}</div>
+      </div>
+      <div title={program.personality} className="grid grid-cols-[auto,1fr] items-center gap-1">
+        <Mic size={16} color={"#999"} />
+        <div className="truncate text-slate-500">{program.personality}</div>
+      </div>
+      <div
+        title={info}
+        className="text-slate-400 break-all overflow-hidden text-sm"
+        style={{ display: "-webkit-box", WebkitLineClamp: weight * 3 }}
+      >
+        {info}
+      </div>
     </div>
   );
 };

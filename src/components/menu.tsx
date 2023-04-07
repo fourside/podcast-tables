@@ -1,6 +1,5 @@
-import { FC, useCallback, VFC } from "react";
-import { formatMonthDate } from "../lib/day";
-import { Clock } from "./clock";
+import { FC, useCallback, useEffect, useState } from "react";
+import { formatHourMinuteFromTimeStamp, formatMonthDate } from "../lib/day";
 
 type Props = {
   title: string;
@@ -27,7 +26,7 @@ type DateButtonProps = {
   onClick: (date: string) => void;
 };
 
-const DateButton: VFC<DateButtonProps> = (props) => {
+const DateButton: FC<DateButtonProps> = (props) => {
   const { onClick } = props;
   const label = formatMonthDate(props.date);
 
@@ -47,5 +46,28 @@ const DateButton: VFC<DateButtonProps> = (props) => {
     >
       {label}
     </a>
+  );
+};
+
+const Clock: FC = () => {
+  const [now, setNow] = useState(Date.now);
+  useEffect(() => {
+    const id = setInterval(() => {
+      setNow(Date.now);
+    }, 1000 * 60);
+
+    return () => {
+      clearInterval(id);
+    };
+  }, []);
+
+  const hourMinute = formatHourMinuteFromTimeStamp(now);
+  const [hour, min] = hourMinute.split(":");
+  return (
+    <div className="text-slate-300">
+      {hour}
+      <span className="text-slate-300 px-px animate-blink">:</span>
+      {min}
+    </div>
   );
 };

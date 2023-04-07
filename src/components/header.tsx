@@ -4,7 +4,6 @@ import { FC } from "react";
 import { User } from "react-feather";
 import { useAuth } from "../context/auth";
 import { signOut } from "../lib/firebase";
-import { Button } from "./button";
 import { DropdownMenu } from "./dropdown-menu";
 
 export const Header: FC = () => {
@@ -33,5 +32,21 @@ export const Header: FC = () => {
         </div>
       )}
     </header>
+  );
+};
+
+type ButtonProps = {
+  label: string;
+  onClick: () => void;
+};
+
+const Button: FC<ButtonProps> = ({ label, onClick }) => {
+  return (
+    <button
+      onClick={onClick}
+      className="bg-transparent border border-slate-200 rounded-lg text-slate-500 py-2 px-3 text-sm cursor-pointer hover:shadow hover:shadow-slate-200"
+    >
+      {label}
+    </button>
   );
 };
