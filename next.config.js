@@ -4,6 +4,10 @@ const withBundleAnalyzer = require("@next/bundle-analyzer")({
 
 /** @type {import('next').NextConfig} */
 const nextCOnfig = {
+  reactStrictMode: true,
+  eslint: {
+    dirs: ["src"],
+  },
   env: {
     API_ENDPOINT: process.env.API_ENDPOINT,
     FIREBASE_API_KEY: process.env.FIREBASE_API_KEY,

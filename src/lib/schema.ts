@@ -2,9 +2,11 @@ import { z } from "zod";
 import { RecordingTask } from "./client";
 import { ProgramResponse, ProgramsPerDateResponse, Station } from "./station";
 
-const schemaForType = <T>() => <S extends z.ZodType<T, any, any>>(arg: S) => {
-  return arg;
-};
+const schemaForType =
+  <T>() =>
+  <S extends z.ZodType<T, any, any>>(arg: S) => {
+    return arg;
+  };
 
 export const stationArraySchema = schemaForType<Station[]>()(
   z.array(

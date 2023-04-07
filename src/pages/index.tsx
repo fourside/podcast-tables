@@ -1,4 +1,4 @@
-import { GetStaticPropsResult, NextPage } from "next";
+import type { GetStaticPropsResult, NextPage } from "next";
 import Router from "next/router";
 import { useEffect } from "react";
 import Layout from "../components/layout";

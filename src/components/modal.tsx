@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, PropsWithChildren } from "react";
 import { X } from "react-feather";
 import { ClientPortal } from "./client-portal";
 
@@ -7,7 +7,7 @@ type Props = {
   onClose: () => void;
 };
 
-export const Modal: FC<Props> = ({ isOpen, onClose, children }) => {
+export const Modal: FC<PropsWithChildren<Props>> = ({ isOpen, onClose, children }) => {
   if (!isOpen) {
     return null;
   }

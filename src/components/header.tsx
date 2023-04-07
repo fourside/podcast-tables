@@ -19,9 +19,7 @@ export const Header: FC = () => {
     <header className="flex justify-between border-b border-b-slate-200">
       <div className="p-4">
         <Link href={"/"}>
-          <a>
-            <h1 className="text-slate-800 m-0 text-3xl">podcast tables</h1>
-          </a>
+          <h1 className="text-slate-800 m-0 text-3xl">podcast tables</h1>
         </Link>
       </div>
       {user && (

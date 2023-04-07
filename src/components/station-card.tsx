@@ -22,8 +22,8 @@ type StationCardProps = {
 const StationCard: React.FC<StationCardProps> = ({ station }) => {
   return (
     <div className="w-[200px] h-[100px] py-8 px-4 flex justify-center items-center rounded-xl border border-slate-200 shadow-md cursor-pointer">
-      <Link href={`/programs/${station.id}`} passHref>
-        <a className="text-center text-slate-700 font-bold leading-4">{station.name}</a>
+      <Link href={`/programs/${station.id}`} className="text-center text-slate-700 font-bold leading-4">
+        {station.name}
       </Link>
     </div>
   );

@@ -1,5 +1,5 @@
-import { yupResolver } from "@hookform/resolvers/yup";
-import { FC } from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { FC, PropsWithChildren } from "react";
 import { useForm } from "react-hook-form";
 import { PostParams } from "../../lib/client";
 import { formSchema } from "../../lib/form-schema";
@@ -17,10 +17,14 @@ type Props = {
 
 export const ProgramForm: FC<Props> = ({ stationId, program, onSubmit }) => {
   const formatted = formatProgram(program);
-
-  const { handleSubmit, register, formState, errors } = useForm<PostParams>({
+  const {
+    handleSubmit,
+    register,
+    formState,
+    formState: { errors },
+  } = useForm<PostParams>({
     mode: "onBlur",
-    resolver: yupResolver(formSchema),
+    resolver: zodResolver(formSchema),
     defaultValues: {
       stationId,
       title: formatted.title,
@@ -76,4 +80,6 @@ export const ProgramForm: FC<Props> = ({ stationId, program, onSubmit }) => {
   );
 };
 
-const FormControlGroup: FC = ({ children }) => <div className="flex flex-col items-start gap-1 w-full">{children}</div>;
+const FormControlGroup: FC<PropsWithChildren> = ({ children }) => (
+  <div className="flex flex-col items-start gap-1 w-full">{children}</div>
+);
