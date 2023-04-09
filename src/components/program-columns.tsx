@@ -1,6 +1,6 @@
 import { FC, useCallback, useEffect, useRef, useState } from "react";
 import { Mic } from "react-feather";
-import { useAuth } from "../context/auth";
+import { FirebaseUser } from "../context/auth";
 import { useToast } from "../context/toast";
 import { PostParams, postProgram } from "../lib/client";
 import { formatHourMinute, formatMonthDay, getToday } from "../lib/day";
@@ -13,10 +13,10 @@ import { ProgramForm } from "./program-form";
 type Props = {
   stationId: string;
   programPerDates: ProgramPerDate[];
+  user: FirebaseUser;
 };
 
-export const ProgramColumns: FC<Props> = ({ stationId, programPerDates }) => {
-  const { user } = useAuth();
+export const ProgramColumns: FC<Props> = ({ stationId, programPerDates, user }) => {
   const dateList = programPerDates.map((programPerDate) => programPerDate.date);
   const [open, setOpen] = useState(false);
   const [program, setProgram] = useState<Program>({

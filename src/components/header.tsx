@@ -7,7 +7,8 @@ import { signOut } from "../lib/firebase";
 import { DropdownMenu } from "./dropdown-menu";
 
 export const Header: FC = () => {
-  const { user } = useAuth();
+  const authState = useAuth();
+  const user = authState.type === "authenticated" ? authState.user : undefined;
 
   const handleSignOut = async () => {
     await signOut();
@@ -21,13 +22,13 @@ export const Header: FC = () => {
           <h1 className="text-slate-800 m-0 text-3xl">podcast tables</h1>
         </Link>
       </div>
-      {user && (
+      {user !== undefined && (
         <div className="flex items-center gap-8 p-2">
           <div className="text-slate-800 flex gap-1 items-center">
             <User size={20} style={{ flexShrink: 0 }} />
             {user.email}
           </div>
-          <DropdownMenu />
+          <DropdownMenu user={user} />
           <Button onClick={handleSignOut} label={"Sign out"} />
         </div>
       )}

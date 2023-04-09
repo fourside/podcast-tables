@@ -13,10 +13,10 @@ type Props = {
 };
 
 const ProgramsPage: NextPage<Props> = ({ programs, stationId }) => {
-  const { authState } = useAuth();
+  const authState = useAuth();
 
   useEffect(() => {
-    if (authState === "fail") {
+    if (authState.type === "not_authenticated") {
       Router.push("/signin");
     }
   }, [authState]);
@@ -26,13 +26,13 @@ const ProgramsPage: NextPage<Props> = ({ programs, stationId }) => {
     return <div>not found</div>;
   }
 
-  if (authState === "unknown") {
+  if (authState.type === "not_authenticated") {
     return null;
   }
 
   return (
     <Layout>
-      <ProgramColumns stationId={stationId} programPerDates={programs} />
+      <ProgramColumns stationId={stationId} programPerDates={programs} user={authState.user} />
     </Layout>
   );
 };

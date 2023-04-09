@@ -46,9 +46,6 @@ export async function postProgram(postParams: PostParams, user: FirebaseUser): P
 }
 
 export async function getRecordingTask(user: FirebaseUser): Promise<RecordingTask[]> {
-  if (!user) {
-    throw new Error("not authenticated");
-  }
   const idToken = await user.getIdToken();
   const response = await request("/programs/queue", {
     headers: {

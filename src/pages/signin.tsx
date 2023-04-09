@@ -5,10 +5,10 @@ import Layout from "../components/layout";
 import { signIn, useAuth } from "../context/auth";
 
 const SignInPage: NextPage = () => {
-  const { authState } = useAuth();
+  const authState = useAuth();
 
   useEffect(() => {
-    if (authState === "success") {
+    if (authState.type === "authenticated") {
       Router.push("/");
     }
   }, [authState]);
@@ -25,7 +25,7 @@ const SignInPage: NextPage = () => {
     }
   };
 
-  if (authState === "unknown") {
+  if (authState.type === "not_authenticated") {
     return null;
   }
 

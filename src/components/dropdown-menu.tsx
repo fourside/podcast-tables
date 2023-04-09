@@ -1,16 +1,21 @@
+"use client";
+
 import { FC, useCallback, useEffect, useRef, useState } from "react";
 import { AlertCircle, AlertTriangle, ChevronDown, Clock } from "react-feather";
-import { useAuth } from "../context/auth";
+import { FirebaseUser } from "../context/auth";
 import { RecordingTask, getRecordingTask } from "../lib/client";
 import { Loading } from "./loading";
 
-export const DropdownMenu: FC = () => {
+type DropdownMenuProps = {
+  user: FirebaseUser;
+};
+
+export const DropdownMenu: FC<DropdownMenuProps> = (props) => {
   const [open, setOpen] = useState(false);
   const [recordingTasks, setRecordingTasks] = useState<RecordingTask[]>([]);
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string>();
   const containerRef = useRef<HTMLDivElement>(null);
-  const { user } = useAuth();
 
   useEffect(() => {
     (async () => {
@@ -20,7 +25,7 @@ export const DropdownMenu: FC = () => {
       try {
         setLoading(true);
         setRecordingTasks([]);
-        const result = await getRecordingTask(user);
+        const result = await getRecordingTask(props.user);
         setRecordingTasks(result);
       } catch (error) {
         if (error instanceof Error) {
@@ -33,7 +38,7 @@ export const DropdownMenu: FC = () => {
         setLoading(false);
       }
     })();
-  }, [open, user]);
+  }, [open, props.user]);
 
   const handleClickOutside = useCallback((event: Event) => {
     if (event.target instanceof Node && containerRef.current?.contains(event.target)) {
