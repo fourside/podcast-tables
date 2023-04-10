@@ -31,7 +31,7 @@ const ProgramsPage: NextPage<Props> = ({ programs, stationId }) => {
   }
 
   return (
-    <Layout>
+    <Layout user={authState.user}>
       <ProgramColumns stationId={stationId} programPerDates={programs} user={authState.user} />
     </Layout>
   );

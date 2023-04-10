@@ -2,14 +2,15 @@ import Link from "next/link";
 import Router from "next/router";
 import { FC } from "react";
 import { User } from "react-feather";
-import { useAuth } from "../context/auth";
+import { FirebaseUser } from "../context/auth";
 import { signOut } from "../lib/firebase";
 import { DropdownMenu } from "./dropdown-menu";
 
-export const Header: FC = () => {
-  const authState = useAuth();
-  const user = authState.type === "authenticated" ? authState.user : undefined;
+type Props = {
+  user?: FirebaseUser;
+};
 
+export const Header: FC<Props> = ({ user }) => {
   const handleSignOut = async () => {
     await signOut();
     Router.push("/signin");

@@ -25,10 +25,6 @@ const SignInPage: NextPage = () => {
     }
   };
 
-  if (authState.type === "not_authenticated") {
-    return null;
-  }
-
   return (
     <Layout>
       <div className="max-w-[360px] min-h-[240px] mx-auto my-12 rounded-xl border-slate-100 flex flex-col gap-8 items-center">

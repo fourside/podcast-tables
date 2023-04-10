@@ -11,19 +11,19 @@ type Props = {
   stations: Station[];
 };
 const IndexPage: NextPage<Props> = ({ stations }) => {
-  const { authState } = useAuth();
+  const authState = useAuth();
   useEffect(() => {
-    if (authState === "fail") {
+    if (authState.type === "not_authenticated") {
       Router.push("/signin");
     }
   }, [authState]);
 
-  if (authState === "unknown") {
+  if (authState.type === "not_authenticated") {
     return null;
   }
 
   return (
-    <Layout>
+    <Layout user={authState.user}>
       <h2 className="text-3xl text-center tracking-widest my-5">Stations</h2>
       <div className="max-w-[720px] min-h-screen mx-auto my-12">
         <StationCards stations={stations} />
