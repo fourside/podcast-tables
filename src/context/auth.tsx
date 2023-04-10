@@ -11,12 +11,15 @@ type AuthStateType =
     }
   | {
       type: "not_authenticated";
+    }
+  | {
+      type: "initialized";
     };
 
-const AuthContext = createContext<AuthStateType>({ type: "not_authenticated" });
+const AuthContext = createContext<AuthStateType>({ type: "initialized" });
 
 const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
-  const [authState, setAuthState] = useState<AuthStateType>({ type: "not_authenticated" });
+  const [authState, setAuthState] = useState<AuthStateType>({ type: "initialized" });
 
   useEffect(() => {
     initializeFirebaseApp();

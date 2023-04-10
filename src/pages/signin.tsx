@@ -2,6 +2,7 @@ import type { NextPage } from "next";
 import Router from "next/router";
 import { FC, useEffect, useState } from "react";
 import Layout from "../components/layout";
+import { Loading } from "../components/loading";
 import { signIn, useAuth } from "../context/auth";
 
 const SignInPage: NextPage = () => {
@@ -24,6 +25,10 @@ const SignInPage: NextPage = () => {
       setLoading(false);
     }
   };
+
+  if (authState.type === "initialized" || authState.type === "authenticated") {
+    return <Loading />;
+  }
 
   return (
     <Layout>

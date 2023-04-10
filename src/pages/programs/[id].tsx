@@ -2,6 +2,7 @@ import { GetStaticPathsResult, GetStaticPropsContext, GetStaticPropsResult, Next
 import Router, { useRouter } from "next/router";
 import { useEffect } from "react";
 import Layout from "../../components/layout";
+import { Loading } from "../../components/loading";
 import { ProgramColumns } from "../../components/program-columns";
 import { useAuth } from "../../context/auth";
 import { getPrograms } from "../../lib/client";
@@ -23,10 +24,10 @@ const ProgramsPage: NextPage<Props> = ({ programs, stationId }) => {
 
   const router = useRouter();
   if (router.isFallback && !programs) {
-    return <div>not found</div>;
+    return <Loading />;
   }
 
-  if (authState.type === "not_authenticated") {
+  if (authState.type === "not_authenticated" || authState.type === "initialized") {
     return null;
   }
 

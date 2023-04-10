@@ -18,7 +18,7 @@ const IndexPage: NextPage<Props> = ({ stations }) => {
     }
   }, [authState]);
 
-  if (authState.type === "not_authenticated") {
+  if (authState.type === "not_authenticated" || authState.type === "initialized") {
     return null;
   }
 
