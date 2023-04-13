@@ -2,7 +2,7 @@ import { z } from "zod";
 import { RecordingTask } from "./client";
 import { ProgramResponse, ProgramsPerDateResponse, Station } from "./station";
 
-const schemaForType =
+export const schemaForType =
   <T>() =>
   <S extends z.ZodType<T, any, any>>(arg: S) => {
     return arg;

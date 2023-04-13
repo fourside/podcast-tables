@@ -2,47 +2,44 @@ import { GoogleAuthProvider, User, getAuth, onAuthStateChanged, signInWithRedire
 import { FC, PropsWithChildren, createContext, useContext, useEffect, useState } from "react";
 import { initializeFirebaseApp } from "../lib/firebase";
 
-export type FirebaseUser = User | null | undefined;
+export type FirebaseUser = User;
 
-type AuthedProps = {
-  authState: "success";
-  user: FirebaseUser;
-};
-type UnauthedProps = {
-  authState: "fail";
-  user?: null;
-};
-type unknownAuthProps = {
-  authState: "unknown";
-  user?: null;
-};
+type AuthStateType =
+  | {
+      type: "authenticated";
+      user: FirebaseUser;
+    }
+  | {
+      type: "not_authenticated";
+    }
+  | {
+      type: "initialized";
+    };
 
-type AuthContextProps = AuthedProps | UnauthedProps | unknownAuthProps;
-
-const AuthContext = createContext<AuthContextProps>({ authState: "unknown" });
+const AuthContext = createContext<AuthStateType>({ type: "initialized" });
 
 const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
-  const [firebaseAuthState, setFirebaseAuthState] = useState<AuthContextProps>({ authState: "unknown" });
+  const [authState, setAuthState] = useState<AuthStateType>({ type: "initialized" });
 
   useEffect(() => {
     initializeFirebaseApp();
     const auth = getAuth();
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user === null) {
-        setFirebaseAuthState({ authState: "fail" });
+        setAuthState({ type: "not_authenticated" });
       } else {
-        setFirebaseAuthState({ authState: "success", user });
+        setAuthState({ type: "authenticated", user });
       }
     });
     return unsubscribe;
   }, []);
 
-  return <AuthContext.Provider value={firebaseAuthState}>{children}</AuthContext.Provider>;
+  return <AuthContext.Provider value={authState}>{children}</AuthContext.Provider>;
 };
 
 export { AuthContext, AuthProvider };
 
-export const useAuth: () => AuthContextProps = () => {
+export const useAuth: () => AuthStateType = () => {
   return useContext(AuthContext);
 };
 

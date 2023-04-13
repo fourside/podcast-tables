@@ -1,5 +1,5 @@
-import type { NextComponentType } from "next";
-import type { AppContext, AppInitialProps, AppProps } from "next/app";
+import type { AppProps } from "next/app";
+import { Noto_Sans_JP } from "next/font/google";
 import Router from "next/router";
 import { useState } from "react";
 import { Loading } from "../components/loading";
@@ -7,7 +7,12 @@ import { AuthProvider } from "../context/auth";
 import { ToastProvider } from "../context/toast";
 import "../styles/globals.css";
 
-const MyApp: NextComponentType<AppContext, AppInitialProps, AppProps> = ({ Component, pageProps }: AppProps) => {
+const notoSansJp = Noto_Sans_JP({
+  weight: "400",
+  subsets: ["latin"],
+});
+
+export default function App({ Component, pageProps }: AppProps) {
   const [loading, setLoading] = useState(false);
 
   Router.events.on("routeChangeStart", () => setLoading(true));
@@ -19,12 +24,12 @@ const MyApp: NextComponentType<AppContext, AppInitialProps, AppProps> = ({ Compo
   }
 
   return (
-    <AuthProvider>
-      <ToastProvider>
-        <Component {...pageProps} />
-      </ToastProvider>
-    </AuthProvider>
+    <div className={notoSansJp.className}>
+      <AuthProvider>
+        <ToastProvider>
+          <Component {...pageProps} />
+        </ToastProvider>
+      </AuthProvider>
+    </div>
   );
-};
-
-export default MyApp;
+}
