@@ -17,6 +17,8 @@ export type RecordingTask = PostParams;
 export async function getStations(): Promise<Station[]> {
   const response = await request("/stations");
   const json = await response.json();
+  console.log("stations", response.headers);
+  console.log("stations", json);
   return stationArraySchema.parse(json);
 }
 
