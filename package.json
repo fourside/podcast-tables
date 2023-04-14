@@ -10,7 +10,6 @@
     "test": "echo no test",
     "prettier": "prettier --write \"**/*.ts\" \"**/*.tsx\"",
     "analyze": "ANALYZE=true npm run build",
-    "postbuild": "find .next -name *.map -delete",
     "prepare": "husky install"
   },
   "dependencies": {
