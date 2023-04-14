@@ -1,4 +1,5 @@
 import * as Sentry from "@sentry/nextjs";
+import { NextPage } from "next";
 import NextErrorComponent, { type ErrorProps } from "next/error";
 
 interface MyErrorProps extends ErrorProps {
@@ -6,7 +7,7 @@ interface MyErrorProps extends ErrorProps {
   hasGetInitialPropsRun?: boolean;
 }
 
-const MyError = ({ statusCode, hasGetInitialPropsRun, err }: MyErrorProps) => {
+const MyError: NextPage<MyErrorProps> = ({ statusCode, hasGetInitialPropsRun, err }) => {
   if (!hasGetInitialPropsRun && err) {
     // getInitialProps is not called in case of
     // https://github.com/vercel/next.js/issues/8592. As a workaround, we pass
@@ -18,9 +19,7 @@ const MyError = ({ statusCode, hasGetInitialPropsRun, err }: MyErrorProps) => {
   return <NextErrorComponent statusCode={statusCode} />;
 };
 
-type Context = Parameters<typeof NextErrorComponent.getInitialProps>[0];
-
-MyError.getInitialProps = async (context: Context) => {
+MyError.getInitialProps = async (context) => {
   const errorInitialProps: MyErrorProps = await NextErrorComponent.getInitialProps(context);
 
   // Workaround for https://github.com/vercel/next.js/issues/8592, mark when
