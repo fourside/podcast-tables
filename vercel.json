@@ -1,0 +1,3 @@
+{
+  "redirects": [{ "source": "/:path*.map", "destination": "/404" }]
+}
