@@ -4,16 +4,18 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "SENTRY_RELEASE=`git rev-parse --short HEAD` next build",
     "start": "next start",
     "lint": "next lint",
     "test": "echo no test",
     "prettier": "prettier --write \"**/*.ts\" \"**/*.tsx\"",
     "analyze": "ANALYZE=true npm run build",
+    "postbuild": "find .next -name *.map -delete",
     "prepare": "husky install"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.0.1",
+    "@sentry/nextjs": "^7.47.0",
     "dayjs": "^1.9.7",
     "firebase": "^9.19.1",
     "he": "^1.2.0",
