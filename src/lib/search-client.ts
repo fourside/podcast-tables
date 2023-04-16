@@ -1,6 +1,7 @@
 import { createHash } from "node:crypto";
 import { searchProgramsResponseSchema } from "./schema";
 import { SearchProgramResponse, SearchQueries } from "./station";
+import { mergeSearchPrograms } from "./util";
 
 export async function search(searchQueries: SearchQueries): Promise<SearchProgramResponse> {
   const urlParams = new URLSearchParams({
@@ -20,7 +21,11 @@ export async function search(searchQueries: SearchQueries): Promise<SearchProgra
   });
   const response = await fetch(`https://radiko.jp/v3/api/program/search?${urlParams}`);
   const json = await response.json();
-  return searchProgramsResponseSchema.parse(json);
+  const parsed = searchProgramsResponseSchema.parse(json);
+  return {
+    meta: parsed.meta,
+    data: mergeSearchPrograms(parsed.data),
+  };
 }
 
 function md5hex(): string {
