@@ -1,9 +1,9 @@
 import type { GetStaticPropsResult, NextPage } from "next";
 import Router from "next/router";
 import { useEffect } from "react";
+import { useAuth } from "../components/auth-context";
 import Layout from "../components/layout";
 import { StationCards } from "../components/station-cards";
-import { useAuth } from "../context/auth";
 import { getStations } from "../lib/client";
 import { Station } from "../lib/station";
 

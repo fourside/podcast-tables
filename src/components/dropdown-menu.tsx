@@ -2,8 +2,8 @@
 
 import { FC, useCallback, useEffect, useRef, useState } from "react";
 import { AlertCircle, AlertTriangle, ChevronDown, Clock } from "react-feather";
-import { FirebaseUser } from "../context/auth";
 import { RecordingTask, getRecordingTask } from "../lib/client";
+import { FirebaseUser } from "./auth-context";
 import { Loading } from "./loading";
 
 type DropdownMenuProps = {

@@ -1,10 +1,10 @@
 import { GetStaticPathsResult, GetStaticPropsContext, GetStaticPropsResult, NextPage } from "next";
 import Router, { useRouter } from "next/router";
 import { useEffect } from "react";
+import { useAuth } from "../../components/auth-context";
 import Layout from "../../components/layout";
 import { Loading } from "../../components/loading";
 import { ProgramColumns } from "../../components/program-columns";
-import { useAuth } from "../../context/auth";
 import { getPrograms } from "../../lib/client";
 import { ProgramPerDate } from "../../lib/station";
 

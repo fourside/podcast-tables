@@ -2,8 +2,8 @@ import type { AppProps } from "next/app";
 import { Noto_Sans_JP } from "next/font/google";
 import Router from "next/router";
 import { useState } from "react";
+import { AuthProvider } from "../components/auth-context";
 import { Loading } from "../components/loading";
-import { AuthProvider } from "../context/auth";
 import { ToastProvider } from "../context/toast";
 import "../styles/globals.css";
 

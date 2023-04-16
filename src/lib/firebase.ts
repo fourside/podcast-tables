@@ -1,5 +1,4 @@
 import { FirebaseApp, FirebaseOptions, initializeApp } from "firebase/app";
-import { getAuth, signOut as firebaseSignOut } from "firebase/auth";
 
 const config: FirebaseOptions = {
   apiKey: process.env.FIREBASE_API_KEY,
@@ -12,9 +11,4 @@ export function initializeFirebaseApp(): void {
   if (firebaseApp === undefined) {
     firebaseApp = initializeApp(config);
   }
-}
-
-export async function signOut(): Promise<void> {
-  const auth = getAuth();
-  await firebaseSignOut(auth);
 }

@@ -1,4 +1,4 @@
-import { FirebaseUser } from "../context/auth";
+import { FirebaseUser } from "../components/auth-context";
 import { getApiEndpoint, getWritableUserMailAddress } from "./env";
 import {
   programsPerDateArraySchema,
