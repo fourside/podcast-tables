@@ -39,3 +39,9 @@ export function getToday(): string {
 export function parseAsDateJs(dateString: string, format: string): Dayjs {
   return dayjs(dateString, format);
 }
+
+export function calcDurationSeconds(startDateTime: string, endDateTime: string): number {
+  const start = dayjs(startDateTime, "YYYY-MM-DD HH:mm:ss");
+  const end = dayjs(endDateTime, "YYYY-MM-DD HH:mm:ss");
+  return end.diff(start, "second");
+}

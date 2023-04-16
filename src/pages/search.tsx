@@ -3,12 +3,14 @@ import Router from "next/router";
 import { useEffect, useState } from "react";
 import Layout from "../components/layout";
 import { Loading } from "../components/loading";
+import { RecordProgramModal } from "../components/record-program-modal";
 import { SearchProgramForm } from "../components/sarch-program-form";
 import { SearchProgramCard } from "../components/search-program-card";
 import { useAuth } from "../context/auth";
 import { getSearchPrograms } from "../lib/client";
+import { calcDurationSeconds } from "../lib/day";
 import { search } from "../lib/search-client";
-import { SearchMeta, SearchProgram, SearchQueries } from "../lib/station";
+import { Program, SearchMeta, SearchProgram, SearchQueries } from "../lib/station";
 
 type Props = {
   searchPrograms: SearchProgram[];
@@ -28,6 +30,35 @@ const SearchPage: NextPage<Props> = (props) => {
   const [yetSearch, setYetSearch] = useState(true);
   const [searching, setSearching] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string>();
+
+  const [modalState, setModalState] = useState<
+    { open: true; data: { stationId: string; program: Program } } | { open: false; data: undefined }
+  >({
+    open: false,
+    data: undefined,
+  });
+  const closeModal = () => {
+    setModalState({ open: false, data: undefined });
+  };
+  const handleProgramClick = (searchProgram: SearchProgram) => {
+    setModalState({
+      open: true,
+      data: {
+        stationId: searchProgram.station_id,
+        program: {
+          id: "",
+          title: searchProgram.title,
+          personality: searchProgram.performer,
+          info: searchProgram.info,
+          from: searchProgram.start_time,
+          to: searchProgram.end_time,
+          duration: calcDurationSeconds(searchProgram.start_time, searchProgram.end_time),
+          img: "",
+          url: "",
+        },
+      },
+    });
+  };
 
   const handleSearch = async (query: SearchQueries) => {
     setSearching(true);
@@ -66,13 +97,22 @@ const SearchPage: NextPage<Props> = (props) => {
           ) : (
             <>
               {programs.map((program, index) => (
-                <SearchProgramCard key={index} program={program} onClick={() => {}} />
+                <SearchProgramCard key={index} program={program} onClick={handleProgramClick} />
               ))}
               {!yetSearch && programs.length === 0 && <div className="text-slate-700 text-xl">no results</div>}
             </>
           )}
         </div>
       </div>
+      {modalState.open && (
+        <RecordProgramModal
+          open={true}
+          onClose={closeModal}
+          stationId={modalState.data.stationId}
+          program={modalState.data.program}
+          user={authState.user}
+        />
+      )}
     </Layout>
   );
 };

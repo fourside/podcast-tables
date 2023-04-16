@@ -28,7 +28,7 @@ export interface Program {
   id: string;
   from: string;
   to: string;
-  duration: number;
+  duration: number; // sec
   title: string;
   url: string;
   info: string;

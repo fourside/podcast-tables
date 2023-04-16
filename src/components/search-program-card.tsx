@@ -21,14 +21,14 @@ export const SearchProgramCard: FC<Props> = ({ program, onClick }) => {
 
   return (
     <div className="grid grid-rows-[auto,auto,auto,1fr] gap-1 p-3 h-[300px] text-slate-600 border border-slate-200 rounded-xl shadow-md shadow-slate-300">
-      <h4 className="text-slate-700 cursor-pointer truncate font-bold text-lg">
+      <h4 className="text-slate-700 cursor-pointer font-bold text-lg">
         <a onClick={handleClick}>{program.title}</a>
       </h4>
       <div className="grid grid-cols-[auto,1fr] gap-1 items-center text-slate-500">
         <Clock size={16} />
         {startDate} {startTime}
       </div>
-      <div title={program.performer} className="grid grid-cols-[auto,1fr] items-center gap-1">
+      <div title={program.performer} className="grid grid-cols-[auto,1fr] items-center gap-1 truncate">
         <Mic size={16} color={"#999"} />
         <div className="text-slate-500">{program.performer}</div>
       </div>

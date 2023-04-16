@@ -1,7 +1,7 @@
 import { decode } from "he";
 import { PostParams } from "./client";
 import { formatFull, unformatFull } from "./day";
-import { ProgramPerDate, Program } from "./station";
+import { Program, ProgramPerDate } from "./station";
 
 export function calcWeightFromDuration(durationSec: number): number {
   const hour = durationSec / (60 * 60);
