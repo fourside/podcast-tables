@@ -1,6 +1,13 @@
 import { z } from "zod";
 import { RecordingTask } from "./client";
-import { ProgramResponse, ProgramsPerDateResponse, Station } from "./station";
+import {
+  ProgramResponse,
+  ProgramsPerDateResponse,
+  SearchMeta,
+  SearchProgram,
+  SearchProgramResponse,
+  Station,
+} from "./station";
 
 export const schemaForType =
   <T>() =>
@@ -38,6 +45,34 @@ export const programsPerDateArraySchema = schemaForType<ProgramsPerDateResponse[
       programs: z.array(programResponseSchema),
     })
   )
+);
+
+const searchProgramsSchema = schemaForType<SearchProgram>()(
+  z.object({
+    station_id: z.string(),
+    title: z.string(),
+    performer: z.string(),
+    info: z.string(),
+    start_time: z.string(),
+    end_time: z.string(),
+  })
+);
+
+const searchMetaSchema = schemaForType<SearchMeta>()(
+  z.object({
+    page_idx: z.number(),
+    row_limit: z.number(),
+    result_count: z.number(),
+    start_day: z.string(),
+    end_day: z.string(),
+  })
+);
+
+export const searchProgramsResponseSchema = schemaForType<SearchProgramResponse>()(
+  z.object({
+    data: z.array(searchProgramsSchema),
+    meta: searchMetaSchema,
+  })
 );
 
 export const recordingTaskArraySchema = schemaForType<RecordingTask[]>()(

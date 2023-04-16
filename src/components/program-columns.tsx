@@ -1,14 +1,11 @@
 import { FC, useCallback, useEffect, useRef, useState } from "react";
 import { Mic } from "react-feather";
 import { FirebaseUser } from "../context/auth";
-import { useToast } from "../context/toast";
-import { PostParams, postProgram } from "../lib/client";
 import { formatHourMinute, formatMonthDay, getToday } from "../lib/day";
 import { Program, ProgramPerDate } from "../lib/station";
-import { calcWeightFromDuration, stripHtmlElement, unformatPostParams } from "../lib/util";
+import { calcWeightFromDuration, stripHtmlElement } from "../lib/util";
 import { Menu } from "./menu";
-import { Modal } from "./modal";
-import { ProgramForm } from "./program-form";
+import { RecordProgramModal } from "./record-program-modal";
 
 type Props = {
   stationId: string;
@@ -33,28 +30,10 @@ export const ProgramColumns: FC<Props> = ({ stationId, programPerDates, user }) 
   const [activeDate, setActiveDate] = useState(getToday());
 
   const closeModal = () => setOpen(false);
-  const { setToast } = useToast();
 
   const handleClick = (program: Program) => {
     setOpen(true);
     setProgram(program);
-  };
-
-  const handleSubmit = async (formatted: PostParams) => {
-    const program = unformatPostParams(formatted);
-    try {
-      const res = await postProgram(program, user);
-      setToast({ text: "OK" });
-      console.log(res);
-    } catch (err) {
-      if (err instanceof Error) {
-        setToast({ text: `ERROR: ${err.message}`, level: "error" });
-        console.error(err);
-      } else {
-        throw err;
-      }
-    }
-    setOpen(false);
   };
 
   const handleMenuClick = useCallback((date: string) => {
@@ -76,9 +55,9 @@ export const ProgramColumns: FC<Props> = ({ stationId, programPerDates, user }) 
           />
         ))}
       </div>
-      <Modal isOpen={open} onClose={closeModal}>
-        <ProgramForm stationId={stationId} program={program} onSubmit={handleSubmit} />
-      </Modal>
+      {open && (
+        <RecordProgramModal open={open} onClose={closeModal} stationId={stationId} program={program} user={user} />
+      )}
     </div>
   );
 };

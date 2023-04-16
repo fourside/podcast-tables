@@ -66,7 +66,7 @@ export const ProgramForm: FC<Props> = ({ stationId, program, onSubmit }) => {
         <FormControlGroup>
           <div
             dangerouslySetInnerHTML={{ __html: infoHtml }}
-            className="rounded-xl w-full text-slate-600 text-xs p-3 border border-slate-100 [&>a]:text-blue-500"
+            className="rounded-xl w-full text-slate-600 text-xs p-3 border border-slate-100 [&>a]:text-blue-500 overflow-y-auto max-h-[300px]"
           />
         </FormControlGroup>
       )}
