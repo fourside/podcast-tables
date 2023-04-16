@@ -1,11 +1,11 @@
 import { FC } from "react";
-import { useToast } from "../context/toast";
 import { PostParams, postProgram } from "../lib/client";
 import { Program } from "../lib/station";
 import { unformatPostParams } from "../lib/util";
 import { FirebaseUser } from "./auth-context";
 import { Modal } from "./modal";
 import { ProgramForm } from "./program-form";
+import { useToast } from "./toast";
 
 type Props = {
   open: boolean;
