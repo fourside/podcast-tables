@@ -1,4 +1,4 @@
-import dayjs from "dayjs";
+import dayjs, { type Dayjs } from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 dayjs.extend(customParseFormat);
 
@@ -34,4 +34,8 @@ export function unformatFull(fromDay: string): string {
 
 export function getToday(): string {
   return dayjs().format("YYYYMMDD");
+}
+
+export function parseAsDateJs(dateString: string, format: string): Dayjs {
+  return dayjs(dateString, format);
 }

@@ -1,7 +1,12 @@
 import { FirebaseUser } from "../context/auth";
 import { getApiEndpoint, getWritableUserMailAddress } from "./env";
-import { programsPerDateArraySchema, recordingTaskArraySchema, stationArraySchema } from "./schema";
-import { ProgramPerDate, ProgramsPerDateResponse, Station } from "./station";
+import {
+  programsPerDateArraySchema,
+  recordingTaskArraySchema,
+  searchProgramsResponseSchema,
+  stationArraySchema,
+} from "./schema";
+import { ProgramPerDate, ProgramsPerDateResponse, SearchProgramResponse, SearchQueries, Station } from "./station";
 import { mergeSameProgramPerDates } from "./util";
 
 export type PostParams = {
@@ -57,6 +62,13 @@ export async function getRecordingTask(user: FirebaseUser): Promise<RecordingTas
   }
   const json = await response.json();
   return recordingTaskArraySchema.parse(json);
+}
+
+export async function getSearchPrograms(searchQueries: SearchQueries): Promise<SearchProgramResponse> {
+  const queries = new URLSearchParams({ key: searchQueries.key, page_idx: searchQueries.page_idx ?? "" });
+  const response = await fetch(`http://localhost:3000/api/search?${queries}`);
+  const json = await response.json();
+  return searchProgramsResponseSchema.parse(json);
 }
 
 async function request(path: string, requestInit?: RequestInit): Promise<Response> {
