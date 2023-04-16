@@ -1,7 +1,7 @@
 import Link from "next/link";
-import Router from "next/router";
+import Router, { useRouter } from "next/router";
 import { FC } from "react";
-import { User } from "react-feather";
+import { Search, User } from "react-feather";
 import { FirebaseUser } from "../context/auth";
 import { signOut } from "../lib/firebase";
 import { DropdownMenu } from "./dropdown-menu";
@@ -25,6 +25,7 @@ export const Header: FC<Props> = ({ user }) => {
       </div>
       {user !== undefined && (
         <div className="flex items-center gap-8 p-2">
+          <SearchLink />
           <div className="text-slate-800 flex gap-1 items-center">
             <User size={20} style={{ flexShrink: 0 }} />
             {user.email}
@@ -34,6 +35,23 @@ export const Header: FC<Props> = ({ user }) => {
         </div>
       )}
     </header>
+  );
+};
+
+const SearchLink: FC = () => {
+  const router = useRouter();
+
+  if (router.pathname === "/search") {
+    return null;
+  }
+
+  return (
+    <Link
+      href="/search"
+      className="grid grid-cols-[auto,1fr] gap-2 items-center text-slate-500 hover:border-b hover:border-b-slate-500"
+    >
+      <Search size={16} /> search
+    </Link>
   );
 };
 
