@@ -36,6 +36,7 @@ export const SearchProgramForm: FC<Props> = (props) => {
             value={key}
             onChange={handleChange}
             autoFocus={true}
+            disabled={props.searching}
             className="text-sm text-slate-700 w-full outline-none"
           />
         </div>

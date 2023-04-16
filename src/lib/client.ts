@@ -66,7 +66,7 @@ export async function getRecordingTask(user: FirebaseUser): Promise<RecordingTas
 
 export async function getSearchPrograms(searchQueries: SearchQueries): Promise<SearchProgramResponse> {
   const queries = new URLSearchParams({ key: searchQueries.key, page_idx: searchQueries.page_idx ?? "" });
-  const response = await fetch(`http://localhost:3000/api/search?${queries}`);
+  const response = await fetch(`/api/search?${queries}`);
   const json = await response.json();
   return searchProgramsResponseSchema.parse(json);
 }
