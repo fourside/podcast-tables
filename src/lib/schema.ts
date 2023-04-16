@@ -1,5 +1,4 @@
 import { z } from "zod";
-import { RecordingTask } from "./client";
 import {
   ProgramResponse,
   ProgramsPerDateResponse,
@@ -7,7 +6,8 @@ import {
   SearchProgram,
   SearchProgramResponse,
   Station,
-} from "./station";
+} from "../models/models";
+import { RecordingTask } from "./client";
 
 export const schemaForType =
   <T>() =>

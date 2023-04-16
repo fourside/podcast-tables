@@ -10,7 +10,7 @@ import { SearchProgramCard } from "../components/search-program-card";
 import { getSearchPrograms } from "../lib/client";
 import { calcDurationSeconds } from "../lib/day";
 import { search } from "../lib/search-client";
-import { Program, SearchMeta, SearchProgram, SearchQueries } from "../lib/station";
+import { Program, SearchMeta, SearchProgram, SearchQueries } from "../models/models";
 
 type Props = {
   searchPrograms: SearchProgram[];

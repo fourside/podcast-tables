@@ -1,4 +1,11 @@
 import { FirebaseUser } from "../components/auth-context";
+import {
+  ProgramPerDate,
+  ProgramsPerDateResponse,
+  SearchProgramResponse,
+  SearchQueries,
+  Station,
+} from "../models/models";
 import { getApiEndpoint, getWritableUserMailAddress } from "./env";
 import {
   programsPerDateArraySchema,
@@ -6,7 +13,6 @@ import {
   searchProgramsResponseSchema,
   stationArraySchema,
 } from "./schema";
-import { ProgramPerDate, ProgramsPerDateResponse, SearchProgramResponse, SearchQueries, Station } from "./station";
 import { mergeSameProgramPerDates } from "./util";
 
 export type PostParams = {

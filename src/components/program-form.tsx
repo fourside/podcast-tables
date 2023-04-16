@@ -4,8 +4,8 @@ import { UseFormRegister, useForm } from "react-hook-form";
 import { z } from "zod";
 import { PostParams } from "../lib/client";
 import { schemaForType } from "../lib/schema";
-import { Program } from "../lib/station";
 import { decodeHtml, formatProgram } from "../lib/util";
+import { Program } from "../models/models";
 
 type Props = {
   stationId: string;

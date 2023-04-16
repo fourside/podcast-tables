@@ -5,7 +5,7 @@ import { useAuth } from "../components/auth-context";
 import Layout from "../components/layout";
 import { StationCards } from "../components/station-cards";
 import { getStations } from "../lib/client";
-import { Station } from "../lib/station";
+import { Station } from "../models/models";
 
 type Props = {
   stations: Station[];

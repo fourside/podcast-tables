@@ -1,6 +1,6 @@
 import { ChangeEvent, FC, FormEvent, useState } from "react";
 import { Search } from "react-feather";
-import { SearchQueries } from "../lib/station";
+import { SearchQueries } from "../models/models";
 
 type Props = {
   searching: boolean;

@@ -1,6 +1,6 @@
 import { createHash } from "node:crypto";
+import { SearchProgramResponse, SearchQueries } from "../models/models";
 import { searchProgramsResponseSchema } from "./schema";
-import { SearchProgramResponse, SearchQueries } from "./station";
 import { mergeSearchPrograms } from "./util";
 
 export async function search(searchQueries: SearchQueries): Promise<SearchProgramResponse> {

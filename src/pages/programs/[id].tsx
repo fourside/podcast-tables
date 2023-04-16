@@ -6,7 +6,7 @@ import Layout from "../../components/layout";
 import { Loading } from "../../components/loading";
 import { ProgramColumns } from "../../components/program-columns";
 import { getPrograms } from "../../lib/client";
-import { ProgramPerDate } from "../../lib/station";
+import { ProgramPerDate } from "../../models/models";
 
 type Props = {
   programs: ProgramPerDate[];

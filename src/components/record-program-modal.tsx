@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { PostParams, postProgram } from "../lib/client";
-import { Program } from "../lib/station";
 import { unformatPostParams } from "../lib/util";
+import { Program } from "../models/models";
 import { FirebaseUser } from "./auth-context";
 import { Modal } from "./modal";
 import { ProgramForm } from "./program-form";

@@ -1,8 +1,8 @@
 import { FC } from "react";
 import { Calendar, Mic } from "react-feather";
 import { parseAsDateJs } from "../lib/day";
-import { SearchProgram } from "../lib/station";
 import { stripHtmlElement } from "../lib/util";
+import { SearchProgram } from "../models/models";
 
 type Props = {
   program: SearchProgram;
