@@ -2,8 +2,8 @@ import { FC, useCallback, useEffect, useRef, useState } from "react";
 import { Mic } from "react-feather";
 import { formatHourMinute, formatMonthDay, getToday } from "../lib/day";
 import { calcWeightFromDuration, stripHtmlElement } from "../lib/util";
-import { Program, ProgramPerDate } from "../models/models";
-import { FirebaseUser } from "./auth-context";
+import type { Program, ProgramPerDate } from "../models/program";
+import type { FirebaseUser } from "./auth-context";
 import { Menu } from "./menu";
 import { RecordProgramModal } from "./record-program-modal";
 

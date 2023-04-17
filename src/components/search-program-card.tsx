@@ -2,7 +2,7 @@ import { FC } from "react";
 import { Calendar, Mic } from "react-feather";
 import { parseAsDateJs } from "../lib/day";
 import { stripHtmlElement } from "../lib/util";
-import { SearchProgram } from "../models/models";
+import { SearchProgram } from "../models/search-program";
 
 type Props = {
   program: SearchProgram;

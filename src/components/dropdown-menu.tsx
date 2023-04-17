@@ -2,7 +2,8 @@
 
 import { FC, useCallback, useEffect, useRef, useState } from "react";
 import { AlertCircle, AlertTriangle, ChevronDown, Clock } from "react-feather";
-import { RecordingTask, getRecordingTask } from "../lib/client";
+import { getRecordPrograms } from "../lib/client";
+import type { RecordProgram } from "../models/record-program";
 import { FirebaseUser } from "./auth-context";
 import { Loading } from "./loading";
 
@@ -12,7 +13,7 @@ type DropdownMenuProps = {
 
 export const DropdownMenu: FC<DropdownMenuProps> = (props) => {
   const [open, setOpen] = useState(false);
-  const [recordingTasks, setRecordingTasks] = useState<RecordingTask[]>([]);
+  const [recordPrograms, setRecordPrograms] = useState<RecordProgram[]>([]);
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string>();
   const containerRef = useRef<HTMLDivElement>(null);
@@ -24,9 +25,9 @@ export const DropdownMenu: FC<DropdownMenuProps> = (props) => {
       }
       try {
         setLoading(true);
-        setRecordingTasks([]);
-        const result = await getRecordingTask(props.user);
-        setRecordingTasks(result);
+        setRecordPrograms([]);
+        const result = await getRecordPrograms(props.user);
+        setRecordPrograms(result);
       } catch (error) {
         if (error instanceof Error) {
           console.error(error);
@@ -69,16 +70,16 @@ export const DropdownMenu: FC<DropdownMenuProps> = (props) => {
       {open && (
         <div className="absolute -bottom-2 right-0 m-0 p-0 translate-y-full bg-white border border-slate-300 rounded-lg shadow-md w-[250px]">
           {loading && <Loading />}
-          {!loading && recordingTasks.length === 0 && !errorMessage && (
+          {!loading && recordPrograms.length === 0 && !errorMessage && (
             <div className="flex items-center gap-2 text-slate-600 p-4">
               <AlertTriangle size={16} />
               No recording task
             </div>
           )}
           {!loading &&
-            recordingTasks.map((recording, i) => (
+            recordPrograms.map((recording, i) => (
               <div key={i} className="border-b border-b-slate-300 last:border-b-0">
-                <RecordingTaskItem recordingTask={recording} />
+                <RecordProgramItem recordingTask={recording} />
               </div>
             ))}
           {!loading && errorMessage && (
@@ -93,11 +94,11 @@ export const DropdownMenu: FC<DropdownMenuProps> = (props) => {
   );
 };
 
-type RecordingTaskItemProps = {
-  recordingTask: RecordingTask;
+type RecordProgramItemProps = {
+  recordingTask: RecordProgram;
 };
 
-const RecordingTaskItem: FC<RecordingTaskItemProps> = (props) => {
+const RecordProgramItem: FC<RecordProgramItemProps> = (props) => {
   return (
     <div title={props.recordingTask.title} className="w-300 py-16 px-32">
       <h1 className="text-slate-600 text-base m-0 truncate">{props.recordingTask.title}</h1>

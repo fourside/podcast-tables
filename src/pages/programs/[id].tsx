@@ -1,4 +1,4 @@
-import { GetStaticPathsResult, GetStaticPropsContext, GetStaticPropsResult, NextPage } from "next";
+import type { GetStaticPathsResult, GetStaticPropsContext, GetStaticPropsResult, NextPage } from "next";
 import Router, { useRouter } from "next/router";
 import { useEffect } from "react";
 import { useAuth } from "../../components/auth-context";
@@ -6,7 +6,7 @@ import Layout from "../../components/layout";
 import { Loading } from "../../components/loading";
 import { ProgramColumns } from "../../components/program-columns";
 import { getPrograms } from "../../lib/client";
-import { ProgramPerDate } from "../../models/models";
+import type { ProgramPerDate } from "../../models/program";
 
 type Props = {
   programs: ProgramPerDate[];

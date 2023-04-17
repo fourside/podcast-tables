@@ -1,6 +1,6 @@
 import { decode } from "he";
-import { Program, ProgramPerDate, SearchProgram } from "../models/models";
-import { PostParams } from "./client";
+import type { Program } from "../models/program";
+import { RecordProgram } from "../models/record-program";
 import { formatFull, unformatFull } from "./day";
 
 export function calcWeightFromDuration(durationSec: number): number {
@@ -20,7 +20,7 @@ export function decodeHtml(htmlString: string): string {
   return decode(htmlString);
 }
 
-export function formatProgram(program: Program): PostParams {
+export function formatProgram(program: Program): RecordProgram {
   return {
     stationId: "",
     title: program.title.trim(),
@@ -30,88 +30,9 @@ export function formatProgram(program: Program): PostParams {
   };
 }
 
-export function unformatPostParams(formatted: PostParams): PostParams {
+export function unformatProgram(formatted: RecordProgram): RecordProgram {
   return {
     ...formatted,
     fromTime: unformatFull(formatted.fromTime),
   };
-}
-
-export function mergeSameProgramPerDates(programPerDates: ProgramPerDate[]): ProgramPerDate[] {
-  const result = programPerDates.reduce<ProgramPerDate[]>((acc, programPerDate) => {
-    const samePrograms: Program[] = [];
-    let sameFlag = false;
-    const mergedPrograms = programPerDate.programs.reduce<Program[]>((acc, program) => {
-      if (isSequentialProgram(program.title)) {
-        samePrograms.push(program);
-        sameFlag = true;
-      } else if (sameFlag) {
-        // un-match and before is matched
-        acc.push(mergePrograms(samePrograms));
-        samePrograms.splice(0); // clear array
-        sameFlag = false;
-        acc.push(program);
-      } else {
-        acc.push(program);
-      }
-      return acc;
-    }, []);
-    const mergedProgramPerDate = {
-      date: programPerDate.date,
-      programs: mergedPrograms,
-    };
-    acc.push(mergedProgramPerDate);
-    return acc;
-  }, []);
-  return result;
-}
-
-function isSequentialProgram(title: string): boolean {
-  return /\(\d\)/.test(title) || /（[０-９]）/.test(title);
-}
-
-function mergePrograms(programs: Program[]): Program {
-  if (programs.length === 1) {
-    return programs[0];
-  }
-  const result = programs.reduce((acc, cur) => {
-    acc.to = cur.to; // overwrite end time
-    acc.duration += cur.duration; // add duration
-    return acc;
-  });
-  result.title = result.title.replace(/\(\d\).*$|（[０-９]）.*$/, "");
-
-  return result;
-}
-
-export function mergeSearchPrograms(programs: SearchProgram[]): SearchProgram[] {
-  let sameFlag = false;
-  const samePrograms: SearchProgram[] = [];
-  return programs.reduce<SearchProgram[]>((acc, program) => {
-    if (isSequentialProgram(program.title)) {
-      samePrograms.push(program);
-      sameFlag = true;
-    } else if (sameFlag) {
-      sameFlag = false;
-      acc.push(_mergeSearchPrograms(samePrograms)); // flush
-      samePrograms.splice(0); // clear
-      acc.push(program);
-    } else {
-      acc.push(program);
-    }
-    return acc;
-  }, []);
-}
-
-function _mergeSearchPrograms(programs: SearchProgram[]): SearchProgram {
-  if (programs.length === 1) {
-    return programs[0];
-  }
-  const result = programs.reduce((acc, cur) => {
-    acc.end_time = cur.end_time; // overwrite end time
-    return acc;
-  });
-  result.title = result.title.replace(/\(\d\).*$|（[０-９]）.*$/, "");
-
-  return result;
 }

@@ -1,29 +1,15 @@
 import { FirebaseUser } from "../components/auth-context";
-import {
-  ProgramPerDate,
-  ProgramsPerDateResponse,
-  SearchProgramResponse,
-  SearchQueries,
-  Station,
-} from "../models/models";
+import { mergeSameProgramPerDates, type ProgramPerDate, type ProgramsPerDateResponse } from "../models/program";
+import type { RecordProgram } from "../models/record-program";
+import type { SearchProgramResponse, SearchQueries } from "../models/search-program";
+import type { Station } from "../models/station";
 import { getApiEndpoint, getWritableUserMailAddress } from "./env";
 import {
   programsPerDateArraySchema,
-  recordingTaskArraySchema,
+  recordProgramsSchema,
   searchProgramsResponseSchema,
   stationArraySchema,
 } from "./schema";
-import { mergeSameProgramPerDates } from "./util";
-
-export type PostParams = {
-  stationId: string;
-  title: string;
-  fromTime: string;
-  duration: string;
-  personality: string;
-};
-
-export type RecordingTask = PostParams;
 
 export async function getStations(): Promise<Station[]> {
   const response = await request("/stations");
@@ -40,7 +26,7 @@ export async function getPrograms(stationId: string): Promise<ProgramPerDate[]> 
   return mergeSameProgramPerDates(convertedJson);
 }
 
-export async function postProgram(postParams: PostParams, user: FirebaseUser): Promise<void> {
+export async function recordProgram(recordProgram: RecordProgram, user: FirebaseUser): Promise<void> {
   const writableUser = getWritableUserMailAddress();
   if (writableUser !== user?.email) {
     return;
@@ -51,12 +37,12 @@ export async function postProgram(postParams: PostParams, user: FirebaseUser): P
     headers: {
       Authorization: `Bearer ${idToken}`,
     },
-    body: JSON.stringify(postParams),
+    body: JSON.stringify(recordProgram),
   });
   console.log("post response", response);
 }
 
-export async function getRecordingTask(user: FirebaseUser): Promise<RecordingTask[]> {
+export async function getRecordPrograms(user: FirebaseUser): Promise<RecordProgram[]> {
   const idToken = await user.getIdToken();
   const response = await request("/programs/queue", {
     headers: {
@@ -67,7 +53,7 @@ export async function getRecordingTask(user: FirebaseUser): Promise<RecordingTas
     return [];
   }
   const json = await response.json();
-  return recordingTaskArraySchema.parse(json);
+  return recordProgramsSchema.parse(json);
 }
 
 export async function getSearchPrograms(searchQueries: SearchQueries): Promise<SearchProgramResponse> {

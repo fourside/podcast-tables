@@ -2,15 +2,15 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { FC, PropsWithChildren, useState } from "react";
 import { UseFormRegister, useForm } from "react-hook-form";
 import { z } from "zod";
-import { PostParams } from "../lib/client";
 import { schemaForType } from "../lib/schema";
 import { decodeHtml, formatProgram } from "../lib/util";
-import { Program } from "../models/models";
+import type { Program } from "../models/program";
+import type { RecordProgram } from "../models/record-program";
 
 type Props = {
   stationId: string;
   program: Program;
-  onSubmit: (postParams: PostParams) => Promise<void>;
+  onSubmit: (record: RecordProgram) => Promise<void>;
 };
 
 export const ProgramForm: FC<Props> = ({ stationId, program, onSubmit }) => {
@@ -20,7 +20,7 @@ export const ProgramForm: FC<Props> = ({ stationId, program, onSubmit }) => {
     register,
     formState,
     formState: { errors },
-  } = useForm<PostParams>({
+  } = useForm<RecordProgram>({
     mode: "onBlur",
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -85,7 +85,7 @@ const FormControlGroup: FC<PropsWithChildren> = ({ children }) => (
 const fileNamePattern = /^[^ \n\\]+$/;
 const notWhiteSpacePattern = /^[^ \n]+$/;
 
-const formSchema = schemaForType<PostParams>()(
+const formSchema = schemaForType<RecordProgram>()(
   z.object({
     stationId: z.string().regex(fileNamePattern, { message: "stationId cannot contain white spaces" }),
     title: z.string().regex(fileNamePattern, { message: "title cannot contain white spaces" }),
@@ -98,9 +98,9 @@ const formSchema = schemaForType<PostParams>()(
 );
 
 type InputProps = {
-  name: keyof PostParams;
+  name: keyof RecordProgram;
   hasError: boolean;
-  register: UseFormRegister<PostParams>;
+  register: UseFormRegister<RecordProgram>;
   forceReadOnly?: boolean;
 };
 
