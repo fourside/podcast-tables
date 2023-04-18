@@ -1,3 +1,5 @@
+import { RecordProgram } from "./record-program";
+
 export interface ProgramsPerDateResponse {
   date: number;
   programs: ProgramResponse[];
@@ -19,6 +21,8 @@ export interface ProgramPerDate {
   programs: Program[];
 }
 
+export const DATE_FORMAT_PROGRAM_PER_DATE = "YYYYMMDD";
+
 export interface Program {
   id: string;
   from: string;
@@ -29,6 +33,26 @@ export interface Program {
   info: string;
   img: string;
   personality: string;
+}
+
+export const DATE_FORMAT_PROGRAM_FROM = "YYYYMMDDHHmmss";
+
+export function convertToRecordProgram(program: Program): RecordProgram {
+  return {
+    stationId: "",
+    title: program.title.trim(),
+    personality: program.personality,
+    fromTime: program.from,
+    duration: String(program.duration / 60),
+  };
+}
+
+export function calcWeightFromDuration(durationSec: number): number {
+  const hour = durationSec / (60 * 60);
+  if (hour < 1) {
+    return 1;
+  }
+  return Math.floor(hour);
 }
 
 export function mergeSameProgramPerDates(programPerDates: ProgramPerDate[]): ProgramPerDate[] {

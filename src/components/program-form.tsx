@@ -2,10 +2,13 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { FC, PropsWithChildren, useState } from "react";
 import { UseFormRegister, useForm } from "react-hook-form";
 import { z } from "zod";
+import { exchangeFormDateToProgramDate, formatDateOfProgramDate } from "../lib/day";
+import { decodeHtml } from "../lib/html";
 import { schemaForType } from "../lib/schema";
-import { decodeHtml, formatProgram } from "../lib/util";
-import type { Program } from "../models/program";
+import { convertToRecordProgram, type Program } from "../models/program";
 import type { RecordProgram } from "../models/record-program";
+
+export const DATE_FORMAT_FORM_DATE = "YYYY/MM/DD HH:mm";
 
 type Props = {
   stationId: string;
@@ -14,7 +17,7 @@ type Props = {
 };
 
 export const ProgramForm: FC<Props> = ({ stationId, program, onSubmit }) => {
-  const formatted = formatProgram(program);
+  const recordProgram = convertToRecordProgram(program);
   const {
     handleSubmit,
     register,
@@ -25,18 +28,25 @@ export const ProgramForm: FC<Props> = ({ stationId, program, onSubmit }) => {
     resolver: zodResolver(formSchema),
     defaultValues: {
       stationId,
-      title: formatted.title,
-      personality: formatted.personality,
-      fromTime: formatted.fromTime,
-      duration: formatted.duration,
+      title: recordProgram.title,
+      personality: recordProgram.personality,
+      fromTime: formatDateOfProgramDate(recordProgram.fromTime, DATE_FORMAT_FORM_DATE),
+      duration: recordProgram.duration,
     },
   });
   const { isSubmitting, isValid } = formState;
 
+  const onSubmitWrapper = (formData: RecordProgram) => {
+    onSubmit({
+      ...formData,
+      fromTime: exchangeFormDateToProgramDate(formData.fromTime),
+    });
+  };
+
   const infoHtml = decodeHtml(program.info);
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-3 my-2">
+    <form onSubmit={handleSubmit(onSubmitWrapper)} className="flex flex-col gap-3 my-2">
       <FormControlGroup>
         <div className="grid grid-cols-[1fr,5fr] items-center gap-2 w-full">
           <Input forceReadOnly={true} name="stationId" register={register} hasError={!!errors.stationId} />

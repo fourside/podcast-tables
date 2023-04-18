@@ -5,9 +5,11 @@ export interface SearchProgram {
   title: string;
   performer: string;
   info: string;
-  start_time: string; // yyyy-mm-dd hh:mm:ss
+  start_time: string;
   end_time: string;
 }
+
+export const DATE_FORMAT_SEARCH_PROGRAM_START_TIME = "YYYY-MM-DD HH:mm:ss";
 
 export interface SearchMeta {
   page_idx: number;

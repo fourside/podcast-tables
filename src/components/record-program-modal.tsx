@@ -1,6 +1,5 @@
 import { FC } from "react";
 import { recordProgram } from "../lib/client";
-import { unformatProgram } from "../lib/util";
 import type { Program } from "../models/program";
 import type { RecordProgram } from "../models/record-program";
 import type { FirebaseUser } from "./auth-context";
@@ -19,8 +18,7 @@ type Props = {
 export const RecordProgramModal: FC<Props> = (props) => {
   const { setToast } = useToast();
 
-  const handleSubmit = async (formatted: RecordProgram) => {
-    const program = unformatProgram(formatted);
+  const handleSubmit = async (program: RecordProgram) => {
     try {
       await recordProgram(program, props.user);
       setToast({ text: "OK" });
