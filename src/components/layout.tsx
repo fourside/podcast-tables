@@ -1,6 +1,6 @@
 import Head from "next/head";
 import { FC, PropsWithChildren } from "react";
-import { FirebaseUser } from "../context/auth";
+import { FirebaseUser } from "./auth-context";
 import { Header } from "./header";
 
 type Props = {

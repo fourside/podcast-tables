@@ -1,11 +1,11 @@
 import { FC } from "react";
-import { FirebaseUser } from "../context/auth";
-import { useToast } from "../context/toast";
-import { PostParams, postProgram } from "../lib/client";
-import { Program } from "../lib/station";
-import { unformatPostParams } from "../lib/util";
+import { recordProgram } from "../lib/client";
+import type { Program } from "../models/program";
+import type { RecordProgram } from "../models/record-program";
+import type { FirebaseUser } from "./auth-context";
 import { Modal } from "./modal";
 import { ProgramForm } from "./program-form";
+import { useToast } from "./toast";
 
 type Props = {
   open: boolean;
@@ -18,10 +18,9 @@ type Props = {
 export const RecordProgramModal: FC<Props> = (props) => {
   const { setToast } = useToast();
 
-  const handleSubmit = async (formatted: PostParams) => {
-    const program = unformatPostParams(formatted);
+  const handleSubmit = async (program: RecordProgram) => {
     try {
-      await postProgram(program, props.user);
+      await recordProgram(program, props.user);
       setToast({ text: "OK" });
     } catch (err) {
       if (err instanceof Error) {

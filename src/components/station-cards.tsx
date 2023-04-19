@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { FC } from "react";
-import { Station } from "../lib/station";
+import type { Station } from "../models/station";
 
 type Props = {
   stations: Station[];

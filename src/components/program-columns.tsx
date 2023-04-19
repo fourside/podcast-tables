@@ -1,9 +1,9 @@
 import { FC, useCallback, useEffect, useRef, useState } from "react";
 import { Mic } from "react-feather";
-import { FirebaseUser } from "../context/auth";
-import { formatHourMinute, formatMonthDay, getToday } from "../lib/day";
-import { Program, ProgramPerDate } from "../lib/station";
-import { calcWeightFromDuration, stripHtmlElement } from "../lib/util";
+import { formatDateOfProgramDate, formatDateOfProgramPerDate, getToday } from "../lib/day";
+import { stripHtmlElement } from "../lib/html";
+import { Program, ProgramPerDate, calcWeightFromDuration as calcWeight } from "../models/program";
+import type { FirebaseUser } from "./auth-context";
 import { Menu } from "./menu";
 import { RecordProgramModal } from "./record-program-modal";
 
@@ -27,7 +27,7 @@ export const ProgramColumns: FC<Props> = ({ stationId, programPerDates, user }) 
     img: "",
     personality: "",
   });
-  const [activeDate, setActiveDate] = useState(getToday());
+  const [activeDate, setActiveDate] = useState(getToday);
 
   const closeModal = () => setOpen(false);
 
@@ -69,7 +69,7 @@ type ProgramColumnProps = {
 };
 
 const ProgramColumn: FC<ProgramColumnProps> = (props) => {
-  const date = formatMonthDay(props.programPerDate.date);
+  const monthAndDate = formatDateOfProgramPerDate(props.programPerDate.date, "MM/DD ddd");
   const columnRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -83,7 +83,7 @@ const ProgramColumn: FC<ProgramColumnProps> = (props) => {
       ref={columnRef}
       className="flex flex-col gap-1 flex-shrink-0 p-2 w-1/4 border border-slate-200 rounded-xl shadow-md shadow-slate-300"
     >
-      <h3 className="whitespace-nowrap m-2 font-bold text-lg">{date}</h3>
+      <h3 className="whitespace-nowrap m-2 font-bold text-lg">{monthAndDate}</h3>
       {props.programPerDate.programs.map((program) => (
         <ProgramCard program={program} key={program.id} onClick={props.onClick} />
       ))}
@@ -97,8 +97,8 @@ type ProgramCardProps = {
 };
 
 const ProgramCard: FC<ProgramCardProps> = ({ program, onClick }) => {
-  const time = formatHourMinute(program.from);
-  const weight = calcWeightFromDuration(program.duration);
+  const startTime = formatDateOfProgramDate(program.from, "HH:mm");
+  const weight = calcWeight(program.duration);
   const info = stripHtmlElement(program.info);
 
   const handleClick = () => {
@@ -114,7 +114,7 @@ const ProgramCard: FC<ProgramCardProps> = ({ program, onClick }) => {
         <h4 className="text-slate-700 cursor-pointer truncate font-bold">
           <a onClick={handleClick}>{program.title}</a>
         </h4>
-        <div className="text-slate-200">{time}</div>
+        <div className="text-slate-200">{startTime}</div>
       </div>
       <div title={program.personality} className="grid grid-cols-[auto,1fr] items-center gap-1">
         <Mic size={16} color={"#999"} />

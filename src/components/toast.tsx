@@ -1,20 +1,53 @@
-import { FC } from "react";
+import { FC, PropsWithChildren, createContext, useContext, useEffect, useState } from "react";
 import { ClientPortal } from "./client-portal";
 
-export const FADEOUT_TIME_MS = 4000;
+type ToastContextProps = {
+  setToast: (toast: ToastType) => void;
+};
+const ToastContext = createContext<ToastContextProps>({
+  setToast: () => {
+    return;
+  },
+});
 
-type Level = "success" | "error";
+export const ToastProvider: FC<PropsWithChildren> = (props) => {
+  const [toast, setToast] = useState<ToastType | undefined>(undefined);
 
-export type ToastType = {
+  const value: ToastContextProps = {
+    setToast,
+  };
+
+  useEffect(() => {
+    const id = setTimeout(() => {
+      setToast(undefined);
+    }, FADEOUT_TIME_MS);
+    return () => clearTimeout(id);
+  }, [toast]);
+
+  return (
+    <ToastContext.Provider value={value}>
+      {toast && <Toast toast={toast} />}
+      {props.children}
+    </ToastContext.Provider>
+  );
+};
+
+export const useToast: () => ToastContextProps = () => {
+  return useContext(ToastContext);
+};
+
+const FADEOUT_TIME_MS = 4000;
+
+type ToastType = {
   text: string;
-  level?: Level;
+  level?: "success" | "error";
 };
 
 type Props = {
   toast: ToastType;
 };
 
-export const Toast: FC<Props> = ({ toast }) => {
+const Toast: FC<Props> = ({ toast }) => {
   const level = toast.level ?? "success";
   return (
     <ClientPortal selector="#toast">

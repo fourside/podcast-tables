@@ -2,8 +2,7 @@ import Link from "next/link";
 import Router, { useRouter } from "next/router";
 import { FC } from "react";
 import { Search, User } from "react-feather";
-import { FirebaseUser } from "../context/auth";
-import { signOut } from "../lib/firebase";
+import { FirebaseUser, signOut } from "./auth-context";
 import { DropdownMenu } from "./dropdown-menu";
 
 type Props = {

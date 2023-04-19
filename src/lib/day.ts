@@ -1,47 +1,36 @@
 import dayjs, { type Dayjs } from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
+import { DATE_FORMAT_FORM_DATE } from "../components/program-form";
+import { DATE_FORMAT_PROGRAM_FROM, DATE_FORMAT_PROGRAM_PER_DATE } from "../models/program";
+import { DATE_FORMAT_SEARCH_PROGRAM_START_TIME } from "../models/search-program";
 dayjs.extend(customParseFormat);
 
-export function formatMonthDay(monthDay: string): string {
-  const d = dayjs(monthDay, "YYYYMMDD");
-  return d.format("MM/DD ddd");
+export function formatDateOfProgramPerDate(date: string, format: string): string {
+  return dayjs(date, DATE_FORMAT_PROGRAM_PER_DATE).format(format);
 }
 
-export function formatMonthDate(monthDay: string): string {
-  const d = dayjs(monthDay, "YYYYMMDD");
-  return d.format("MM/DD");
+export function formatDateOfProgramDate(dateTime: string, format: string): string {
+  return dayjs(dateTime, DATE_FORMAT_PROGRAM_FROM).format(format);
 }
 
-export function formatHourMinute(dateTime: string): string {
-  const d = dayjs(dateTime, "YYYYMMDDHHmmss");
-  return d.format("HH:mm");
+export function getCurrentHourMinute(): string {
+  return dayjs().format("HH:mm");
 }
 
-export function formatHourMinuteFromTimeStamp(timestamp: number): string {
-  const d = dayjs(timestamp);
-  return d.format("HH:mm");
-}
-
-export function formatFull(fromDay: string): string {
-  const d = dayjs(fromDay, "YYYYMMDDHHmmss");
-  return d.format("YYYY/MM/DD HH:mm");
-}
-
-export function unformatFull(fromDay: string): string {
-  const d = dayjs(fromDay, "YYYY/MM/DD HH:mm");
-  return d.format("YYYYMMDDHHmm");
+export function exchangeFormDateToProgramDate(formDate: string): string {
+  return dayjs(formDate, DATE_FORMAT_FORM_DATE).format(DATE_FORMAT_PROGRAM_FROM);
 }
 
 export function getToday(): string {
   return dayjs().format("YYYYMMDD");
 }
 
-export function parseAsDateJs(dateString: string, format: string): Dayjs {
-  return dayjs(dateString, format);
+export function parseSearchProgramDate(dateString: string): Dayjs {
+  return dayjs(dateString, DATE_FORMAT_SEARCH_PROGRAM_START_TIME);
 }
 
 export function calcDurationSeconds(startDateTime: string, endDateTime: string): number {
-  const start = dayjs(startDateTime, "YYYY-MM-DD HH:mm:ss");
-  const end = dayjs(endDateTime, "YYYY-MM-DD HH:mm:ss");
+  const start = dayjs(startDateTime, DATE_FORMAT_SEARCH_PROGRAM_START_TIME);
+  const end = dayjs(endDateTime, DATE_FORMAT_SEARCH_PROGRAM_START_TIME);
   return end.diff(start, "second");
 }

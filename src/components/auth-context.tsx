@@ -1,4 +1,11 @@
-import { GoogleAuthProvider, User, getAuth, onAuthStateChanged, signInWithRedirect } from "firebase/auth";
+import {
+  GoogleAuthProvider,
+  User,
+  signOut as firebaseSignOut,
+  getAuth,
+  onAuthStateChanged,
+  signInWithRedirect,
+} from "firebase/auth";
 import { FC, PropsWithChildren, createContext, useContext, useEffect, useState } from "react";
 import { initializeFirebaseApp } from "../lib/firebase";
 
@@ -45,4 +52,8 @@ export const useAuth: () => AuthStateType = () => {
 
 export function signIn(): Promise<void> {
   return signInWithRedirect(getAuth(), new GoogleAuthProvider());
+}
+
+export async function signOut(): Promise<void> {
+  await firebaseSignOut(getAuth());
 }

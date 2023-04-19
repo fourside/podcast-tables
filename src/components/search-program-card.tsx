@@ -1,8 +1,8 @@
 import { FC } from "react";
 import { Calendar, Mic } from "react-feather";
-import { parseAsDateJs } from "../lib/day";
-import { SearchProgram } from "../lib/station";
-import { stripHtmlElement } from "../lib/util";
+import { parseSearchProgramDate } from "../lib/day";
+import { stripHtmlElement } from "../lib/html";
+import { SearchProgram } from "../models/search-program";
 
 type Props = {
   program: SearchProgram;
@@ -10,7 +10,7 @@ type Props = {
 };
 
 export const SearchProgramCard: FC<Props> = ({ program, onClick }) => {
-  const date = parseAsDateJs(program.start_time, "YYYY-MM-DD HH:mm:ss");
+  const date = parseSearchProgramDate(program.start_time);
   const startDate = date.format("MM/DD ddd");
   const startTime = date.format("HH:mm");
   const info = stripHtmlElement(program.info);

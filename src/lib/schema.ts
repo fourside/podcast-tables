@@ -1,13 +1,8 @@
 import { z } from "zod";
-import { RecordingTask } from "./client";
-import {
-  ProgramResponse,
-  ProgramsPerDateResponse,
-  SearchMeta,
-  SearchProgram,
-  SearchProgramResponse,
-  Station,
-} from "./station";
+import type { ProgramResponse, ProgramsPerDateResponse } from "../models/program";
+import type { RecordProgram } from "../models/record-program";
+import type { SearchMeta, SearchProgram, SearchProgramResponse } from "../models/search-program";
+import type { Station } from "../models/station";
 
 export const schemaForType =
   <T>() =>
@@ -75,7 +70,7 @@ export const searchProgramsResponseSchema = schemaForType<SearchProgramResponse>
   })
 );
 
-export const recordingTaskArraySchema = schemaForType<RecordingTask[]>()(
+export const recordProgramsSchema = schemaForType<RecordProgram[]>()(
   z.array(
     z.object({
       stationId: z.string(),

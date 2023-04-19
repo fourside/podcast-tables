@@ -1,16 +1,17 @@
 import type { GetServerSideProps, NextPage } from "next";
 import Router from "next/router";
 import { useEffect, useState } from "react";
+import { useAuth } from "../components/auth-context";
 import Layout from "../components/layout";
 import { Loading } from "../components/loading";
 import { RecordProgramModal } from "../components/record-program-modal";
 import { SearchProgramForm } from "../components/sarch-program-form";
 import { SearchProgramCard } from "../components/search-program-card";
-import { useAuth } from "../context/auth";
 import { getSearchPrograms } from "../lib/client";
 import { calcDurationSeconds } from "../lib/day";
 import { search } from "../lib/search-client";
-import { Program, SearchMeta, SearchProgram, SearchQueries } from "../lib/station";
+import { Program } from "../models/program";
+import { SearchMeta, SearchProgram, SearchQueries } from "../models/search-program";
 
 type Props = {
   searchPrograms: SearchProgram[];

@@ -1,5 +1,5 @@
 import { FC, useCallback, useEffect, useState } from "react";
-import { formatHourMinuteFromTimeStamp, formatMonthDate } from "../lib/day";
+import { formatDateOfProgramPerDate, getCurrentHourMinute } from "../lib/day";
 
 type Props = {
   title: string;
@@ -28,7 +28,7 @@ type DateButtonProps = {
 
 const DateButton: FC<DateButtonProps> = (props) => {
   const { onClick } = props;
-  const label = formatMonthDate(props.date);
+  const label = formatDateOfProgramPerDate(props.date, "MM/DD");
 
   const handleClick = useCallback(
     (event: React.MouseEvent) => {
@@ -50,10 +50,10 @@ const DateButton: FC<DateButtonProps> = (props) => {
 };
 
 const Clock: FC = () => {
-  const [now, setNow] = useState(Date.now);
+  const [hourMinute, setHourMinute] = useState(getCurrentHourMinute);
   useEffect(() => {
     const id = setInterval(() => {
-      setNow(Date.now);
+      setHourMinute(getCurrentHourMinute());
     }, 1000 * 60);
 
     return () => {
@@ -61,7 +61,6 @@ const Clock: FC = () => {
     };
   }, []);
 
-  const hourMinute = formatHourMinuteFromTimeStamp(now);
   const [hour, min] = hourMinute.split(":");
   return (
     <div className="text-slate-300">

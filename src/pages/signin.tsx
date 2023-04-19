@@ -1,9 +1,9 @@
 import type { NextPage } from "next";
 import Router from "next/router";
 import { FC, useEffect, useState } from "react";
+import { signIn, useAuth } from "../components/auth-context";
 import Layout from "../components/layout";
 import { Loading } from "../components/loading";
-import { signIn, useAuth } from "../context/auth";
 
 const SignInPage: NextPage = () => {
   const authState = useAuth();
