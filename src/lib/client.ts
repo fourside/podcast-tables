@@ -32,7 +32,7 @@ export async function recordProgram(recordProgram: RecordProgram, user: Firebase
     return;
   }
   const idToken = await user.getIdToken();
-  const response = await request("/program", {
+  const response = await request("program", {
     method: "POST",
     headers: {
       Authorization: `Bearer ${idToken}`,
@@ -44,7 +44,7 @@ export async function recordProgram(recordProgram: RecordProgram, user: Firebase
 
 export async function getRecordPrograms(user: FirebaseUser): Promise<RecordProgram[]> {
   const idToken = await user.getIdToken();
-  const response = await request("/programs/queue", {
+  const response = await request("programs/queue", {
     headers: {
       Authorization: `Bearer ${idToken}`,
     },

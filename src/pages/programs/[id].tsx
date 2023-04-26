@@ -45,8 +45,7 @@ const REVALIDATE_SEC = 60 * 60;
 export async function getStaticProps(
   context: GetStaticPropsContext<{ id: string }>
 ): Promise<GetStaticPropsResult<Props>> {
-  const id = context.params?.id;
-  const stationId = id ?? "";
+  const stationId = context.params?.id ?? "";
   const programs = await getPrograms(stationId);
   return {
     props: {
