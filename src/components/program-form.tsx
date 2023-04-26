@@ -2,7 +2,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { FC, PropsWithChildren, useState } from "react";
 import { UseFormRegister, useForm } from "react-hook-form";
 import { z } from "zod";
-import { exchangeFormDateToProgramDate, formatDateOfProgramDate } from "../lib/day";
+import { exchangeFormDateToRecordProgramDate, formatDateOfProgramDate } from "../lib/day";
 import { decodeHtml } from "../lib/html";
 import { schemaForType } from "../lib/schema";
 import { convertToRecordProgram, type Program } from "../models/program";
@@ -17,7 +17,7 @@ type Props = {
 };
 
 export const ProgramForm: FC<Props> = ({ stationId, program, onSubmit }) => {
-  const recordProgram = convertToRecordProgram(program);
+  const recordProgram = convertToRecordProgram(program, stationId);
   const {
     handleSubmit,
     register,
@@ -27,7 +27,7 @@ export const ProgramForm: FC<Props> = ({ stationId, program, onSubmit }) => {
     mode: "onBlur",
     resolver: zodResolver(formSchema),
     defaultValues: {
-      stationId,
+      stationId: recordProgram.stationId,
       title: recordProgram.title,
       personality: recordProgram.personality,
       fromTime: formatDateOfProgramDate(recordProgram.fromTime, DATE_FORMAT_FORM_DATE),
@@ -39,7 +39,7 @@ export const ProgramForm: FC<Props> = ({ stationId, program, onSubmit }) => {
   const onSubmitWrapper = (formData: RecordProgram) => {
     onSubmit({
       ...formData,
-      fromTime: exchangeFormDateToProgramDate(formData.fromTime),
+      fromTime: exchangeFormDateToRecordProgramDate(formData.fromTime),
     });
   };
 

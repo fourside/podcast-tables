@@ -37,9 +37,9 @@ export interface Program {
 
 export const DATE_FORMAT_PROGRAM_FROM = "YYYYMMDDHHmmss";
 
-export function convertToRecordProgram(program: Program): RecordProgram {
+export function convertToRecordProgram(program: Program, stationId: string): RecordProgram {
   return {
-    stationId: "",
+    stationId,
     title: program.title.trim(),
     personality: program.personality,
     fromTime: program.from,

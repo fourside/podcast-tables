@@ -2,6 +2,7 @@ import dayjs, { type Dayjs } from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 import { DATE_FORMAT_FORM_DATE } from "../components/program-form";
 import { DATE_FORMAT_PROGRAM_FROM, DATE_FORMAT_PROGRAM_PER_DATE } from "../models/program";
+import { DATE_FORMAT_RECORD_PROGRAM } from "../models/record-program";
 import { DATE_FORMAT_SEARCH_PROGRAM_START_TIME } from "../models/search-program";
 dayjs.extend(customParseFormat);
 
@@ -17,8 +18,8 @@ export function getCurrentHourMinute(): string {
   return dayjs().format("HH:mm");
 }
 
-export function exchangeFormDateToProgramDate(formDate: string): string {
-  return dayjs(formDate, DATE_FORMAT_FORM_DATE).format(DATE_FORMAT_PROGRAM_FROM);
+export function exchangeFormDateToRecordProgramDate(formDate: string): string {
+  return dayjs(formDate, DATE_FORMAT_FORM_DATE).format(DATE_FORMAT_RECORD_PROGRAM);
 }
 
 export function getToday(): string {
