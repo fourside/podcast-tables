@@ -32,5 +32,6 @@ jobs:
         run: npm run build
         env:
           API_ENDPOINT: ${{ secrets.API_ENDPOINT }}
+          RADIKO_RESOURCE_ENDPOINT: ${{ secrets.RADIKO_RESOURCE_ENDPOINT }}
           FIREBASE_API_KEY: ${{ secrets.FIREBASE_API_KEY }}
           FIREBASE_AUTH_DOMAIN: ${{ secrets.FIREBASE_AUTH_DOMAIN }}
