@@ -3,7 +3,7 @@ import { mergeSameProgramPerDates, type ProgramPerDate, type ProgramsPerDateResp
 import type { RecordProgram } from "../models/record-program";
 import type { SearchProgramResponse, SearchQueries } from "../models/search-program";
 import type { Station } from "../models/station";
-import { getApiEndpoint, getWritableUserMailAddress } from "./env";
+import { Env } from "./env";
 import {
   programsPerDateArraySchema,
   recordProgramsSchema,
@@ -12,14 +12,13 @@ import {
 } from "./schema";
 
 export async function getStations(): Promise<Station[]> {
-  const response = await request("/stations");
+  const response = await fetch(`${Env.radikoResourceEndpoint}/stations.json`);
   const json = await response.json();
   return stationArraySchema.parse(json);
 }
 
 export async function getPrograms(stationId: string): Promise<ProgramPerDate[]> {
-  const response = await request(`/programs/${stationId}`);
-  console.log("res", response);
+  const response = await fetch(`${Env.radikoResourceEndpoint}/programs/${stationId}.json`);
   const json = await response.json();
   const programPerDateJson = programsPerDateArraySchema.parse(json);
   const convertedJson = convert(programPerDateJson);
@@ -27,12 +26,11 @@ export async function getPrograms(stationId: string): Promise<ProgramPerDate[]> 
 }
 
 export async function recordProgram(recordProgram: RecordProgram, user: FirebaseUser): Promise<void> {
-  const writableUser = getWritableUserMailAddress();
-  if (writableUser !== user?.email) {
+  if (Env.writableUserMailAddress !== user?.email) {
     return;
   }
   const idToken = await user.getIdToken();
-  const response = await request("program", {
+  const response = await fetch(`${Env.apiEndpoint}/program`, {
     method: "POST",
     headers: {
       Authorization: `Bearer ${idToken}`,
@@ -44,7 +42,7 @@ export async function recordProgram(recordProgram: RecordProgram, user: Firebase
 
 export async function getRecordPrograms(user: FirebaseUser): Promise<RecordProgram[]> {
   const idToken = await user.getIdToken();
-  const response = await request("programs/queue", {
+  const response = await fetch(`${Env.apiEndpoint}/programs/queue`, {
     headers: {
       Authorization: `Bearer ${idToken}`,
     },
@@ -61,11 +59,6 @@ export async function getSearchPrograms(searchQueries: SearchQueries): Promise<S
   const response = await fetch(`/api/search?${queries}`);
   const json = await response.json();
   return searchProgramsResponseSchema.parse(json);
-}
-
-async function request(path: string, requestInit?: RequestInit): Promise<Response> {
-  const endpoint = getApiEndpoint();
-  return fetch(`${endpoint}/${path}`, requestInit);
 }
 
 function convert(programPerDateResponses: ProgramsPerDateResponse[]): ProgramPerDate[] {
