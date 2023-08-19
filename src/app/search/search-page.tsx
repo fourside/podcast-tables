@@ -1,24 +1,24 @@
-import type { GetServerSideProps, NextPage } from "next";
+"use client";
+import type { NextPage } from "next";
 import Router from "next/router";
 import { useEffect, useState } from "react";
-import { useAuth } from "../components/auth-context";
-import Layout from "../components/layout";
-import { Loading } from "../components/loading";
-import { RecordProgramModal } from "../components/record-program-modal";
-import { SearchProgramForm } from "../components/sarch-program-form";
-import { SearchProgramCard } from "../components/search-program-card";
-import { getSearchPrograms } from "../lib/client";
-import { calcDurationSeconds } from "../lib/day";
-import { search } from "../lib/search-client";
-import { Program } from "../models/program";
-import { SearchMeta, SearchProgram, SearchQueries } from "../models/search-program";
+import { useAuth } from "../../components/auth-context";
+import { HeaderLayout } from "../../components/header-layout";
+import { Loading } from "../../components/loading";
+import { RecordProgramModal } from "../../components/record-program-modal";
+import { SearchProgramForm } from "../../components/sarch-program-form";
+import { SearchProgramCard } from "../../components/search-program-card";
+import { getSearchPrograms } from "../../lib/client";
+import { calcDurationSeconds } from "../../lib/day";
+import { Program } from "../../models/program";
+import { SearchMeta, SearchProgram, SearchQueries } from "../../models/search-program";
 
 type Props = {
   searchPrograms: SearchProgram[];
   meta?: SearchMeta;
 };
 
-const SearchPage: NextPage<Props> = (props) => {
+export const SearchPage: NextPage<Props> = (props) => {
   const authState = useAuth();
   useEffect(() => {
     if (authState.type === "not_authenticated") {
@@ -85,7 +85,7 @@ const SearchPage: NextPage<Props> = (props) => {
   }
 
   return (
-    <Layout user={authState.user}>
+    <HeaderLayout user={authState.user}>
       <div className="my-5 mx-[10%]">
         <h2 className="my-5 text-2xl">Search</h2>
         <div className="my-5">
@@ -114,35 +114,6 @@ const SearchPage: NextPage<Props> = (props) => {
           user={authState.user}
         />
       )}
-    </Layout>
+    </HeaderLayout>
   );
-};
-
-export default SearchPage;
-
-export const getServerSideProps: GetServerSideProps<Props> = async (context) => {
-  const { key, page_idx } = context.query;
-  if (key === undefined) {
-    return {
-      props: {
-        searchPrograms: [],
-      },
-    };
-  }
-  const searchKey = Array.isArray(key) ? key[0] : key;
-  const pageIndex = Array.isArray(page_idx) ? page_idx[0] : page_idx;
-  const programResponse = await search({ key: searchKey, page_idx: pageIndex });
-  return {
-    props: {
-      searchPrograms: programResponse.data.map((data) => ({
-        station_id: data.station_id,
-        title: data.title,
-        performer: data.performer,
-        start_time: data.start_time,
-        end_time: data.end_time,
-        info: data.info,
-      })),
-      meta: programResponse.meta,
-    },
-  };
 };

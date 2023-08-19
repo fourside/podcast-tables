@@ -1,11 +1,11 @@
-import type { NextPage } from "next";
+"use client";
 import Router from "next/router";
 import { FC, useEffect, useState } from "react";
-import { signIn, useAuth } from "../components/auth-context";
-import Layout from "../components/layout";
-import { Loading } from "../components/loading";
+import { signIn, useAuth } from "../../components/auth-context";
+import { HeaderLayout } from "../../components/header-layout";
+import { Loading } from "../../components/loading";
 
-const SignInPage: NextPage = () => {
+export const SignInPage: FC = () => {
   const authState = useAuth();
 
   useEffect(() => {
@@ -31,7 +31,7 @@ const SignInPage: NextPage = () => {
   }
 
   return (
-    <Layout>
+    <HeaderLayout>
       <div className="max-w-[360px] min-h-[240px] mx-auto my-12 rounded-xl border-slate-100 flex flex-col gap-8 items-center">
         <button
           onClick={handleSignInClick}
@@ -48,11 +48,9 @@ const SignInPage: NextPage = () => {
           )}
         </button>
       </div>
-    </Layout>
+    </HeaderLayout>
   );
 };
-
-export default SignInPage;
 
 const GoogleIcon: FC = () => {
   return (
