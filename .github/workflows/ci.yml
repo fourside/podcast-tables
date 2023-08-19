@@ -33,5 +33,6 @@ jobs:
         env:
           API_ENDPOINT: ${{ secrets.API_ENDPOINT }}
           RADIKO_RESOURCE_ENDPOINT: ${{ secrets.RADIKO_RESOURCE_ENDPOINT }}
+          WRITABLE_USER_MAIL_ADDRESS: ${{ WRITABLE_USER_MAIL_ADDRESS}}
           FIREBASE_API_KEY: ${{ secrets.FIREBASE_API_KEY }}
           FIREBASE_AUTH_DOMAIN: ${{ secrets.FIREBASE_AUTH_DOMAIN }}
