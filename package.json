@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "@hookform/resolvers": "^3.0.1",
-    "@sentry/nextjs": "^7.47.0",
+    "@sentry/nextjs": "^7.60.0",
     "dayjs": "^1.9.7",
     "firebase": "^9.19.1",
     "he": "^1.2.0",
