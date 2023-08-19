@@ -12,11 +12,6 @@ import {
 } from "./schema";
 
 export async function getStations(): Promise<Station[]> {
-  try {
-    console.log("????????????????????????", Env.radikoResourceEndpoint);
-  } catch (er) {
-    console.log("catched", process.env.RADIKO_RESOURCE_ENDPOINT);
-  }
   const response = await fetch(`${Env.radikoResourceEndpoint}/stations.json`);
   const json = await response.json();
   return stationArraySchema.parse(json);
