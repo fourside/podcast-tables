@@ -1,13 +1,13 @@
 "use client";
-import type { NextPage } from "next";
 import Router from "next/router";
-import { useEffect, useState } from "react";
-import { useAuth } from "../../components/auth-context";
+import { FC, useEffect, useState } from "react";
+import { AuthProvider, useAuth } from "../../components/auth-context";
 import { HeaderLayout } from "../../components/header-layout";
 import { Loading } from "../../components/loading";
 import { RecordProgramModal } from "../../components/record-program-modal";
 import { SearchProgramForm } from "../../components/sarch-program-form";
 import { SearchProgramCard } from "../../components/search-program-card";
+import { ToastProvider } from "../../components/toast";
 import { getSearchPrograms } from "../../lib/client";
 import { calcDurationSeconds } from "../../lib/day";
 import { Program } from "../../models/program";
@@ -18,8 +18,19 @@ type Props = {
   meta?: SearchMeta;
 };
 
-export const SearchPage: NextPage<Props> = (props) => {
+export const SearchPage: FC<Props> = (props) => {
+  return (
+    <AuthProvider>
+      <ToastProvider>
+        <InnerSearchPage {...props} />
+      </ToastProvider>
+    </AuthProvider>
+  );
+};
+
+const InnerSearchPage: FC<Props> = (props) => {
   const authState = useAuth();
+
   useEffect(() => {
     if (authState.type === "not_authenticated") {
       Router.push("/signin");
