@@ -1,7 +1,11 @@
 import { search } from "../../lib/search-client";
 import { SearchPage } from "./search-page";
 
-export default async function Search(searchParams: { [key: string]: string | string[] | undefined }) {
+type Props = {
+  searchParams: { [key: string]: string | string[] | undefined };
+};
+
+export default async function Search({ searchParams }: Props) {
   const key = searchParams["key"];
   const page_idx = searchParams["page_idx"];
 
