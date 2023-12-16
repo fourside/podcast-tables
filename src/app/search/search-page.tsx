@@ -5,13 +5,13 @@ import { AuthProvider, useAuth } from "../../components/auth-context";
 import { HeaderLayout } from "../../components/header-layout";
 import { Loading } from "../../components/loading";
 import { RecordProgramModal } from "../../components/record-program-modal";
-import { SearchProgramForm } from "../../components/sarch-program-form";
-import { SearchProgramCard } from "../../components/search-program-card";
 import { ToastProvider } from "../../components/toast";
 import { getSearchPrograms } from "../../lib/client";
 import { calcDurationSeconds } from "../../lib/day";
 import { Program } from "../../models/program";
 import { SearchMeta, SearchProgram, SearchQueries } from "../../models/search-program";
+import { SearchProgramForm } from "./sarch-program-form";
+import { SearchProgramCard } from "./search-program-card";
 
 type Props = {
   searchPrograms: SearchProgram[];

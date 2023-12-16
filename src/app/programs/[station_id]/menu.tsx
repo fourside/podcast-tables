@@ -1,5 +1,5 @@
 import { FC, useCallback, useEffect, useState } from "react";
-import { formatDateOfProgramPerDate, getCurrentHourMinute } from "../lib/day";
+import { formatDateOfProgramPerDate, getCurrentHourMinute } from "../../../lib/day";
 
 type Props = {
   title: string;

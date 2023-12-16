@@ -1,11 +1,11 @@
 import { FC, useCallback, useEffect, useRef, useState } from "react";
 import { Mic } from "react-feather";
-import { formatDateOfProgramDate, formatDateOfProgramPerDate, getToday } from "../lib/day";
-import { stripHtmlElement } from "../lib/html";
-import { Program, ProgramPerDate, calcWeightFromDuration as calcWeight } from "../models/program";
-import type { FirebaseUser } from "./auth-context";
+import type { FirebaseUser } from "../../../components/auth-context";
+import { RecordProgramModal } from "../../../components/record-program-modal";
+import { formatDateOfProgramDate, formatDateOfProgramPerDate, getToday } from "../../../lib/day";
+import { stripHtmlElement } from "../../../lib/html";
+import { Program, ProgramPerDate, calcWeightFromDuration as calcWeight } from "../../../models/program";
 import { Menu } from "./menu";
-import { RecordProgramModal } from "./record-program-modal";
 
 type Props = {
   stationId: string;
