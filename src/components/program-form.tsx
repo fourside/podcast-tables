@@ -7,6 +7,7 @@ import { decodeHtml } from "../lib/html";
 import { schemaForType } from "../lib/schema";
 import { convertToRecordProgram, type Program } from "../models/program";
 import type { RecordProgram } from "../models/record-program";
+import classes from "./program-form.module.css";
 
 export const DATE_FORMAT_FORM_DATE = "YYYY/MM/DD HH:mm";
 
@@ -46,9 +47,9 @@ export const ProgramForm: FC<Props> = ({ stationId, program, onSubmit }) => {
   const infoHtml = decodeHtml(program.info);
 
   return (
-    <form onSubmit={handleSubmit(onSubmitWrapper)} className="flex flex-col gap-3 my-2">
+    <form onSubmit={handleSubmit(onSubmitWrapper)} className={classes.form}>
       <FormControlGroup>
-        <div className="grid grid-cols-[1fr,5fr] items-center gap-2 w-full">
+        <div className={classes.stationAndTitle}>
           <Input forceReadOnly={true} name="stationId" register={register} hasError={!!errors.stationId} />
           <Input name="title" register={register} hasError={!!errors.title} />
         </div>
@@ -57,14 +58,14 @@ export const ProgramForm: FC<Props> = ({ stationId, program, onSubmit }) => {
       </FormControlGroup>
 
       <FormControlGroup>
-        <div className="w-full">
+        <div className={classes.personality}>
           <Input name="personality" register={register} hasError={!!errors.personality} />
         </div>
         <ErrorFormMessage message={errors.personality?.message} />
       </FormControlGroup>
 
       <FormControlGroup>
-        <div className="grid grid-cols-[3fr,1fr] items-center gap-2 w-3/4">
+        <div className={classes.fromAndDuration}>
           <Input name="fromTime" register={register} hasError={!!errors.fromTime} />
           <Input name="duration" register={register} hasError={!!errors.duration} />
         </div>
@@ -76,20 +77,20 @@ export const ProgramForm: FC<Props> = ({ stationId, program, onSubmit }) => {
         <FormControlGroup>
           <div
             dangerouslySetInnerHTML={{ __html: infoHtml }}
-            className="rounded-xl w-full text-slate-600 text-xs p-3 border border-slate-100 [&>a]:text-blue-500 overflow-y-auto max-h-[300px]"
+            className={classes.info}
           />
         </FormControlGroup>
       )}
 
       <div>
-        <SubmitButton label={"SEND"} isSubmitting={isSubmitting} isValid={!isSubmitting || isValid} />
+        <SubmitButton isSubmitting={isSubmitting} isValid={!isSubmitting || isValid} />
       </div>
     </form>
   );
 };
 
 const FormControlGroup: FC<PropsWithChildren> = ({ children }) => (
-  <div className="flex flex-col items-start gap-1 w-full">{children}</div>
+  <div className={classes.FormControlGroup}>{children}</div>
 );
 
 const fileNamePattern = /^[^ \n\\]+$/;
@@ -114,7 +115,7 @@ type InputProps = {
   forceReadOnly?: boolean;
 };
 
-export const Input: FC<InputProps> = (props) => {
+const Input: FC<InputProps> = (props) => {
   const [readOnly, setReadOnly] = useState(true);
 
   const handleClick = () => {
@@ -131,9 +132,9 @@ export const Input: FC<InputProps> = (props) => {
       onClick={handleClick}
       readOnly={props.forceReadOnly || readOnly}
       onBlur={handleBlur}
-      className="border border-slate-300 rounded-xl p-3 text-slate-800 text-xs w-full outline-blue-500"
+      className={classes.input}
       style={{
-        borderColor: props.hasError ? "#ef4444" : "#eee",
+        borderColor: props.hasError ? "var(--red-8)" : "var(--slate-7)",
         backgroundColor: props.forceReadOnly || readOnly ? "#fafafa" : "transparent",
       }}
     />
@@ -149,34 +150,23 @@ const ErrorFormMessage: FC<ErrorFormMessageProps> = ({ message }) => {
     return null;
   }
 
-  return <div className="text-red-700 text-sm">{message}</div>;
+  return <div className={classes.errorMessage}>{message}</div>;
 };
 
 type SubmitButtonProps = {
-  label: string;
   isSubmitting: boolean;
   isValid: boolean;
 };
 
-const SubmitButton: FC<SubmitButtonProps> = ({ label, isSubmitting, isValid }) => {
-  if (isSubmitting) {
-    return (
-      <div
-        title="submitting..."
-        className="rounded-xl w-[100px] h-[36px] px-2 py-3 flex justify-center bg-slate-400 border-slate-400"
-      >
-        <div className="rounded-full w-[20px] h-[20px] border border-t-slate-800 border-b-slate-800 border-r-slate-800 border-l-slate-300 animate-spin" />
-      </div>
-    );
-  }
+const SubmitButton: FC<SubmitButtonProps> = ({ isSubmitting, isValid }) => {
   return (
     <button
       name="submit"
       disabled={!isValid}
-      className="flex justify-center items-center border border-slate-300 rounded-xl text-sm text-slate-600 w-[100px] h-[36px] px-2 py-3 hover:bg-slate-400 hover:text-slate-300 hover:border-slate-400"
+      className={classes.submitButton}
       style={{ cursor: isValid ? "pointer" : "not-allowed" }}
     >
-      {label}
+      {isSubmitting ? <div className={classes.spinner} /> : "SEND"}
     </button>
   );
 };

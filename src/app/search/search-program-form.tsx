@@ -1,6 +1,7 @@
 import { ChangeEvent, FC, FormEvent, useState } from "react";
 import { Search } from "react-feather";
 import { SearchQueries } from "../../models/search-program";
+import classes from "./search-program-form.module.css";
 
 type Props = {
   searching: boolean;
@@ -25,11 +26,11 @@ export const SearchProgramForm: FC<Props> = (props) => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="flex flex-col gap-2 border border-slate-200 rounded-xl py-3 px-4 shadow-sm shadow-slate-100"
+      className={classes.form}
     >
-      <label className="flex flex-col gap-1">
-        <span className="text-sm text-slate-500">検索キー</span>
-        <div className="grid grid-cols-[auto,1fr] gap-2 items-center border border-slate-200 text-slate-500 rounded-md w-full py-1 px-3 focus-within:outline focus-within:outline-blue-500 focus-within:outline-2">
+      <label className={classes.label}>
+        <span className={classes.labelTitle}>検索キー</span>
+        <div className={classes.inputContainer}>
           <Search size={16} />
           <input
             type="search"
@@ -37,15 +38,14 @@ export const SearchProgramForm: FC<Props> = (props) => {
             onChange={handleChange}
             autoFocus={true}
             disabled={props.searching}
-            className="text-sm text-slate-700 w-full outline-none"
+            className={classes.input}
           />
         </div>
       </label>
       <div>
         <button
           disabled={props.searching}
-          className="border border-slate-200 rounded-lg py-1 px-3 text-slate-500 hover:shadow-slate-100 hover:shadow-md
-"
+          className={classes.button}
         >
           search
         </button>

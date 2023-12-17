@@ -1,5 +1,6 @@
 import { FC, useCallback, useEffect, useState } from "react";
 import { formatDateOfProgramPerDate, getCurrentHourMinute } from "../../../lib/day";
+import classes from "./menu.module.css";
 
 type Props = {
   title: string;
@@ -10,8 +11,8 @@ type Props = {
 
 export const Menu: FC<Props> = ({ title, dateList, activeDate, onMenuClick }) => {
   return (
-    <div className="sticky top-5 text-center flex flex-col gap-2 pr-3">
-      <h2 className="text-slate-500 text-2xl my-6">{title}</h2>
+    <div className={classes.container}>
+      <h2 className={classes.title}>{title}</h2>
       <Clock />
       {dateList.map((date) => (
         <DateButton key={date} date={date} isActive={date === activeDate} onClick={onMenuClick} />
@@ -41,7 +42,7 @@ const DateButton: FC<DateButtonProps> = (props) => {
   return (
     <a
       onClick={handleClick}
-      className="border border-slate-300 rounded-lg py-1 px-3 text-slate-600 cursor-pointer min-w-fit"
+      className={classes.dateButton}
       style={{ backgroundColor: props.isActive ? "#ddd" : "transparent" }}
     >
       {label}
@@ -63,9 +64,9 @@ const Clock: FC = () => {
 
   const [hour, min] = hourMinute.split(":");
   return (
-    <div className="text-slate-300">
+    <div className={classes.clock}>
       {hour}
-      <span className="text-slate-300 px-px animate-blink">:</span>
+      <span className={classes.clockDelimiter}>:</span>
       {min}
     </div>
   );

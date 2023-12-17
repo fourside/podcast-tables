@@ -1,6 +1,6 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "@radix-ui/colors/slate.css";
+@import "@radix-ui/colors/blue.css";
+@import "@radix-ui/colors/red.css";
 
 html,
 body {
@@ -9,11 +9,16 @@ body {
   font-family: -apple-system, NotoSansJP, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans,
     Droid Sans, Helvetica Neue, sans-serif;
   line-height: 1.5;
+  color: var(--slate-12);
 }
 
 a {
   color: inherit;
   text-decoration: none;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
 }
 
 * {

@@ -4,6 +4,7 @@ import { FC, PropsWithChildren } from "react";
 import { Search, User } from "react-feather";
 import { FirebaseUser, signOut } from "./auth-context";
 import { DropdownMenu } from "./dropdown-menu";
+import classes from "./header-layout.module.css";
 
 type Props = {
   user?: FirebaseUser;
@@ -34,30 +35,30 @@ type HeaderProps = {
 
 const Header: FC<HeaderProps> = (props) => {
   return (
-    <header className="flex justify-between border-b border-b-slate-200">
-      <div className="p-4">
+    <header className={classes.header}>
+      <div className={classes.titleWrapper}>
         <Link href={"/"}>
-          <h1 className="text-slate-800 m-0 text-3xl">podcast tables</h1>
+          <h1 className={classes.title}>podcast tables</h1>
         </Link>
       </div>
       {props.user !== undefined && (
-        <div className="flex items-center gap-8 p-2">
+        <div className={classes.content}>
           {!props.inSearchPage && (
             <Link
               href="/search"
-              className="grid grid-cols-[auto,1fr] gap-2 items-center text-slate-500 hover:border-b hover:border-b-slate-500"
+              className={classes.link}
             >
               <Search size={16} /> search
             </Link>
           )}
-          <div className="text-slate-800 flex gap-1 items-center">
+          <div className={classes.user}>
             <User size={20} style={{ flexShrink: 0 }} />
             {props.user.email}
           </div>
           <DropdownMenu user={props.user} />
           <button
             onClick={props.onSignOut}
-            className="bg-transparent border border-slate-200 rounded-lg text-slate-500 py-2 px-3 text-sm cursor-pointer hover:shadow hover:shadow-slate-200"
+            className={classes.signOutButton}
           >
             Sign out
           </button>
