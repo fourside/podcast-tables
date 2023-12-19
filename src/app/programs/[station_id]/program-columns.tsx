@@ -1,11 +1,12 @@
 import { FC, useCallback, useEffect, useRef, useState } from "react";
 import { Mic } from "react-feather";
-import { formatDateOfProgramDate, formatDateOfProgramPerDate, getToday } from "../lib/day";
-import { stripHtmlElement } from "../lib/html";
-import { Program, ProgramPerDate, calcWeightFromDuration as calcWeight } from "../models/program";
-import type { FirebaseUser } from "./auth-context";
+import type { FirebaseUser } from "../../../components/auth-context";
+import { RecordProgramModal } from "../../../components/record-program-modal";
+import { formatDateOfProgramDate, formatDateOfProgramPerDate, getToday } from "../../../lib/day";
+import { stripHtmlElement } from "../../../lib/html";
+import { Program, ProgramPerDate, calcWeightFromDuration as calcWeight } from "../../../models/program";
 import { Menu } from "./menu";
-import { RecordProgramModal } from "./record-program-modal";
+import classes from "./program-columns.module.css";
 
 type Props = {
   stationId: string;
@@ -41,11 +42,11 @@ export const ProgramColumns: FC<Props> = ({ stationId, programPerDates, user }) 
   }, []);
 
   return (
-    <div className="flex w-11/12 mx-auto p-2">
-      <div className="w-1/12">
+    <div className={classes.columns}>
+      <div className={classes.columnsSide}>
         <Menu title={stationId} dateList={dateList} activeDate={activeDate} onMenuClick={handleMenuClick} />
       </div>
-      <div className="flex gap-3 overflow-y-hidden">
+      <div className={classes.columnsMain}>
         {programPerDates.map((programPerDate) => (
           <ProgramColumn
             key={programPerDate.date}
@@ -79,11 +80,8 @@ const ProgramColumn: FC<ProgramColumnProps> = (props) => {
   }, [props.activeDate, props.programPerDate.date]);
 
   return (
-    <div
-      ref={columnRef}
-      className="flex flex-col gap-1 flex-shrink-0 p-2 w-1/4 border border-slate-200 rounded-xl shadow-md shadow-slate-300"
-    >
-      <h3 className="whitespace-nowrap m-2 font-bold text-lg">{monthAndDate}</h3>
+    <div ref={columnRef} className={classes.column}>
+      <h3 className={classes.columnDate}>{monthAndDate}</h3>
       {props.programPerDate.programs.map((program) => (
         <ProgramCard program={program} key={program.id} onClick={props.onClick} />
       ))}
@@ -106,25 +104,18 @@ const ProgramCard: FC<ProgramCardProps> = ({ program, onClick }) => {
   };
 
   return (
-    <div
-      className="flex flex-col gap-1 p-3 text-slate-600 border border-slate-200 rounded-xl"
-      style={{ minHeight: `${1.5 * 4 * weight}em` }}
-    >
-      <div title={program.title} className="grid grid-cols-[1fr,auto] gap-2">
-        <h4 className="text-slate-700 cursor-pointer truncate font-bold">
+    <div className={classes.card} style={{ minHeight: `${1.5 * 4 * weight}em` }}>
+      <div title={program.title} className={classes.cardTitleContainer}>
+        <h4 className={classes.cardTitle}>
           <a onClick={handleClick}>{program.title}</a>
         </h4>
-        <div className="text-slate-200">{startTime}</div>
+        <div className={classes.startTime}>{startTime}</div>
       </div>
-      <div title={program.personality} className="grid grid-cols-[auto,1fr] items-center gap-1">
+      <div title={program.personality} className={classes.personalityContainer}>
         <Mic size={16} color={"#999"} />
-        <div className="truncate text-slate-500">{program.personality}</div>
+        <div className={classes.personality}>{program.personality}</div>
       </div>
-      <div
-        title={info}
-        className="text-slate-400 break-all overflow-hidden text-sm"
-        style={{ display: "-webkit-box", WebkitLineClamp: weight * 3 }}
-      >
+      <div title={info} className={classes.info} style={{ display: "-webkit-box", WebkitLineClamp: weight * 3 }}>
         {info}
       </div>
     </div>

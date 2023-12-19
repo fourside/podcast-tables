@@ -1,5 +1,6 @@
 import { FC, PropsWithChildren, createContext, useContext, useEffect, useState } from "react";
 import { ClientPortal } from "./client-portal";
+import classes from "./toast.module.css";
 
 type ToastContextProps = {
   setToast: (toast: ToastType) => void;
@@ -52,7 +53,7 @@ const Toast: FC<Props> = ({ toast }) => {
   return (
     <ClientPortal selector="#toast">
       <div
-        className="fixed top-8 left-1/2 w-[200px] -translate-x-2/4 text-center text-sm p-3 rounded-xl animate-fadeOut"
+        className={classes.toast}
         style={
           level === "success"
             ? { color: "rgb(0,100,0)", backgroundColor: "rgba(50,200,50)" }

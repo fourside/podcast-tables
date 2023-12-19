@@ -1,0 +1,33 @@
+.container {
+  margin: 1.25rem 10%;
+}
+
+.title {
+  margin: 1.25rem 0;
+  font-size: 1.5rem;
+  line-height: 2rem;
+}
+
+.formContainer {
+  margin: 1.25rem 0;
+}
+
+.errorMessage {
+  margin: 0.25rem 0;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  color: var(--red-11);
+}
+
+.results {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.5rem;
+  margin: 1.25rem 0;
+}
+
+.noResult {
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+  color: var(--slate-10);
+}

@@ -5,13 +5,14 @@ import { AuthProvider, useAuth } from "../../components/auth-context";
 import { HeaderLayout } from "../../components/header-layout";
 import { Loading } from "../../components/loading";
 import { RecordProgramModal } from "../../components/record-program-modal";
-import { SearchProgramForm } from "../../components/sarch-program-form";
-import { SearchProgramCard } from "../../components/search-program-card";
 import { ToastProvider } from "../../components/toast";
 import { getSearchPrograms } from "../../lib/client";
 import { calcDurationSeconds } from "../../lib/day";
 import { Program } from "../../models/program";
 import { SearchMeta, SearchProgram, SearchQueries } from "../../models/search-program";
+import classes from "./search-page.module.css";
+import { SearchProgramCard } from "./search-program-card";
+import { SearchProgramForm } from "./search-program-form";
 
 type Props = {
   searchPrograms: SearchProgram[];
@@ -97,13 +98,13 @@ const InnerSearchPage: FC<Props> = (props) => {
 
   return (
     <HeaderLayout user={authState.user}>
-      <div className="my-5 mx-[10%]">
-        <h2 className="my-5 text-2xl">Search</h2>
-        <div className="my-5">
+      <div className={classes.container}>
+        <h2 className={classes.title}>Search</h2>
+        <div className={classes.formContainer}>
           <SearchProgramForm searching={searching} onSubmit={handleSearch} />
-          {errorMessage !== undefined && <div className="text-sm text-red-600 my-1">{errorMessage}</div>}
+          {errorMessage !== undefined && <div className={classes.errorMessage}>{errorMessage}</div>}
         </div>
-        <div className="my-5 grid grid-cols-3 gap-2 ">
+        <div className={classes.results}>
           {searching ? (
             <Loading />
           ) : (
@@ -111,7 +112,7 @@ const InnerSearchPage: FC<Props> = (props) => {
               {programs.map((program, index) => (
                 <SearchProgramCard key={index} program={program} onClick={handleProgramClick} />
               ))}
-              {!yetSearch && programs.length === 0 && <div className="text-slate-700 text-xl">no results</div>}
+              {!yetSearch && programs.length === 0 && <div className={classes.noResult}>no results</div>}
             </>
           )}
         </div>

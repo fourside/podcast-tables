@@ -1,0 +1,28 @@
+.container {
+  display: flex;
+  margin-top: 3rem;
+  margin-bottom: 3rem;
+  flex-direction: column;
+  gap: 2rem;
+  align-items: center;
+  border-radius: 0.75rem;
+  max-width: 360px;
+}
+
+.button {
+  display: grid;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  align-items: center;
+  border-radius: 0.5rem;
+  border-width: 1px;
+  width: 13rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+
+.button:hover {
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+}

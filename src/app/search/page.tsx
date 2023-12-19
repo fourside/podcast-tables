@@ -6,7 +6,6 @@ type Props = {
 };
 
 export default async function Search({ searchParams }: Props) {
-  console.log("!!!!!!!!!!!", searchParams);
   const key = searchParams["key"];
   const page_idx = searchParams["page_idx"];
 

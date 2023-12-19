@@ -1,0 +1,19 @@
+.toast {
+  position: fixed;
+  top: 2rem;
+  left: 50%;
+  padding: 0.75rem;
+  border-radius: 0.75rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  text-align: center;
+  width: 200px;
+  animation: fadeOut 4s infinite ease;
+}
+
+@keyframes fadeOut {
+  0% { top: 0; opacity: 0 }
+  10% { top: 0; opacity: 1 }
+  90% { top: 0; opacity: 1 }
+  100% { top: 32px; opacity: 0 }
+}

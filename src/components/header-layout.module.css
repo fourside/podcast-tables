@@ -1,0 +1,46 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--slate-6);
+}
+
+.titleWrapper {
+  padding: 1rem;
+}
+
+.title {
+  margin: 0;
+  font-size: 1.875rem;
+  line-height: 2.25rem;
+}
+
+.content {
+  display: flex;
+  padding: 0.5rem;
+  gap: 2rem;
+  align-items: center;
+}
+
+.link {
+  display: grid;
+  grid: auto / auto 1fr;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.user {
+  display: flex;
+  gap: 0.25rem;
+  align-items: center;
+}
+
+.signOutButton {
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.5rem;
+  border: 1px solid var(--slate-8);
+  color: var(--slate-11);
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  background-color: transparent;
+  cursor: pointer;
+}

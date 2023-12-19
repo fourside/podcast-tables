@@ -4,6 +4,7 @@ import { FC, useEffect, useState } from "react";
 import { signIn, useAuth } from "../../components/auth-context";
 import { HeaderLayout } from "../../components/header-layout";
 import { Loading } from "../../components/loading";
+import classes from "./signin-page.module.css";
 
 export const SignInPage: FC = () => {
   const authState = useAuth();
@@ -32,12 +33,8 @@ export const SignInPage: FC = () => {
 
   return (
     <HeaderLayout>
-      <div className="max-w-[360px] min-h-[240px] mx-auto my-12 rounded-xl border-slate-100 flex flex-col gap-8 items-center">
-        <button
-          onClick={handleSignInClick}
-          className="w-52 border border-slate-500 rounded-lg grid grid-cols-[auto,1fr] items-center py-2 px-4 text-sm text-slate-700 hover:shadow"
-          disabled={loading}
-        >
+      <div className={classes.container}>
+        <button onClick={handleSignInClick} className={classes.button} disabled={loading}>
           {loading ? (
             "Signing in..."
           ) : (

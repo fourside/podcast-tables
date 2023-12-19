@@ -3,9 +3,9 @@ import { useRouter } from "next/navigation";
 import { FC, useEffect } from "react";
 import { AuthProvider, useAuth } from "../../../components/auth-context";
 import { HeaderLayout } from "../../../components/header-layout";
-import { ProgramColumns } from "../../../components/program-columns";
 import { ToastProvider } from "../../../components/toast";
 import type { ProgramPerDate } from "../../../models/program";
+import { ProgramColumns } from "./program-columns";
 
 type Props = {
   programs: ProgramPerDate[];

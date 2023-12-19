@@ -1,0 +1,39 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  position: sticky;
+  top: 1.25rem;
+  text-align: center;
+}
+
+.title {
+  margin: 1.5rem 0;
+  font-size: 1.5rem;
+  line-height: 2rem;
+}
+
+.dateButton {
+  padding: 0.25rem 0.75rem;
+  border-radius: 0.5rem;
+  border: 1px solid var(--slate-7);
+  color: var(--slate-11);
+  min-width: fit-content;
+  cursor: pointer;
+}
+
+.clock {
+  color: var(--slate-11);
+}
+
+.clockDelimiter {
+  padding-left: 1px;
+  padding-right: 1px;
+  animation: blink 1.5s infinite;
+}
+
+@keyframes blink {
+  0% { color: #ccc }
+  50% { color: #60646c }
+  100% { color: #ccc }
+}
