@@ -53,7 +53,6 @@ const Index: FC<IndexProps> = (props) => {
   );
 };
 
-
 type StationCardProps = {
   station: Station;
 };

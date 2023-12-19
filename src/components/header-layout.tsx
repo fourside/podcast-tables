@@ -44,10 +44,7 @@ const Header: FC<HeaderProps> = (props) => {
       {props.user !== undefined && (
         <div className={classes.content}>
           {!props.inSearchPage && (
-            <Link
-              href="/search"
-              className={classes.link}
-            >
+            <Link href="/search" className={classes.link}>
               <Search size={16} /> search
             </Link>
           )}
@@ -56,10 +53,7 @@ const Header: FC<HeaderProps> = (props) => {
             {props.user.email}
           </div>
           <DropdownMenu user={props.user} />
-          <button
-            onClick={props.onSignOut}
-            className={classes.signOutButton}
-          >
+          <button onClick={props.onSignOut} className={classes.signOutButton}>
             Sign out
           </button>
         </div>

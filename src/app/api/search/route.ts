@@ -27,10 +27,12 @@ export async function GET(request: Request): Promise<Response> {
   const response = await fetch(`https://radiko.jp/v3/api/program/search?${urlParams}`);
   const json = await response.json();
   const parsed = searchProgramsResponseSchema.parse(json);
-  return new Response(JSON.stringify({
-    meta: parsed.meta,
-    data: mergeSearchPrograms(parsed.data),
-  }));
+  return new Response(
+    JSON.stringify({
+      meta: parsed.meta,
+      data: mergeSearchPrograms(parsed.data),
+    })
+  );
 }
 
 function md5hex(): string {

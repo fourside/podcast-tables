@@ -34,11 +34,7 @@ export const SignInPage: FC = () => {
   return (
     <HeaderLayout>
       <div className={classes.container}>
-        <button
-          onClick={handleSignInClick}
-          className={classes.button}
-          disabled={loading}
-        >
+        <button onClick={handleSignInClick} className={classes.button} disabled={loading}>
           {loading ? (
             "Signing in..."
           ) : (

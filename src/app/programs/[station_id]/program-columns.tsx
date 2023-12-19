@@ -80,10 +80,7 @@ const ProgramColumn: FC<ProgramColumnProps> = (props) => {
   }, [props.activeDate, props.programPerDate.date]);
 
   return (
-    <div
-      ref={columnRef}
-      className={classes.column}
-    >
+    <div ref={columnRef} className={classes.column}>
       <h3 className={classes.columnDate}>{monthAndDate}</h3>
       {props.programPerDate.programs.map((program) => (
         <ProgramCard program={program} key={program.id} onClick={props.onClick} />
@@ -107,10 +104,7 @@ const ProgramCard: FC<ProgramCardProps> = ({ program, onClick }) => {
   };
 
   return (
-    <div
-      className={classes.card}
-      style={{ minHeight: `${1.5 * 4 * weight}em` }}
-    >
+    <div className={classes.card} style={{ minHeight: `${1.5 * 4 * weight}em` }}>
       <div title={program.title} className={classes.cardTitleContainer}>
         <h4 className={classes.cardTitle}>
           <a onClick={handleClick}>{program.title}</a>
@@ -121,11 +115,7 @@ const ProgramCard: FC<ProgramCardProps> = ({ program, onClick }) => {
         <Mic size={16} color={"#999"} />
         <div className={classes.personality}>{program.personality}</div>
       </div>
-      <div
-        title={info}
-        className={classes.info}
-        style={{ display: "-webkit-box", WebkitLineClamp: weight * 3 }}
-      >
+      <div title={info} className={classes.info} style={{ display: "-webkit-box", WebkitLineClamp: weight * 3 }}>
         {info}
       </div>
     </div>

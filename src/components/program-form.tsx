@@ -75,10 +75,7 @@ export const ProgramForm: FC<Props> = ({ stationId, program, onSubmit }) => {
 
       {infoHtml && (
         <FormControlGroup>
-          <div
-            dangerouslySetInnerHTML={{ __html: infoHtml }}
-            className={classes.info}
-          />
+          <div dangerouslySetInnerHTML={{ __html: infoHtml }} className={classes.info} />
         </FormControlGroup>
       )}
 

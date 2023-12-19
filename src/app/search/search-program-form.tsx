@@ -24,10 +24,7 @@ export const SearchProgramForm: FC<Props> = (props) => {
   };
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className={classes.form}
-    >
+    <form onSubmit={handleSubmit} className={classes.form}>
       <label className={classes.label}>
         <span className={classes.labelTitle}>検索キー</span>
         <div className={classes.inputContainer}>
@@ -43,10 +40,7 @@ export const SearchProgramForm: FC<Props> = (props) => {
         </div>
       </label>
       <div>
-        <button
-          disabled={props.searching}
-          className={classes.button}
-        >
+        <button disabled={props.searching} className={classes.button}>
           search
         </button>
       </div>
