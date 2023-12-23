@@ -1,29 +1,8 @@
 import { FirebaseUser } from "../components/auth-context";
-import { mergeSameProgramPerDates, type ProgramPerDate, type ProgramsPerDateResponse } from "../models/program";
 import type { RecordProgram } from "../models/record-program";
 import type { SearchProgramResponse, SearchQueries } from "../models/search-program";
-import type { Station } from "../models/station";
 import { Env } from "./env";
-import {
-  programsPerDateArraySchema,
-  recordProgramsSchema,
-  searchProgramsResponseSchema,
-  stationArraySchema,
-} from "./schema";
-
-export async function getStations(): Promise<Station[]> {
-  const response = await fetch(`${Env.radikoResourceEndpoint}/stations.json`);
-  const json = await response.json();
-  return stationArraySchema.parse(json);
-}
-
-export async function getPrograms(stationId: string): Promise<ProgramPerDate[]> {
-  const response = await fetch(`${Env.radikoResourceEndpoint}/programs/${stationId}.json`);
-  const json = await response.json();
-  const programPerDateJson = programsPerDateArraySchema.parse(json);
-  const convertedJson = convert(programPerDateJson);
-  return mergeSameProgramPerDates(convertedJson);
-}
+import { recordProgramsSchema, searchProgramsResponseSchema } from "./schema";
 
 export async function recordProgram(recordProgram: RecordProgram, user: FirebaseUser): Promise<void> {
   if (Env.writableUserMailAddress !== user?.email) {
@@ -59,26 +38,4 @@ export async function getSearchPrograms(searchQueries: SearchQueries): Promise<S
   const response = await fetch(`/api/search?${queries}`);
   const json = await response.json();
   return searchProgramsResponseSchema.parse(json);
-}
-
-function convert(programPerDateResponses: ProgramsPerDateResponse[]): ProgramPerDate[] {
-  return programPerDateResponses.map((res) => {
-    const programs = res.programs.map((res) => {
-      return {
-        id: res.id,
-        from: res.ft,
-        to: res.to,
-        duration: parseInt(res.dur),
-        title: res.title,
-        url: res.url,
-        info: res.info,
-        img: res.img,
-        personality: res.personality,
-      };
-    });
-    return {
-      date: res.date.toString(),
-      programs,
-    };
-  });
 }
