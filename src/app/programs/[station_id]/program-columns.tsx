@@ -1,21 +1,20 @@
-import { FC, useCallback, useEffect, useRef, useState } from "react";
+import { FC, useEffect, useRef, useState } from "react";
 import { Mic } from "react-feather";
 import type { FirebaseUser } from "../../../components/auth-context";
 import { RecordProgramModal } from "../../../components/record-program-modal";
-import { formatDateOfProgramDate, formatDateOfProgramPerDate, getToday } from "../../../lib/day";
+import { formatDateOfProgramDate, formatDateOfProgramPerDate } from "../../../lib/day";
 import { stripHtmlElement } from "../../../lib/html";
 import { Program, ProgramPerDate, calcWeightFromDuration as calcWeight } from "../../../models/program";
-import { Menu } from "./menu";
 import classes from "./program-columns.module.css";
 
 type Props = {
   stationId: string;
   programPerDates: ProgramPerDate[];
   user: FirebaseUser;
+  activeDate: string;
 };
 
-export const ProgramColumns: FC<Props> = ({ stationId, programPerDates, user }) => {
-  const dateList = programPerDates.map((programPerDate) => programPerDate.date);
+export const ProgramColumns: FC<Props> = ({ stationId, programPerDates, user, activeDate }) => {
   const [open, setOpen] = useState(false);
   const [program, setProgram] = useState<Program>({
     id: "",
@@ -28,7 +27,6 @@ export const ProgramColumns: FC<Props> = ({ stationId, programPerDates, user }) 
     img: "",
     personality: "",
   });
-  const [activeDate, setActiveDate] = useState(getToday);
 
   const closeModal = () => setOpen(false);
 
@@ -37,25 +35,16 @@ export const ProgramColumns: FC<Props> = ({ stationId, programPerDates, user }) 
     setProgram(program);
   };
 
-  const handleMenuClick = useCallback((date: string) => {
-    setActiveDate(date);
-  }, []);
-
   return (
     <div className={classes.columns}>
-      <div className={classes.columnsSide}>
-        <Menu title={stationId} dateList={dateList} activeDate={activeDate} onMenuClick={handleMenuClick} />
-      </div>
-      <div className={classes.columnsMain}>
-        {programPerDates.map((programPerDate) => (
-          <ProgramColumn
-            key={programPerDate.date}
-            programPerDate={programPerDate}
-            activeDate={activeDate}
-            onClick={handleClick}
-          />
-        ))}
-      </div>
+      {programPerDates.map((programPerDate) => (
+        <ProgramColumn
+          key={programPerDate.date}
+          programPerDate={programPerDate}
+          activeDate={activeDate}
+          onClick={handleClick}
+        />
+      ))}
       {open && (
         <RecordProgramModal open={open} onClose={closeModal} stationId={stationId} program={program} user={user} />
       )}

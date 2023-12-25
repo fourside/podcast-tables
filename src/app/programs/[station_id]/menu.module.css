@@ -4,6 +4,7 @@
   gap: 0.5rem;
   position: sticky;
   top: 1.25rem;
+  left: 0;
   text-align: center;
 }
 
@@ -33,7 +34,13 @@
 }
 
 @keyframes blink {
-  0% { color: #ccc }
-  50% { color: #60646c }
-  100% { color: #ccc }
+  0% {
+    color: #ccc;
+  }
+  50% {
+    color: #60646c;
+  }
+  100% {
+    color: #ccc;
+  }
 }
