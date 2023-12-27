@@ -21,7 +21,6 @@ const nextCOnfig = {
     largePageDataBytes: 32 * 1024 * 1024,
   },
   env: {
-    API_ENDPOINT: process.env.API_ENDPOINT,
     RADIKO_RESOURCE_ENDPOINT: process.env.RADIKO_RESOURCE_ENDPOINT,
     FIREBASE_API_KEY: process.env.FIREBASE_API_KEY,
     FIREBASE_AUTH_DOMAIN: process.env.FIREBASE_AUTH_DOMAIN,

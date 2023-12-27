@@ -1,10 +1,10 @@
 import { FC } from "react";
-import { recordProgram } from "../lib/client";
 import type { Program } from "../models/program";
 import type { RecordProgram } from "../models/record-program";
 import type { FirebaseUser } from "./auth-context";
 import { Modal } from "./modal";
 import { ProgramForm } from "./program-form";
+import { recordProgram } from "./record-program-action";
 import { useToast } from "./toast";
 
 type Props = {

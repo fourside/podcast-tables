@@ -20,7 +20,11 @@
   background-color: var(--slate-2);
   transform: translateY(100%);
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  width: 250px;
+}
+
+.dropdownContent {
+  width: 300px;
+  min-height: 100px;
 }
 
 .empty {
@@ -47,7 +51,9 @@
 }
 
 .itemContainer {
-  padding: 4rem 8rem;
+  padding: 1rem 1.5rem;
+  display: grid;
+  gap: 0.25rem;
 }
 
 .itemTitle {
@@ -57,27 +63,32 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  color: var(--slate-11);
 }
 
 .itemContent {
   display: flex;
   gap: 0.5rem;
-  justify-content: center;
+  align-items: center;
 }
 
 .itemStation {
   padding: 0.25rem 0.5rem;
   border-radius: 0.5rem;
+  border: 1px solid var(--slate-8);
   font-size: 0.75rem;
   line-height: 1rem;
+  color: var(--slate-10);
 }
 
 .itemPersonality {
   font-size: 0.875rem;
   line-height: 1.25rem;
+  color: var(--slate-10);
 }
 
 .itemDuration {
   font-size: 0.875rem;
   line-height: 1.25rem;
+  color: var(--slate-10);
 }
