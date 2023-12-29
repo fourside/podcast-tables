@@ -7,7 +7,7 @@ export async function GET(request: Request): Promise<Response> {
     headers: { Authorization: basicAuthHeader() },
   });
   const json = await res.json();
-  const result = recordProgramsSchema.safeParse(JSON.parse(json));
+  const result = recordProgramsSchema.safeParse(json);
   if (result.success) {
     return new Response(JSON.stringify(result.data));
   }
