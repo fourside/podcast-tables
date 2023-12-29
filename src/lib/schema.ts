@@ -70,14 +70,14 @@ export const searchProgramsResponseSchema = schemaForType<SearchProgramResponse>
   })
 );
 
-export const recordProgramsSchema = schemaForType<RecordProgram[]>()(
-  z.array(
-    z.object({
-      stationId: z.string(),
-      title: z.string(),
-      fromTime: z.string(),
-      duration: z.string(),
-      personality: z.string(),
-    })
-  )
+export const recordProgramSchema = schemaForType<RecordProgram>()(
+  z.object({
+    stationId: z.string(),
+    title: z.string(),
+    fromTime: z.string(),
+    duration: z.string(),
+    personality: z.string(),
+  })
 );
+
+export const recordProgramsSchema = schemaForType<RecordProgram[]>()(z.array(recordProgramSchema));

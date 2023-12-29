@@ -2,7 +2,7 @@
 
 import { FC, useCallback, useEffect, useRef, useState } from "react";
 import { AlertCircle, AlertTriangle, ChevronDown, Clock } from "react-feather";
-import { getRecordPrograms } from "../lib/client";
+import { recordProgramsSchema } from "../lib/schema";
 import type { RecordProgram } from "../models/record-program";
 import { FirebaseUser } from "./auth-context";
 import classes from "./dropdown-menu.module.css";
@@ -26,6 +26,7 @@ export const DropdownMenu: FC<DropdownMenuProps> = (props) => {
       }
       try {
         setLoading(true);
+        setErrorMessage(undefined);
         setRecordPrograms([]);
         const result = await getRecordPrograms(props.user);
         setRecordPrograms(result);
@@ -70,25 +71,27 @@ export const DropdownMenu: FC<DropdownMenuProps> = (props) => {
       </div>
       {open && (
         <div className={classes.dropdown}>
-          {loading && <Loading />}
-          {!loading && recordPrograms.length === 0 && !errorMessage && (
-            <div className={classes.empty}>
-              <AlertTriangle size={16} />
-              No recording task
-            </div>
-          )}
-          {!loading &&
-            recordPrograms.map((recording, i) => (
-              <div key={i} className={classes.item}>
-                <RecordProgramItem recordingTask={recording} />
+          <div className={classes.dropdownContent}>
+            {loading ? (
+              <Loading />
+            ) : errorMessage !== undefined ? (
+              <div className={classes.errorContainer}>
+                <AlertCircle size={16} className={classes.errorIcon} />
+                {errorMessage}
               </div>
-            ))}
-          {!loading && errorMessage && (
-            <div className={classes.errorContainer}>
-              <AlertCircle size={16} className={classes.errorIcon} />
-              {errorMessage}
-            </div>
-          )}
+            ) : recordPrograms.length === 0 ? (
+              <div className={classes.empty}>
+                <AlertTriangle size={16} />
+                No recording task
+              </div>
+            ) : (
+              recordPrograms.map((recording, i) => (
+                <div key={i} className={classes.item}>
+                  <RecordProgramItem recordingTask={recording} />
+                </div>
+              ))
+            )}
+          </div>
         </div>
       )}
     </div>
@@ -116,3 +119,14 @@ const RecordProgramItem: FC<RecordProgramItemProps> = (props) => {
     </div>
   );
 };
+
+async function getRecordPrograms(user: FirebaseUser): Promise<RecordProgram[]> {
+  const idToken = await user.getIdToken();
+  const response = await fetch("/api/queue", {
+    headers: {
+      Authorization: `Bearer ${idToken}`,
+    },
+  });
+  const json = await response.json();
+  return recordProgramsSchema.parse(json);
+}
