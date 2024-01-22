@@ -60,17 +60,22 @@ export function mergeSameProgramPerDates(programPerDates: ProgramPerDate[]): Pro
     const samePrograms: Program[] = [];
     let sameFlag = false;
     const mergedPrograms = programPerDate.programs.reduce<Program[]>((acc, program) => {
-      if (isSequentialProgram(program.title)) {
-        samePrograms.push(program);
+      const canonical = {
+        ...program,
+        title: canonicalProgramTitle(program.title),
+      };
+      if (canonical.title === acc.at(-1)?.title) {
+        samePrograms.push(canonical);
         sameFlag = true;
       } else if (sameFlag) {
         // un-match and before is matched
-        acc.push(mergePrograms(samePrograms));
+        const before = acc.pop()!;
+        acc.push(mergePrograms([before, ...samePrograms]));
         samePrograms.splice(0); // clear array
         sameFlag = false;
-        acc.push(program);
+        acc.push(canonical);
       } else {
-        acc.push(program);
+        acc.push(canonical);
       }
       return acc;
     }, []);
@@ -84,20 +89,20 @@ export function mergeSameProgramPerDates(programPerDates: ProgramPerDate[]): Pro
   return result;
 }
 
-export function isSequentialProgram(title: string): boolean {
-  return /\(\d\)/.test(title) || /（[０-９]）/.test(title);
-}
-
 function mergePrograms(programs: Program[]): Program {
   if (programs.length === 1) {
     return programs[0];
   }
-  const result = programs.reduce((acc, cur) => {
+  return [...programs].reduce((acc, cur) => {
     acc.to = cur.to; // overwrite end time
     acc.duration += cur.duration; // add duration
     return acc;
   });
-  result.title = result.title.replace(/\(\d\).*$|（[０-９]）.*$/, "");
+}
 
-  return result;
+export function canonicalProgramTitle(programTitle: string): string {
+  return programTitle
+    .replace(/\(\d\).*$/, "")
+    .replace(/（[０-９]）.*$/, "")
+    .trim();
 }
