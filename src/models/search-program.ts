@@ -1,4 +1,4 @@
-import { isSequentialProgram } from "./program";
+import { canonicalProgramTitle } from "./program";
 
 export interface SearchProgram {
   station_id: string;
@@ -33,12 +33,17 @@ export function mergeSearchPrograms(programs: SearchProgram[]): SearchProgram[] 
   let sameFlag = false;
   const samePrograms: SearchProgram[] = [];
   return programs.reduce<SearchProgram[]>((acc, program) => {
-    if (isSequentialProgram(program.title)) {
+    const canonical = {
+      ...program,
+      title: canonicalProgramTitle(program.title),
+    };
+    if (canonical.title === acc.at(-1)?.title) {
       samePrograms.push(program);
       sameFlag = true;
     } else if (sameFlag) {
       sameFlag = false;
-      acc.push(_mergeSearchPrograms(samePrograms)); // flush
+      const before = acc.pop()!;
+      acc.push(_mergeSearchPrograms([before, ...samePrograms]));
       samePrograms.splice(0); // clear
       acc.push(program);
     } else {
@@ -52,11 +57,8 @@ function _mergeSearchPrograms(programs: SearchProgram[]): SearchProgram {
   if (programs.length === 1) {
     return programs[0];
   }
-  const result = programs.reduce((acc, cur) => {
+  return programs.reduce((acc, cur) => {
     acc.end_time = cur.end_time; // overwrite end time
     return acc;
   });
-  result.title = result.title.replace(/\(\d\).*$|（[０-９]）.*$/, "");
-
-  return result;
 }
