@@ -121,11 +121,11 @@ const RecordProgramItem: FC<RecordProgramItemProps> = (props) => {
 };
 
 async function getRecordPrograms(user: FirebaseUser): Promise<RecordProgram[]> {
-  const idToken = await user.getIdToken();
+  if (user.email === null) {
+    throw new Error("use not have email");
+  }
   const response = await fetch("/api/queue", {
-    headers: {
-      Authorization: `Bearer ${idToken}`,
-    },
+    headers: { "x-login-user": user.email },
   });
   const json = await response.json();
   return recordProgramsSchema.parse(json);

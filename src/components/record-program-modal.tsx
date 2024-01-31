@@ -1,10 +1,9 @@
-import { FC } from "react";
+import type { FC } from "react";
 import type { Program } from "../models/program";
 import type { RecordProgram } from "../models/record-program";
 import type { FirebaseUser } from "./auth-context";
 import { Modal } from "./modal";
 import { ProgramForm } from "./program-form";
-import { recordProgram } from "./record-program-action";
 import { useToast } from "./toast";
 
 type Props = {
@@ -39,3 +38,14 @@ export const RecordProgramModal: FC<Props> = (props) => {
     </Modal>
   );
 };
+
+async function recordProgram(recordProgram: RecordProgram, user: FirebaseUser): Promise<void> {
+  if (user.email === null) {
+    throw new Error("not has email");
+  }
+  await fetch("/api/queue", {
+    method: "POST",
+    headers: { "x-login-user": user.email },
+    body: JSON.stringify(recordProgram),
+  });
+}
