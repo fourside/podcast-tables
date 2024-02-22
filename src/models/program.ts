@@ -43,6 +43,7 @@ export function convertToRecordProgram(program: Program, stationId: string): Rec
     title: program.title.trim(),
     personality: program.personality,
     fromTime: program.from,
+    toTime: program.to,
     duration: String(program.duration / 60),
   };
 }

@@ -32,6 +32,7 @@ export const ProgramForm: FC<Props> = ({ stationId, program, onSubmit }) => {
       title: recordProgram.title,
       personality: recordProgram.personality,
       fromTime: formatDateOfProgramDate(recordProgram.fromTime, DATE_FORMAT_FORM_DATE),
+      toTime: formatDateOfProgramDate(recordProgram.toTime, DATE_FORMAT_FORM_DATE),
       duration: recordProgram.duration,
     },
   });
@@ -65,12 +66,12 @@ export const ProgramForm: FC<Props> = ({ stationId, program, onSubmit }) => {
       </FormControlGroup>
 
       <FormControlGroup>
-        <div className={classes.fromAndDuration}>
+        <div className={classes.fromAndTo}>
           <Input name="fromTime" register={register} hasError={!!errors.fromTime} />
-          <Input name="duration" register={register} hasError={!!errors.duration} />
+          <Input name="toTime" register={register} hasError={!!errors.toTime} />
         </div>
         <ErrorFormMessage message={errors.fromTime?.message} />
-        <ErrorFormMessage message={errors.duration?.message} />
+        <ErrorFormMessage message={errors.toTime?.message} />
       </FormControlGroup>
 
       {infoHtml && (
@@ -100,6 +101,9 @@ const formSchema = schemaForType<RecordProgram>()(
     fromTime: z
       .string()
       .regex(/^\d{4}\/\d{2}\/\d{2} \d{2}:\d{2}$/, { message: "fromTime must be format: YYYY/MM/DD HH:mm" }),
+    toTime: z
+      .string()
+      .regex(/^\d{4}\/\d{2}\/\d{2} \d{2}:\d{2}$/, { message: "toTime must be format: YYYY/MM/DD HH:mm" }),
     duration: z.string().regex(/^\d+$/, { message: "duration must be number" }),
     personality: z.string().regex(notWhiteSpacePattern, { message: "personality cannot contain white spaces" }),
   })

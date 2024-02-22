@@ -75,6 +75,7 @@ export const recordProgramSchema = schemaForType<RecordProgram>()(
     stationId: z.string(),
     title: z.string(),
     fromTime: z.string(),
+    toTime: z.string(),
     duration: z.string(),
     personality: z.string(),
   })
