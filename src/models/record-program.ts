@@ -2,6 +2,7 @@ export interface RecordProgram {
   stationId: string;
   title: string;
   fromTime: string; // yyyymmddHHmm
+  toTime: string; // yyyymmddHHmm
   duration: string; // min
   personality: string;
 }
