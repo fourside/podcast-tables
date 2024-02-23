@@ -42,6 +42,7 @@ export const ProgramForm: FC<Props> = ({ stationId, program, onSubmit }) => {
     onSubmit({
       ...formData,
       fromTime: exchangeFormDateToRecordProgramDate(formData.fromTime),
+      toTime: exchangeFormDateToRecordProgramDate(formData.toTime),
     });
   };
 
